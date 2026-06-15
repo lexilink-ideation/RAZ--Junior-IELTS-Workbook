@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City Falcons — RAZ Vocabulary Workbook</title>
+<style>
+  :root{
+    --teal-dark:#0f3d3e;
+    --teal:#1f7a72;
+    --teal-light:#5fb3a8;
+    --blue:#2f6f9e;
+    --sand:#fbf6ec;
+    --card:#ffffff;
+    --accent:#ffb347;
+    --accent2:#e8895c;
+    --text:#1c2b2d;
+    --muted:#5b7674;
+    --radius:18px;
+    --shadow: 0 6px 20px rgba(15,61,62,0.10);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Trebuchet MS', 'Segoe UI', Verdana, sans-serif;
+    background: linear-gradient(160deg, var(--sand) 0%, #eef6f4 60%, #e6f3ef 100%);
+    color:var(--text);
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+
+  /* HEADER */
+  header{
+    background: linear-gradient(120deg, var(--teal-dark), var(--teal) 70%, var(--teal-light));
+    color:#fff;
+    padding:28px 20px 22px;
+    border-radius:0 0 32px 32px;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .studio-name{
+    font-size:0.78rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.85;
+    font-weight:700;
+  }
+  header h1{
+    margin:6px 0 4px;
+    font-size:2.1rem;
+    font-weight:800;
+    letter-spacing:0.5px;
+  }
+  header .subtitle{
+    font-size:0.95rem;
+    opacity:0.92;
+    font-weight:500;
+  }
+  .header-meta{
+    margin-top:14px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+  .meta-pill{
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:999px;
+    padding:6px 16px;
+    font-size:0.85rem;
+    font-weight:600;
+    backdrop-filter: blur(2px);
+  }
+  .meta-pill.level{ background: var(--accent); color:#3a2400; border:none; }
+
+  /* PROGRESS BAR */
+  .progress-wrap{
+    max-width:880px;
+    margin:18px auto 0;
+    padding:0 16px;
+  }
+  .progress-track{
+    display:flex;
+    background:var(--card);
+    border-radius:999px;
+    box-shadow:var(--shadow);
+    padding:6px;
+    gap:4px;
+    overflow-x:auto;
+  }
+  .progress-step{
+    flex:1;
+    min-width:74px;
+    text-align:center;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--muted);
+    padding:8px 4px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: all 0.25s ease;
+    white-space:nowrap;
+  }
+  .progress-step.active{
+    background: linear-gradient(120deg, var(--teal), var(--teal-light));
+    color:#fff;
+    box-shadow:0 3px 10px rgba(31,122,114,0.35);
+  }
+  .progress-step .check{
+    display:inline-block;
+    margin-left:4px;
+    color:var(--accent2);
+    font-weight:900;
+  }
+  .progress-step.active .check{ color:#fff; }
+
+  /* MAIN CONTAINER */
+  main{
+    max-width:880px;
+    margin:24px auto;
+    padding:0 16px;
+  }
+  .section{
+    display:none;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.active{ display:block; }
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .section-title .num{
+    background: var(--teal);
+    color:#fff;
+    border-radius:50%;
+    width:38px;height:38px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:1.05rem;
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .section-title h2{
+    margin:0;
+    font-size:1.5rem;
+    color:var(--teal-dark);
+    font-weight:800;
+  }
+  .section-sub{
+    color:var(--muted);
+    font-size:0.92rem;
+    margin:-12px 0 18px 50px;
+  }
+
+  /* CARD BASE */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+    overflow:hidden;
+    border:2px solid transparent;
+    transition: border-color 0.25s ease, transform 0.15s ease;
+  }
+  .vocab-card:hover{ transform: translateY(-2px); border-color: var(--teal-light); }
+  .vocab-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    cursor:pointer;
+    gap:12px;
+  }
+  .vocab-head-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .vocab-emoji{ font-size:1.8rem; }
+  .vocab-word{
+    font-size:1.25rem;
+    font-weight:800;
+    color:var(--teal-dark);
+  }
+  .vocab-pos{
+    font-size:0.8rem;
+    color:var(--muted);
+    font-weight:600;
+    margin-left:6px;
+  }
+  .vocab-cn{
+    font-size:1.1rem;
+    color:var(--blue);
+    font-weight:700;
+    background:#eaf4f2;
+    padding:4px 12px;
+    border-radius:999px;
+  }
+  .vocab-arrow{
+    font-size:1.2rem;
+    color:var(--teal);
+    transition: transform 0.3s ease;
+  }
+  .vocab-card.open .vocab-arrow{ transform: rotate(180deg); }
+  .vocab-body{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding:0 20px;
+    background:#f6fbfa;
+  }
+  .vocab-card.open .vocab-body{
+    max-height:300px;
+    padding:14px 20px 18px;
+  }
+  .vocab-body .label{
+    font-weight:800;
+    color:var(--teal);
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-top:8px;
+  }
+  .vocab-body .label:first-child{ margin-top:0; }
+  .vocab-example{
+    font-style:italic;
+    color:var(--text);
+    background:#fff;
+    border-left:4px solid var(--accent);
+    padding:8px 12px;
+    border-radius:8px;
+    margin-top:4px;
+  }
+
+  /* STORY */
+  .story-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:0;
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .story-page{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .story-img-wrap{
+    width:100%;
+    background:#e6f3ef;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:60px;
+    padding:14px;
+    font-size:0.85rem;
+    color:var(--muted);
+    text-align:center;
+  }
+  .story-text{
+    padding:18px 22px;
+    font-size:1.15rem;
+  }
+  .story-page-num{
+    font-weight:800;
+    color:var(--teal-light);
+    font-size:0.8rem;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .story-text mark{
+    background: var(--accent);
+    color:var(--teal-dark);
+    border-radius:6px;
+    padding:0 4px;
+    font-weight:800;
+  }
+  .story-divider{
+    height:6px;
+    background: linear-gradient(90deg, var(--teal-light), var(--accent), var(--blue));
+    opacity:0.3;
+  }
+
+  /* QUESTIONS */
+  .q-block{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 20px;
+    margin-bottom:14px;
+  }
+  .q-num{
+    font-weight:800;
+    color:var(--blue);
+    margin-right:6px;
+  }
+  .q-text{ font-weight:700; margin-bottom:10px; }
+  .tf-options, .mc-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .opt-btn{
+    border:2px solid var(--teal-light);
+    background:#fff;
+    color:var(--teal-dark);
+    border-radius:999px;
+    padding:8px 18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-size:0.95rem;
+  }
+  .opt-btn:hover{ background:#eaf4f2; }
+  .opt-btn.correct{ background:#cdeede; border-color:#3eb489; color:#0f3d3e; }
+  .opt-btn.wrong{ background:#fbe0db; border-color:#e8895c; color:#7a2e1c; }
+  .opt-btn.disabled{ pointer-events:none; opacity:0.85; }
+  .feedback{
+    margin-top:8px;
+    font-weight:700;
+    font-size:0.92rem;
+    min-height:20px;
+  }
+  .feedback.correct-text{ color:#1f7a4f; }
+  .feedback.wrong-text{ color:#c0492f; }
+  .short-answer textarea{
+    width:100%;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:1rem;
+    resize:vertical;
+    min-height:60px;
+  }
+  .short-answer .hint-btn{
+    margin-top:8px;
+    background:none;
+    border:none;
+    color:var(--blue);
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:underline;
+    font-size:0.88rem;
+    padding:0;
+  }
+  .hint-box{
+    margin-top:6px;
+    background:#eaf4f2;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:0.9rem;
+    color:var(--teal-dark);
+    display:none;
+  }
+  .hint-box.show{ display:block; }
+
+  /* PRACTICE: match, dnd, fill blank */
+  .practice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  @media (max-width:560px){ .practice-grid{ grid-template-columns:1fr; } }
+  .match-item{
+    background:#fff;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:700;
+    text-align:center;
+    transition:all 0.2s;
+  }
+  .match-item.selected{ background:var(--teal-light); color:#fff; }
+  .match-item.matched{ background:#cdeede; border-color:#3eb489; color:#0f3d3e; pointer-events:none; }
+  .match-item.shake{ animation: shake 0.4s; border-color:#e8895c; }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
+  .blank-input{
+    border:none;
+    border-bottom:3px dotted var(--teal);
+    background:#eaf4f2;
+    font-weight:800;
+    font-size:1rem;
+    text-align:center;
+    width:130px;
+    padding:4px 6px;
+    border-radius:6px;
+    font-family:inherit;
+  }
+  .blank-input.correct{ background:#cdeede; border-bottom-color:#3eb489; }
+  .blank-input.wrong{ background:#fbe0db; border-bottom-color:#e8895c; }
+
+  .word-bank{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+  .word-chip{
+    background: var(--teal);
+    color:#fff;
+    border-radius:999px;
+    padding:6px 16px;
+    font-weight:700;
+    cursor:grab;
+    user-select:none;
+    font-size:0.92rem;
+  }
+  .word-chip.used{ opacity:0.35; cursor:default; }
+  .dz{
+    border:2px dashed var(--teal-light);
+    border-radius:10px;
+    padding:4px 10px;
+    min-width:110px;
+    display:inline-block;
+    text-align:center;
+    min-height:32px;
+    vertical-align:middle;
+    font-weight:800;
+    color:var(--teal-dark);
+    background:#f6fbfa;
+  }
+  .dz.filled{ background:#cdeede; border-style:solid; border-color:#3eb489; }
+
+  .check-btn, .reset-btn, .nav-btn{
+    background: linear-gradient(120deg, var(--teal), var(--teal-light));
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:10px 26px;
+    font-weight:800;
+    font-size:0.95rem;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(31,122,114,0.3);
+    transition:transform 0.15s ease;
+  }
+  .check-btn:hover, .reset-btn:hover, .nav-btn:hover{ transform:translateY(-2px); }
+  .reset-btn{ background: linear-gradient(120deg, #c0c8c6, #9bb0ad); box-shadow:none; }
+
+  /* SPEAKING */
+  .speak-level{
+    margin-bottom:18px;
+  }
+  .speak-level h3{
+    color:var(--blue);
+    font-size:1.05rem;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .speak-q{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:12px 18px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .speak-q .mic{ font-size:1.3rem; }
+
+  /* WRITING */
+  .scramble-words{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:10px 0;
+  }
+  .scramble-chip{
+    background:#fff;
+    border:2px solid var(--teal);
+    color:var(--teal-dark);
+    border-radius:10px;
+    padding:8px 14px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .scramble-chip.placed{ opacity:0.3; pointer-events:none; }
+  .answer-line{
+    min-height:46px;
+    border:2px dashed var(--teal-light);
+    border-radius:10px;
+    background:#f6fbfa;
+    padding:8px 12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin:8px 0;
+  }
+  .answer-line .scramble-chip{ cursor:pointer; border-color:#3eb489; background:#cdeede; }
+  .frame{
+    background:#f6fbfa;
+    border-radius:12px;
+    padding:14px;
+    margin:10px 0;
+  }
+  .frame input[type=text]{
+    border:none;
+    border-bottom:2px solid var(--teal);
+    background:transparent;
+    font-weight:700;
+    font-family:inherit;
+    font-size:1rem;
+    padding:2px 6px;
+    width:140px;
+  }
+  textarea.paragraph{
+    width:100%;
+    min-height:120px;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:12px;
+    font-family:inherit;
+    font-size:1rem;
+    resize:vertical;
+  }
+  .word-counter{
+    font-size:0.85rem;
+    color:var(--muted);
+    margin-top:6px;
+  }
+  .vocab-tracker{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+  }
+  .track-chip{
+    border:2px solid var(--teal-light);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .track-chip.used{ background:var(--accent); border-color:var(--accent); color:#3a2400; }
+
+  /* REVIEW */
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  @media (max-width:560px){ .review-grid{ grid-template-columns:1fr; } }
+  .review-card h3{
+    margin:0 0 8px;
+    color:var(--teal-dark);
+    font-size:1.05rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .star-word{
+    display:inline-block;
+    background: var(--accent);
+    color:#3a2400;
+    border-radius:8px;
+    padding:4px 10px;
+    font-weight:800;
+    margin:4px 4px 0 0;
+  }
+  .pattern-line{
+    background:#eaf4f2;
+    border-radius:10px;
+    padding:8px 12px;
+    margin:6px 0;
+    font-weight:600;
+  }
+
+  /* FOOTER NAV */
+  .footer-nav{
+    display:flex;
+    justify-content:space-between;
+    margin-top:24px;
+    gap:10px;
+  }
+  .nav-btn.secondary{
+    background:#fff;
+    color:var(--teal-dark);
+    border:2px solid var(--teal-light);
+    box-shadow:none;
+  }
+  .nav-btn:disabled{
+    opacity:0.4;
+    pointer-events:none;
+  }
+
+  /* INTRO BANNER ROW */
+  .level-banner{
+    text-align:center;
+    margin:14px auto 0;
+    color:var(--teal-dark);
+    font-weight:700;
+    font-size:0.95rem;
+  }
+
+  ::selection{ background:var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🦅 City Falcons</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level H (RAZ)</div>
+    <div class="meta-pill">Reader: City Falcons</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= 1. VOCABULARY ================= -->
+  <section class="section active" data-section="0">
+    <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+    <div class="section-sub">Tap each card to see the Chinese meaning, a simple definition, and an example sentence. 点击单词卡查看意思！</div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🦅</span>
+          <span><span class="vocab-word">falcon</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">猎鹰</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a fast bird that hunts other animals</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">Fran and Fred are city falcons.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🐣</span>
+          <span><span class="vocab-word">chick</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">小鸡 / 幼鸟</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a baby bird</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">They had three hungry chicks in the nest.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🐦</span>
+          <span><span class="vocab-word">prey</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">猎物</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>an animal that is hunted for food</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">They needed to find prey to feed them.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🏠</span>
+          <span><span class="vocab-word">nest box</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">巢箱</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a box people build so animals can live and raise babies safely</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">Fran and Fred looked down from their nest box on the bridge.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">😋</span>
+          <span><span class="vocab-word">hungry</span><span class="vocab-pos">(adj.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">饥饿的</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>wanting or needing food</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">Fran and Fred had three hungry chicks in their nest.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">📷</span>
+          <span><span class="vocab-word">webcam</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">网络摄像头</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a camera that shows live pictures on the internet</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">They watched the falcons on a webcam.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">⬇️</span>
+          <span><span class="vocab-word">stoop</span><span class="vocab-pos">(n./v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">俯冲</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a very fast dive a falcon makes to catch prey</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">Fran made a fast dive, or stoop, to catch a bird.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 2. STORY ================= -->
+  <section class="section" data-section="1">
+    <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+    <div class="section-sub">Read the story below. Target words are <mark>highlighted</mark>. Read it more than once! 多读几次！</div>
+
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🌉 Two falcons sit on a bridge nest box above a river</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 3</div>
+          Fran and Fred looked down from their <mark>nest box</mark> on the bridge.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🔭 People watching falcons from a computer and from a park</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 4</div>
+          People liked to watch Fran, Fred, and their <mark>chicks</mark> in the nest box. They watched the <mark>falcons</mark> on a <mark>webcam</mark>. They also watched from a park below the bridge.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🦅 A falcon family with chicks on the bridge</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 5</div>
+          People made the <mark>nest box</mark> so the <mark>falcons</mark> could have a safe nest.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🐣 A falcon feeding three baby chicks</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 6</div>
+          Fran and Fred had three <mark>hungry</mark> <mark>chicks</mark> in their nest. They needed to find <mark>prey</mark> to feed them.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🌉 Falcons on top of a tall bridge tower</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 7</div>
+          Fran and Fred flew to the top of the tall bridge.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🐦 A small bird flying below the bridge</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 8</div>
+          They waited for smaller birds to fly below them.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">⬇️ A falcon diving fast toward a bird</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 9</div>
+          Fran made a fast dive, or <mark>stoop</mark>, to catch a bird. Fran made many <mark>stoops</mark> to catch her <mark>prey</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">👀 People in a park looking up and pointing</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 10</div>
+          People in the park by the bridge watched Fran. They liked to watch <mark>falcons</mark> <mark>stoop</mark>. Fran's <mark>stoop</mark> was the fastest the people had seen.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🍽️ Falcon parents bringing food back to chicks</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 11</div>
+          Fran and Fred took their <mark>prey</mark> back to the nest. They fed their three <mark>hungry</mark> <mark>chicks</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🪶 Young falcons learning to fly near the bridge</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 12</div>
+          In a few weeks, the <mark>chicks</mark> grew big enough to fly and <mark>stoop</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">📺 A webcam screen showing falcons flying away</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 13</div>
+          People watched them on the <mark>webcam</mark> and from the park. Soon, all the <mark>falcons</mark> flew away from the <mark>nest box</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">⏳ An empty nest box on the bridge, waiting</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 14</div>
+          The people waited a year for Fran and Fred to return. They waited to watch Fran and Fred have more <mark>chicks</mark> on the bridge.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 3. READING COMPREHENSION ================= -->
+  <section class="section" data-section="2">
+    <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+    <div class="section-sub">Answer the questions about the story.</div>
+
+    <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1.</span>Fran and Fred built their nest box on a mountain.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2.</span>People watched the falcons on a webcam and from a park.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3.</span>Fran and Fred had three hungry chicks.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4.</span>A "stoop" is a slow, gentle landing.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5.</span>The chicks grew big enough to fly and stoop after a few weeks.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1.</span>Where did Fran and Fred build their nest?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">In a tree</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">In a nest box on a bridge</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">On a roof</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2.</span>How many chicks did Fran and Fred have?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">Two</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">Three</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">Four</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3.</span>What does "prey" mean?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">A camera</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">An animal that is hunted for food</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">A type of bridge</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4.</span>What did Fran do to catch a bird?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">She walked slowly</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">She swam in the river</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">She made a fast dive, or stoop</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5.</span>How did people watch Fran and Fred?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">On a webcam and from a park</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">From an airplane</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">From a boat</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">1.</span>Why did people build a nest box for the falcons?</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: so the falcons could have a safe nest / so people could keep them safe.</div>
+    </div>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">2.</span>What did Fran and Fred need to find for their hungry chicks?</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: They needed to find prey to feed them.</div>
+    </div>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">3.</span>What happened after the chicks grew big enough to fly?</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: All the falcons flew away from the nest box, and people waited a year for Fran and Fred to return.</div>
+    </div>
+
+  </section>
+
+  <!-- ================= 4. PRACTICE ================= -->
+  <section class="section" data-section="3">
+    <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+    <div class="section-sub">Practice the words in different ways. Get instant feedback!</div>
+
+    <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+    <p>Click a word, then click its matching meaning.</p>
+    <div class="practice-grid" id="matchGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+    <p>Drag a word from the word bank into the blank. (Or click the word, then click the blank.)</p>
+    <div class="card">
+      <p>1. Fran and Fred have three <span class="dz" data-answer="hungry" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> chicks.</p>
+      <p>2. They watched the falcons on a <span class="dz" data-answer="webcam" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>.</p>
+      <p>3. Fran made a fast dive, or <span class="dz" data-answer="stoop" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>, to catch a bird.</p>
+      <p>4. They needed to find <span class="dz" data-answer="prey" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> to feed them.</p>
+      <p>5. People built a <span class="dz" data-answer="nest box" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> on the bridge.</p>
+      <div class="word-bank" id="wordBank">
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="hungry">hungry</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="webcam">webcam</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="stoop">stoop</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="prey">prey</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="nest box">nest box</div>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="check-btn" onclick="checkFillBlanks()">Check Answers</button>
+        <button class="reset-btn" onclick="resetFillBlanks()">Reset</button>
+      </div>
+      <div class="feedback" id="fillFeedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+    <div class="q-block">
+      <div class="q-text">1. A baby bird is called a ___.</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">prey</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">chick</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">falcon</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. A fast dive a falcon makes to catch food is called a ___.</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">stoop</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">webcam</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">nest box</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+    <div class="practice-grid" id="cnToEnGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+    <div class="practice-grid" id="enToCnGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+    <div class="q-block">
+      <div class="q-text">1. People liked to watch Fran, Fred, and their ______ in the nest box.</div>
+      <input type="text" class="blank-input" id="sc1" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','chicks')">Check</button>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. Fran and Fred flew to the top of the tall ______.</div>
+      <input type="text" class="blank-input" id="sc2" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','bridge')">Check</button>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. Fran made many ______ to catch her prey.</div>
+      <input type="text" class="blank-input" id="sc3" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','stoops')">Check</button>
+    </div>
+
+  </section>
+
+  <!-- ================= 5. SPEAKING ================= -->
+  <section class="section" data-section="4">
+    <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+    <div class="section-sub">Practice speaking out loud. Use the pictures and the story to help you.</div>
+
+    <div class="speak-level">
+      <h3>🟢 Level 1 — Simple Answers</h3>
+      <div class="speak-q"><span class="mic">🎤</span>What bird do you see in the story?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Does the falcon have a nest box?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Are the chicks hungry?</div>
+    </div>
+
+    <div class="speak-level">
+      <h3>🟡 Level 2 — Short Sentence Answers</h3>
+      <div class="speak-q"><span class="mic">🎤</span>Describe the falcons. What color are they?</div>
+      <div class="speak-q"><span class="mic">🎤</span>How do people watch the falcons?</div>
+      <div class="speak-q"><span class="mic">🎤</span>What does "stoop" mean? Use it in a sentence.</div>
+    </div>
+
+    <div class="speak-level">
+      <h3>🔵 Level 3 — Open-Ended Questions</h3>
+      <div class="speak-q"><span class="mic">🎤</span>Why do you think people built a nest box for the falcons?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Do you think cities are good places for wild animals? Why or why not?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Which animal in the story do you like best? Why?</div>
+    </div>
+
+    <div class="card">
+      <strong>Useful phrases:</strong> <em>I see... | The falcon is... | I think... because... | In my opinion...</em>
+    </div>
+
+  </section>
+
+  <!-- ================= 6. WRITING ================= -->
+  <section class="section" data-section="5">
+    <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+    <div class="section-sub">Build up from words to sentences to a paragraph.</div>
+
+    <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+    <p>Click the words in the correct order to build the sentence.</p>
+
+    <div class="card">
+      <p><strong>1.</strong> nest box / on / their / Fran and Fred / looked down from / the bridge</p>
+      <div class="scramble-words" id="scramble1"></div>
+      <div class="answer-line" id="answer1"></div>
+      <button class="check-btn" onclick="checkScramble(1,'Fran and Fred looked down from their nest box on the bridge')">Check</button>
+      <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+      <div class="feedback" id="scrambleFeedback1"></div>
+    </div>
+
+    <div class="card">
+      <p><strong>2.</strong> a fast dive / Fran made / to catch a bird / or stoop</p>
+      <div class="scramble-words" id="scramble2"></div>
+      <div class="answer-line" id="answer2"></div>
+      <button class="check-btn" onclick="checkScramble(2,'Fran made a fast dive or stoop to catch a bird')">Check</button>
+      <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+      <div class="feedback" id="scrambleFeedback2"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+    <div class="frame">
+      Fran and Fred live in a <input type="text" placeholder="nest box"> on a <input type="text" placeholder="bridge">.
+    </div>
+    <div class="frame">
+      They had three <input type="text" placeholder="hungry"> <input type="text" placeholder="chicks"> to feed.
+    </div>
+    <div class="frame">
+      People watched the falcons on a <input type="text" placeholder="webcam"> and from a <input type="text" placeholder="park">.
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+    <p>Write 3-4 sentences about City Falcons. Use at least <strong>three</strong> vocabulary words: <em>falcon, chick, prey, nest box, hungry, webcam, stoop</em>.</p>
+    <textarea class="paragraph" id="paragraphBox" placeholder="The story is about..." oninput="updateWordCount()"></textarea>
+    <div class="word-counter" id="wordCounter">0 words</div>
+    <div class="vocab-tracker" id="vocabTracker">
+      <span class="track-chip" data-word="falcon">falcon</span>
+      <span class="track-chip" data-word="chick">chick</span>
+      <span class="track-chip" data-word="prey">prey</span>
+      <span class="track-chip" data-word="nest box">nest box</span>
+      <span class="track-chip" data-word="hungry">hungry</span>
+      <span class="track-chip" data-word="webcam">webcam</span>
+      <span class="track-chip" data-word="stoop">stoop</span>
+    </div>
+
+  </section>
+
+  <!-- ================= 7. REVIEW ================= -->
+  <section class="section" data-section="6">
+    <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+    <div class="section-sub">Great job! Here's everything you learned today.</div>
+
+    <div class="review-grid">
+      <div class="review-card card">
+        <h3>📝 Today's Vocabulary</h3>
+        <div class="star-word">falcon ⭐</div>
+        <div class="star-word">chick</div>
+        <div class="star-word">prey</div>
+        <div class="star-word">nest box ⭐</div>
+        <div class="star-word">hungry</div>
+        <div class="star-word">webcam</div>
+        <div class="star-word">stoop ⭐</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>🧩 Sentence Patterns</h3>
+        <div class="pattern-line">What has these stripes? → A zebra has stripes.</div>
+        <div class="pattern-line">They watched the falcons on a webcam.</div>
+        <div class="pattern-line">Fran made a fast dive, or stoop, to catch a bird.</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>📐 Key Grammar Points</h3>
+        <div class="pattern-line">long / short</div>
+        <div class="pattern-line">big / small</div>
+        <div class="pattern-line">Past tense: looked, watched, made, flew, fed</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>💭 Things to Remember</h3>
+        <div class="pattern-line">Falcons are birds of prey — they hunt other animals.</div>
+        <div class="pattern-line">People build nest boxes to help wild animals stay safe in the city.</div>
+        <div class="pattern-line">A stoop is a very fast dive — falcons are the fastest animals on Earth!</div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;margin-top:20px;">
+      <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing City Falcons!</h2>
+      <p style="margin:8px 0 0;">You learned 7 new words and practiced reading, speaking, and writing. Well done! 做得好！</p>
+    </div>
+
+  </section>
+
+  <div class="footer-nav">
+    <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+  </div>
+
+</main>
+
+<script>
+  // ===== Navigation =====
+  const sections = document.querySelectorAll('.section');
+  const steps = document.querySelectorAll('.progress-step');
+  let current = 0;
+
+  function showSection(i){
+    sections.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+    steps.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+    document.getElementById('prevBtn').disabled = (i===0);
+    document.getElementById('nextBtn').textContent = (i===sections.length-1) ? 'Finish ✓' : 'Next →';
+    current = i;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function changeSection(dir){
+    let next = current + dir;
+    if(next < 0) next = 0;
+    if(next > sections.length-1){ return; }
+    showSection(next);
+  }
+  steps.forEach((step,idx)=>{
+    step.addEventListener('click', ()=> showSection(idx));
+  });
+  showSection(0);
+
+  // ===== Vocabulary cards =====
+  function toggleVocab(el){
+    el.parentElement.classList.toggle('open');
+  }
+
+  // ===== TF / MC instant feedback =====
+  function checkTF(btn, isCorrect){
+    const group = btn.parentElement;
+    const feedback = group.parentElement.querySelector('.feedback');
+    if(group.classList.contains('answered')) return;
+    group.classList.add('answered');
+    Array.from(group.children).forEach(b=> b.classList.add('disabled'));
+    if(isCorrect){
+      btn.classList.add('correct');
+      feedback.textContent = '✓ Correct! Well done!';
+      feedback.className = 'feedback correct-text';
+    } else {
+      btn.classList.add('wrong');
+      feedback.textContent = '✗ Not quite. Try the next one!';
+      feedback.className = 'feedback wrong-text';
+      // highlight correct one
+      Array.from(group.children).forEach(b=>{
+        if(b !== btn && b.getAttribute('onclick').includes('true')){
+          b.classList.add('correct');
+        }
+      });
+    }
+  }
+
+  // ===== Hints =====
+  function toggleHint(btn){
+    const box = btn.nextElementSibling;
+    box.classList.toggle('show');
+    btn.textContent = box.classList.contains('show') ? '🙈 Hide hint' : '💡 Show hint';
+  }
+
+  // ===== Match words and meanings =====
+  const matchData = [
+    {word:'falcon', meaning:'a fast bird that hunts other animals'},
+    {word:'chick', meaning:'a baby bird'},
+    {word:'prey', meaning:'an animal that is hunted for food'},
+    {word:'nest box', meaning:'a box people build for animals to live safely'},
+    {word:'hungry', meaning:'wanting or needing food'},
+    {word:'webcam', meaning:'a camera that shows live pictures online'},
+    {word:'stoop', meaning:'a fast dive a falcon makes to catch prey'}
+  ];
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function buildMatch(){
+    const grid = document.getElementById('matchGrid');
+    const words = matchData.map(d=>d.word);
+    const meanings = shuffle(matchData.map(d=>d.meaning));
+    let html = '<div>';
+    words.forEach(w=> html += `<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);
+    html += '</div><div>';
+    meanings.forEach(m=> html += `<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);
+    html += '</div>';
+    grid.innerHTML = html;
+  }
+
+  let selectedWord = null;
+  function selectMatch(el){
+    if(el.classList.contains('matched')) return;
+    if(el.dataset.type === 'word'){
+      if(selectedWord) selectedWord.classList.remove('selected');
+      selectedWord = el;
+      el.classList.add('selected');
+    } else {
+      if(!selectedWord) return;
+      const correct = matchData.find(d=>d.word===selectedWord.dataset.val).meaning;
+      if(correct === el.dataset.val){
+        selectedWord.classList.remove('selected');
+        selectedWord.classList.add('matched');
+        el.classList.add('matched');
+        selectedWord = null;
+      } else {
+        el.classList.add('shake');
+        setTimeout(()=> el.classList.remove('shake'), 400);
+      }
+    }
+  }
+  buildMatch();
+
+  // ===== Fill in the blanks (drag & click) =====
+  let fillSelected = null;
+  function dragWord(ev){
+    ev.dataTransfer.setData('text/plain', ev.target.dataset.word);
+    ev.dataTransfer.setData('chipid', Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));
+  }
+  function dropWord(ev, zone){
+    ev.preventDefault();
+    if(zone.classList.contains('filled')) return;
+    const word = ev.dataTransfer.getData('text/plain');
+    const chipIdx = ev.dataTransfer.getData('chipid');
+    placeWordInZone(zone, word, document.querySelectorAll('.word-chip')[chipIdx]);
+  }
+  function selectFillWord(chip){
+    if(chip.classList.contains('used')) return;
+    if(fillSelected) fillSelected.classList.remove('selected');
+    fillSelected = chip;
+    chip.classList.add('selected');
+  }
+  function clickFillBlank(zone){
+    if(zone.classList.contains('filled') || !fillSelected) return;
+    placeWordInZone(zone, fillSelected.dataset.word, fillSelected);
+    fillSelected.classList.remove('selected');
+    fillSelected = null;
+  }
+  function placeWordInZone(zone, word, chip){
+    zone.textContent = word;
+    zone.classList.add('filled');
+    if(chip) chip.classList.add('used');
+  }
+  function checkFillBlanks(){
+    const zones = document.querySelectorAll('.dz');
+    let correct = 0;
+    zones.forEach(z=>{
+      if(z.textContent.trim().toLowerCase() === z.dataset.answer.toLowerCase()){
+        z.classList.add('filled');
+        z.style.background = '#cdeede';
+        z.style.borderColor = '#3eb489';
+        correct++;
+      } else if(z.textContent.trim() !== '') {
+        z.style.background = '#fbe0db';
+        z.style.borderColor = '#e8895c';
+      }
+    });
+    const fb = document.getElementById('fillFeedback');
+    fb.textContent = `You got ${correct} / ${zones.length} correct!`;
+    fb.className = correct === zones.length ? 'feedback correct-text' : 'feedback wrong-text';
+  }
+  function resetFillBlanks(){
+    document.querySelectorAll('.dz').forEach(z=>{
+      z.textContent = '';
+      z.classList.remove('filled');
+      z.style.background = '';
+      z.style.borderColor = '';
+    });
+    document.querySelectorAll('.word-chip').forEach(c=> c.classList.remove('used','selected'));
+    document.getElementById('fillFeedback').textContent = '';
+    fillSelected = null;
+  }
+
+  // ===== Chinese <-> English matching =====
+  const cnEnData = [
+    {en:'falcon', cn:'猎鹰'},
+    {en:'chick', cn:'幼鸟'},
+    {en:'prey', cn:'猎物'},
+    {en:'nest box', cn:'巢箱'},
+    {en:'hungry', cn:'饥饿的'},
+    {en:'webcam', cn:'网络摄像头'},
+    {en:'stoop', cn:'俯冲'}
+  ];
+
+  function buildCnEn(containerId, leftKey, rightKey){
+    const grid = document.getElementById(containerId);
+    const lefts = cnEnData.map(d=>d[leftKey]);
+    const rights = shuffle(cnEnData.map(d=>d[rightKey]));
+    let html = '<div>';
+    lefts.forEach(l=> html += `<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);
+    html += '</div><div>';
+    rights.forEach(r=> html += `<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);
+    html += '</div>';
+    grid.innerHTML = html;
+  }
+
+  const cnEnSelected = {};
+  function selectCnEn(el, containerId){
+    if(el.classList.contains('matched')) return;
+    const isLeftToEn = containerId === 'cnToEnGrid';
+    const dataKey = isLeftToEn ? 'cn' : 'en';
+    const otherKey = isLeftToEn ? 'en' : 'cn';
+    if(el.dataset.type === 'left'){
+      if(cnEnSelected[containerId]) cnEnSelected[containerId].classList.remove('selected');
+      cnEnSelected[containerId] = el;
+      el.classList.add('selected');
+    } else {
+      const sel = cnEnSelected[containerId];
+      if(!sel) return;
+      const pair = cnEnData.find(d=> d[dataKey] === sel.dataset.val);
+      if(pair && pair[otherKey] === el.dataset.val){
+        sel.classList.remove('selected');
+        sel.classList.add('matched');
+        el.classList.add('matched');
+        cnEnSelected[containerId] = null;
+      } else {
+        el.classList.add('shake');
+        setTimeout(()=> el.classList.remove('shake'), 400);
+      }
+    }
+  }
+  buildCnEn('cnToEnGrid','cn','en');
+  buildCnEn('enToCnGrid','en','cn');
+
+  // ===== Sentence completion =====
+  function checkSC(id, answer){
+    const input = document.getElementById(id);
+    if(input.value.trim().toLowerCase() === answer.toLowerCase()){
+      input.classList.remove('wrong');
+      input.classList.add('correct');
+    } else {
+      input.classList.remove('correct');
+      input.classList.add('wrong');
+    }
+  }
+
+  // ===== Sentence scramble =====
+  const scrambleData = {
+    1: ['Fran and Fred', 'looked down from', 'their', 'nest box', 'on', 'the bridge'],
+    2: ['Fran made', 'a fast dive', 'or stoop', 'to catch a bird']
+  };
+  function buildScramble(num){
+    const container = document.getElementById('scramble'+num);
+    const words = shuffle(scrambleData[num]);
+    container.innerHTML = '';
+    words.forEach(w=>{
+      const chip = document.createElement('div');
+      chip.className = 'scramble-chip';
+      chip.textContent = w;
+      chip.onclick = ()=> moveChip(chip, num);
+      container.appendChild(chip);
+    });
+  }
+  function moveChip(chip, num){
+    const answerLine = document.getElementById('answer'+num);
+    if(chip.parentElement.id === 'scramble'+num){
+      answerLine.appendChild(chip);
+    } else {
+      document.getElementById('scramble'+num).appendChild(chip);
+    }
+  }
+  function checkScramble(num, correctSentence){
+    const answerLine = document.getElementById('answer'+num);
+    const built = Array.from(answerLine.children).map(c=>c.textContent).join(' ');
+    const fb = document.getElementById('scrambleFeedback'+num);
+    if(built.toLowerCase() === correctSentence.toLowerCase()){
+      fb.textContent = '✓ Correct! ' + correctSentence + '.';
+      fb.className = 'feedback correct-text';
+    } else {
+      fb.textContent = '✗ Not quite. Try rearranging the words!';
+      fb.className = 'feedback wrong-text';
+    }
+  }
+  function resetScramble(num){
+    buildScramble(num);
+    document.getElementById('answer'+num).innerHTML = '';
+    document.getElementById('scrambleFeedback'+num).textContent = '';
+  }
+  buildScramble(1);
+  buildScramble(2);
+
+  // ===== Paragraph writing tracker =====
+  function updateWordCount(){
+    const text = document.getElementById('paragraphBox').value;
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    document.getElementById('wordCounter').textContent = words.length + ' words';
+    const lower = text.toLowerCase();
+    document.querySelectorAll('.track-chip').forEach(chip=>{
+      const w = chip.dataset.word.toLowerCase();
+      chip.classList.toggle('used', lower.includes(w));
+    });
+  }
+</script>
+
+</body>
+</html>
