@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glassblowing — RAZ Vocabulary Workbook</title>
+<style>
+  :root{
+    --teal-dark:#0f3d3e;
+    --teal:#1f7a72;
+    --teal-light:#5fb3a8;
+    --blue:#2f6f9e;
+    --sand:#fbf6ec;
+    --card:#ffffff;
+    --accent:#ffb347;
+    --accent2:#e8895c;
+    --text:#1c2b2d;
+    --muted:#5b7674;
+    --radius:18px;
+    --shadow: 0 6px 20px rgba(15,61,62,0.10);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Trebuchet MS', 'Segoe UI', Verdana, sans-serif;
+    background: linear-gradient(160deg, var(--sand) 0%, #eef6f4 60%, #e6f3ef 100%);
+    color:var(--text);
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+
+  /* HEADER */
+  header{
+    background: linear-gradient(120deg, var(--teal-dark), var(--teal) 70%, var(--teal-light));
+    color:#fff;
+    padding:28px 20px 22px;
+    border-radius:0 0 32px 32px;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .studio-name{
+    font-size:0.78rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.85;
+    font-weight:700;
+  }
+  header h1{
+    margin:6px 0 4px;
+    font-size:2.1rem;
+    font-weight:800;
+    letter-spacing:0.5px;
+  }
+  header .subtitle{
+    font-size:0.95rem;
+    opacity:0.92;
+    font-weight:500;
+  }
+  .header-meta{
+    margin-top:14px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+  .meta-pill{
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:999px;
+    padding:6px 16px;
+    font-size:0.85rem;
+    font-weight:600;
+    backdrop-filter: blur(2px);
+  }
+  .meta-pill.level{ background: var(--accent); color:#3a2400; border:none; }
+
+  /* PROGRESS BAR */
+  .progress-wrap{
+    max-width:880px;
+    margin:18px auto 0;
+    padding:0 16px;
+  }
+  .progress-track{
+    display:flex;
+    background:var(--card);
+    border-radius:999px;
+    box-shadow:var(--shadow);
+    padding:6px;
+    gap:4px;
+    overflow-x:auto;
+  }
+  .progress-step{
+    flex:1;
+    min-width:74px;
+    text-align:center;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--muted);
+    padding:8px 4px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: all 0.25s ease;
+    white-space:nowrap;
+  }
+  .progress-step.active{
+    background: linear-gradient(120deg, var(--teal), var(--teal-light));
+    color:#fff;
+    box-shadow:0 3px 10px rgba(31,122,114,0.35);
+  }
+  .progress-step .check{
+    display:inline-block;
+    margin-left:4px;
+    color:var(--accent2);
+    font-weight:900;
+  }
+  .progress-step.active .check{ color:#fff; }
+
+  /* MAIN CONTAINER */
+  main{
+    max-width:880px;
+    margin:24px auto;
+    padding:0 16px;
+  }
+  .section{
+    display:none;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.active{ display:block; }
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .section-title .num{
+    background: var(--teal);
+    color:#fff;
+    border-radius:50%;
+    width:38px;height:38px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:1.05rem;
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .section-title h2{
+    margin:0;
+    font-size:1.5rem;
+    color:var(--teal-dark);
+    font-weight:800;
+  }
+  .section-sub{
+    color:var(--muted);
+    font-size:0.92rem;
+    margin:-12px 0 18px 50px;
+  }
+
+  /* CARD BASE */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+    overflow:hidden;
+    border:2px solid transparent;
+    transition: border-color 0.25s ease, transform 0.15s ease;
+  }
+  .vocab-card:hover{ transform: translateY(-2px); border-color: var(--teal-light); }
+  .vocab-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    cursor:pointer;
+    gap:12px;
+  }
+  .vocab-head-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .vocab-emoji{ font-size:1.8rem; }
+  .vocab-word{
+    font-size:1.25rem;
+    font-weight:800;
+    color:var(--teal-dark);
+  }
+  .vocab-pos{
+    font-size:0.8rem;
+    color:var(--muted);
+    font-weight:600;
+    margin-left:6px;
+  }
+  .vocab-cn{
+    font-size:1.1rem;
+    color:var(--blue);
+    font-weight:700;
+    background:#eaf4f2;
+    padding:4px 12px;
+    border-radius:999px;
+  }
+  .vocab-arrow{
+    font-size:1.2rem;
+    color:var(--teal);
+    transition: transform 0.3s ease;
+  }
+  .vocab-card.open .vocab-arrow{ transform: rotate(180deg); }
+  .vocab-body{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding:0 20px;
+    background:#f6fbfa;
+  }
+  .vocab-card.open .vocab-body{
+    max-height:300px;
+    padding:14px 20px 18px;
+  }
+  .vocab-body .label{
+    font-weight:800;
+    color:var(--teal);
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-top:8px;
+  }
+  .vocab-body .label:first-child{ margin-top:0; }
+  .vocab-example{
+    font-style:italic;
+    color:var(--text);
+    background:#fff;
+    border-left:4px solid var(--accent);
+    padding:8px 12px;
+    border-radius:8px;
+    margin-top:4px;
+  }
+
+  /* PHRASE CARDS */
+  .phrase-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+    overflow:hidden;
+    border:2px solid transparent;
+    transition: border-color 0.25s ease, transform 0.15s ease;
+  }
+  .phrase-card:hover{ transform: translateY(-2px); border-color: var(--accent); }
+  .phrase-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    cursor:pointer;
+    gap:12px;
+  }
+  .phrase-head-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .phrase-word{
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--teal-dark);
+  }
+  .phrase-card .vocab-body{ background:#fff8ee; }
+
+  /* STORY */
+  .story-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:0;
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .story-page{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .story-img-wrap{
+    width:100%;
+    background:#e6f3ef;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:60px;
+    padding:14px;
+    font-size:0.85rem;
+    color:var(--muted);
+    text-align:center;
+  }
+  .story-text{
+    padding:18px 22px;
+    font-size:1.15rem;
+  }
+  .story-page-num{
+    font-weight:800;
+    color:var(--teal-light);
+    font-size:0.8rem;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .story-text mark{
+    background: var(--accent);
+    color:var(--teal-dark);
+    border-radius:6px;
+    padding:0 4px;
+    font-weight:800;
+  }
+  .story-text mark.phrase{
+    background: #cdeede;
+    color:var(--teal-dark);
+  }
+
+  /* QUESTIONS */
+  .q-block{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 20px;
+    margin-bottom:14px;
+  }
+  .q-num{
+    font-weight:800;
+    color:var(--blue);
+    margin-right:6px;
+  }
+  .q-text{ font-weight:700; margin-bottom:10px; }
+  .tf-options, .mc-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .opt-btn{
+    border:2px solid var(--teal-light);
+    background:#fff;
+    color:var(--teal-dark);
+    border-radius:999px;
+    padding:8px 18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-size:0.95rem;
+  }
+  .opt-btn:hover{ background:#eaf4f2; }
+  .opt-btn.correct{ background:#cdeede; border-color:#3eb489; color:#0f3d3e; }
+  .opt-btn.wrong{ background:#fbe0db; border-color:#e8895c; color:#7a2e1c; }
+  .opt-btn.disabled{ pointer-events:none; opacity:0.85; }
+  .feedback{
+    margin-top:8px;
+    font-weight:700;
+    font-size:0.92rem;
+    min-height:20px;
+  }
+  .feedback.correct-text{ color:#1f7a4f; }
+  .feedback.wrong-text{ color:#c0492f; }
+  .short-answer textarea{
+    width:100%;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:1rem;
+    resize:vertical;
+    min-height:60px;
+  }
+  .short-answer .hint-btn{
+    margin-top:8px;
+    background:none;
+    border:none;
+    color:var(--blue);
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:underline;
+    font-size:0.88rem;
+    padding:0;
+  }
+  .hint-box{
+    margin-top:6px;
+    background:#eaf4f2;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:0.9rem;
+    color:var(--teal-dark);
+    display:none;
+  }
+  .hint-box.show{ display:block; }
+
+  /* PRACTICE: match, dnd, fill blank */
+  .practice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  @media (max-width:560px){ .practice-grid{ grid-template-columns:1fr; } }
+  .match-item{
+    background:#fff;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:700;
+    text-align:center;
+    transition:all 0.2s;
+  }
+  .match-item.selected{ background:var(--teal-light); color:#fff; }
+  .match-item.matched{ background:#cdeede; border-color:#3eb489; color:#0f3d3e; pointer-events:none; }
+  .match-item.shake{ animation: shake 0.4s; border-color:#e8895c; }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
+  .blank-input{
+    border:none;
+    border-bottom:3px dotted var(--teal);
+    background:#eaf4f2;
+    font-weight:800;
+    font-size:1rem;
+    text-align:center;
+    width:130px;
+    padding:4px 6px;
+    border-radius:6px;
+    font-family:inherit;
+  }
+  .blank-input.correct{ background:#cdeede; border-bottom-color:#3eb489; }
+  .blank-input.wrong{ background:#fbe0db; border-bottom-color:#e8895c; }
+
+  .word-bank{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+  .word-chip{
+    background: var(--teal);
+    color:#fff;
+    border-radius:999px;
+    padding:6px 16px;
+    font-weight:700;
+    cursor:grab;
+    user-select:none;
+    font-size:0.92rem;
+  }
+  .word-chip.used{ opacity:0.35; cursor:default; }
+  .dz{
+    border:2px dashed var(--teal-light);
+    border-radius:10px;
+    padding:4px 10px;
+    min-width:110px;
+    display:inline-block;
+    text-align:center;
+    min-height:32px;
+    vertical-align:middle;
+    font-weight:800;
+    color:var(--teal-dark);
+    background:#f6fbfa;
+  }
+  .dz.filled{ background:#cdeede; border-style:solid; border-color:#3eb489; }
+
+  .check-btn, .reset-btn, .nav-btn{
+    background: linear-gradient(120deg, var(--teal), var(--teal-light));
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:10px 26px;
+    font-weight:800;
+    font-size:0.95rem;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(31,122,114,0.3);
+    transition:transform 0.15s ease;
+  }
+  .check-btn:hover, .reset-btn:hover, .nav-btn:hover{ transform:translateY(-2px); }
+  .reset-btn{ background: linear-gradient(120deg, #c0c8c6, #9bb0ad); box-shadow:none; }
+
+  /* SPEAKING */
+  .speak-level{
+    margin-bottom:18px;
+  }
+  .speak-level h3{
+    color:var(--blue);
+    font-size:1.05rem;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .speak-q{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:12px 18px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .speak-q .mic{ font-size:1.3rem; }
+
+  /* WRITING */
+  .scramble-words{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:10px 0;
+  }
+  .scramble-chip{
+    background:#fff;
+    border:2px solid var(--teal);
+    color:var(--teal-dark);
+    border-radius:10px;
+    padding:8px 14px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .scramble-chip.placed{ opacity:0.3; pointer-events:none; }
+  .answer-line{
+    min-height:46px;
+    border:2px dashed var(--teal-light);
+    border-radius:10px;
+    background:#f6fbfa;
+    padding:8px 12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin:8px 0;
+  }
+  .answer-line .scramble-chip{ cursor:pointer; border-color:#3eb489; background:#cdeede; }
+  .frame{
+    background:#f6fbfa;
+    border-radius:12px;
+    padding:14px;
+    margin:10px 0;
+  }
+  .frame input[type=text]{
+    border:none;
+    border-bottom:2px solid var(--teal);
+    background:transparent;
+    font-weight:700;
+    font-family:inherit;
+    font-size:1rem;
+    padding:2px 6px;
+    width:140px;
+  }
+  textarea.paragraph{
+    width:100%;
+    min-height:120px;
+    border:2px solid var(--teal-light);
+    border-radius:12px;
+    padding:12px;
+    font-family:inherit;
+    font-size:1rem;
+    resize:vertical;
+  }
+  .word-counter{
+    font-size:0.85rem;
+    color:var(--muted);
+    margin-top:6px;
+  }
+  .vocab-tracker{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+  }
+  .track-chip{
+    border:2px solid var(--teal-light);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .track-chip.used{ background:var(--accent); border-color:var(--accent); color:#3a2400; }
+
+  /* REVIEW */
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  @media (max-width:560px){ .review-grid{ grid-template-columns:1fr; } }
+  .review-card h3{
+    margin:0 0 8px;
+    color:var(--teal-dark);
+    font-size:1.05rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .star-word{
+    display:inline-block;
+    background: var(--accent);
+    color:#3a2400;
+    border-radius:8px;
+    padding:4px 10px;
+    font-weight:800;
+    margin:4px 4px 0 0;
+  }
+  .pattern-line{
+    background:#eaf4f2;
+    border-radius:10px;
+    padding:8px 12px;
+    margin:6px 0;
+    font-weight:600;
+  }
+
+  /* FOOTER NAV */
+  .footer-nav{
+    display:flex;
+    justify-content:space-between;
+    margin-top:24px;
+    gap:10px;
+  }
+  .nav-btn.secondary{
+    background:#fff;
+    color:var(--teal-dark);
+    border:2px solid var(--teal-light);
+    box-shadow:none;
+  }
+  .nav-btn:disabled{
+    opacity:0.4;
+    pointer-events:none;
+  }
+
+  ::selection{ background:var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🔥 Glassblowing</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level F (RAZ)</div>
+    <div class="meta-pill">Reader: Glassblowing</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= 1. VOCABULARY ================= -->
+  <section class="section active" data-section="0">
+    <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+    <div class="section-sub">Tap each card to see the Chinese meaning, a simple definition, and an example sentence. 点击单词卡查看意思！</div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🧑‍🎨</span>
+          <span><span class="vocab-word">glassblower</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">吹玻璃师</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a person who makes things out of hot, melted glass</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I am a glassblower. Watch me make a beautiful glass bowl.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🔥</span>
+          <span><span class="vocab-word">oven</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">炉子</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a very hot place that heats things up</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">The oven that holds the glass is very, very hot.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🍯</span>
+          <span><span class="vocab-word">runny</span><span class="vocab-pos">(adj.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">流动的</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>thin and able to flow, like a liquid</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">The hot glass is runny, like honey.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🥖</span>
+          <span><span class="vocab-word">pipe</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">管子</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a long, hollow tube used to blow glass</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I dip my long pipe into the hot glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">💧</span>
+          <span><span class="vocab-word">dip</span><span class="vocab-pos">(v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">蘸</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to put something into a liquid for a short time</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I dip my long pipe into the hot glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🔄</span>
+          <span><span class="vocab-word">roll</span><span class="vocab-pos">(v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">滚动</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to turn something over and over while it moves</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I roll the pipe on the table to smooth and cool the glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">✨</span>
+          <span><span class="vocab-word">smooth</span><span class="vocab-pos">(v./adj.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">把…变圆滑</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to make something even, with no bumps</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I roll the pipe on the table to smooth and cool the glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🥣</span>
+          <span><span class="vocab-word">bowl</span><span class="vocab-pos">(n.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">碗</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>a round dish, often used for food</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">My beautiful bowl is done.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🟢</span>
+          <span><span class="vocab-word">gooey</span><span class="vocab-pos">(adj.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">胶状的</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>soft, thick, and sticky</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I blow a bubble in the gooey glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🔺</span>
+          <span><span class="vocab-word">shape</span><span class="vocab-pos">(v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">塑形</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to give something a form by working on it</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">My tools help me to shape the glass.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🌀</span>
+          <span><span class="vocab-word">spin</span><span class="vocab-pos">(v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">旋转</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to turn around and around quickly</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I spin the glass as fast as I can.</div>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-head" onclick="toggleVocab(this)">
+        <div class="vocab-head-left">
+          <span class="vocab-emoji">🌡️</span>
+          <span><span class="vocab-word">heat</span><span class="vocab-pos">(v.)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">加热</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to make something hot</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I heat the glass again to make it smooth.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 1.5 PHRASES (shown as part of vocab) ================= -->
+  <!-- We keep phrases inside section 0 as a second block -->
+
+  <!-- ================= 2. STORY ================= -->
+  <section class="section" data-section="1">
+    <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+    <div class="section-sub">Read the story below. Target words are <mark>highlighted</mark> and new phrases are <mark class="phrase">highlighted in green</mark>. Read it more than once! 多读几次！</div>
+
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🧑‍🎨 A man stands in his glass studio surrounded by colorful glass pieces</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 3</div>
+          I am a <mark>glassblower</mark>. Watch me make a beautiful glass <mark>bowl</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🔥 A hand reaches into a glowing orange oven holding hot glass</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 4</div>
+          The <mark>oven</mark> that holds the glass is very, very hot. The hot glass is <mark>runny</mark>, like honey.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🥖 A man rolls a long pipe with glowing orange glass on a metal table</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 5</div>
+          I <mark>dip</mark> my long <mark>pipe</mark> into the hot glass. I <mark>roll</mark> the pipe on the table to <mark>smooth</mark> and cool the glass.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">💨 A man blows into a long pipe with a glowing orange bubble of glass</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 6</div>
+          I <mark class="phrase">blow into</mark> the pipe. I blow a bubble in the <mark>gooey</mark> glass. I <mark class="phrase">try not to</mark> blow too hard.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🎨 A glowing piece of red glass shaped like a bowl on the end of a pipe</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 7</div>
+          I add other colors to make the <mark>bowl</mark> even more beautiful.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🔥 A man dips a glowing pipe into a bright orange furnace</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 8</div>
+          I <mark>dip</mark> my <mark>pipe</mark> into the <mark>oven</mark> again. The oven makes the colors flow.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🛠️ A glassblower uses tools to shape a glowing ball of glass</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 9</div>
+          My tools help me to <mark>shape</mark> the glass.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🌀 A glowing orange ball of glass spinning near a furnace</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 10</div>
+          I <mark>spin</mark> the glass <mark class="phrase">as fast as I can</mark>. The <mark class="phrase">bowl gets wider and wider</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🔧 A glassblower uses a tool to break off the pipe from a glowing bowl shape</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 11</div>
+          I break off the pipe. I <mark>heat</mark> the glass again to make it <mark>smooth</mark>.
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-page">
+        <div class="story-img-wrap">🥣 A finished amber glass bowl with a colorful pattern, cooling on a table</div>
+        <div class="story-text">
+          <div class="story-page-num">Page 12</div>
+          The glass cools slowly. My beautiful <mark>bowl</mark> is done.
+        </div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">🆕 New Phrases 新学的词组</h3>
+
+    <div class="phrase-card">
+      <div class="phrase-head" onclick="toggleVocab(this)">
+        <div class="phrase-head-left">
+          <span class="vocab-emoji">💨</span>
+          <span class="phrase-word">blow into</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">吹进去</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to push air into something with your mouth</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I blow into the pipe.</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-head" onclick="toggleVocab(this)">
+        <div class="phrase-head-left">
+          <span class="vocab-emoji">📏</span>
+          <span class="phrase-word">get wider and wider</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">变得越来越宽</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to slowly become bigger across, more and more</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">The bowl gets wider and wider.</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-head" onclick="toggleVocab(this)">
+        <div class="phrase-head-left">
+          <span class="vocab-emoji">🙂</span>
+          <span class="phrase-word">try to do sth</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">试着做某事</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to make an effort to do something</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I try to make the bowl smooth.</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-head" onclick="toggleVocab(this)">
+        <div class="phrase-head-left">
+          <span class="vocab-emoji">🙅</span>
+          <span class="phrase-word">try not to do sth</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">试着不做某事</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>to make an effort to avoid doing something</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I try not to blow too hard.</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-head" onclick="toggleVocab(this)">
+        <div class="phrase-head-left">
+          <span class="vocab-emoji">⚡</span>
+          <span class="phrase-word">as fast as one can</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="vocab-cn">尽快</span>
+          <span class="vocab-arrow">▾</span>
+        </div>
+      </div>
+      <div class="vocab-body">
+        <div class="label">Simple meaning</div>
+        <div>doing something at the fastest speed possible for you</div>
+        <div class="label">Example</div>
+        <div class="vocab-example">I spin the glass as fast as I can.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 3. READING COMPREHENSION ================= -->
+  <section class="section" data-section="2">
+    <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+    <div class="section-sub">Answer the questions about the story.</div>
+
+    <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1.</span>A glassblower makes things out of cold glass.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2.</span>The oven is very, very hot.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3.</span>The glassblower rolls the pipe to smooth and cool the glass.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4.</span>The glassblower tries to blow as hard as possible.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5.</span>The glass cools slowly at the end.</div>
+      <div class="tf-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">True</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1.</span>What does "runny" mean?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">very cold</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">thin and able to flow, like honey</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">very hard</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2.</span>What does the glassblower use to blow the glass?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">a spoon</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">a pipe</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">a bowl</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3.</span>What helps the glassblower shape the glass?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">the table</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">tools</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">a webcam</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4.</span>What happens to the bowl when the glassblower spins the glass?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">It gets smaller</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">It gets wider and wider</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">It breaks</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5.</span>Why does the glassblower heat the glass again at the end?</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">To add more colors</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">To make it smooth</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">To make it cold</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">1.</span>What is the glass like when it is hot?</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: The hot glass is runny, like honey.</div>
+    </div>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">2.</span>Why does the glassblower try not to blow too hard?</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: The glass is gooey, so blowing too hard could break the bubble or make the shape wrong.</div>
+    </div>
+
+    <div class="q-block short-answer">
+      <div class="q-text"><span class="q-num">3.</span>What are the steps the glassblower follows to make the bowl? Name three.</div>
+      <textarea placeholder="Type your answer here..."></textarea>
+      <br>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button>
+      <div class="hint-box">Hint: dip the pipe in the oven, blow a bubble, add colors, shape the glass, spin it, heat it again to make it smooth.</div>
+    </div>
+
+  </section>
+
+  <!-- ================= 4. PRACTICE ================= -->
+  <section class="section" data-section="3">
+    <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+    <div class="section-sub">Practice the words and phrases in different ways. Get instant feedback!</div>
+
+    <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+    <p>Click a word, then click its matching meaning.</p>
+    <div class="practice-grid" id="matchGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+    <p>Drag a word from the word bank into the blank. (Or click the word, then click the blank.)</p>
+    <div class="card">
+      <p>1. The hot glass is <span class="dz" data-answer="runny" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>, like honey.</p>
+      <p>2. I <span class="dz" data-answer="dip" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> my long pipe into the hot glass.</p>
+      <p>3. I blow a bubble in the <span class="dz" data-answer="gooey" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> glass.</p>
+      <p>4. My tools help me to <span class="dz" data-answer="shape" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> the glass.</p>
+      <p>5. I <span class="dz" data-answer="spin" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> the glass as fast as I can.</p>
+      <div class="word-bank" id="wordBank">
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="runny">runny</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="dip">dip</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="gooey">gooey</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="shape">shape</div>
+        <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="spin">spin</div>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="check-btn" onclick="checkFillBlanks()">Check Answers</button>
+        <button class="reset-btn" onclick="resetFillBlanks()">Reset</button>
+      </div>
+      <div class="feedback" id="fillFeedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+    <div class="q-block">
+      <div class="q-text">1. A round dish used for food is a ___.</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,false)">pipe</button>
+        <button class="opt-btn" onclick="checkTF(this,true)">bowl</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">oven</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. To make something hot is to ___ it.</div>
+      <div class="mc-options">
+        <button class="opt-btn" onclick="checkTF(this,true)">heat</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">roll</button>
+        <button class="opt-btn" onclick="checkTF(this,false)">spin</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+    <div class="practice-grid" id="cnToEnGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+    <div class="practice-grid" id="enToCnGrid"></div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+    <div class="q-block">
+      <div class="q-text">1. I ______ into the pipe. I blow a bubble in the gooey glass.</div>
+      <input type="text" class="blank-input" id="sc1" placeholder="phrase">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','blow')">Check</button>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. I spin the glass as fast ______ I can.</div>
+      <input type="text" class="blank-input" id="sc2" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','as')">Check</button>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. The bowl gets ______ and wider.</div>
+      <input type="text" class="blank-input" id="sc3" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','wider')">Check</button>
+    </div>
+    <div class="q-block">
+      <div class="q-text">4. I try ______ to blow too hard.</div>
+      <input type="text" class="blank-input" id="sc4" placeholder="word">
+      <button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc4','not')">Check</button>
+    </div>
+
+  </section>
+
+  <!-- ================= 5. SPEAKING ================= -->
+  <section class="section" data-section="4">
+    <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+    <div class="section-sub">Practice speaking out loud. Use the pictures and the story to help you.</div>
+
+    <div class="speak-level">
+      <h3>🟢 Level 1 — Simple Answers</h3>
+      <div class="speak-q"><span class="mic">🎤</span>What does a glassblower make?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Is the oven hot or cold?</div>
+      <div class="speak-q"><span class="mic">🎤</span>What does the glassblower use to blow the glass?</div>
+    </div>
+
+    <div class="speak-level">
+      <h3>🟡 Level 2 — Short Sentence Answers</h3>
+      <div class="speak-q"><span class="mic">🎤</span>What is the hot glass like? Use the word "runny".</div>
+      <div class="speak-q"><span class="mic">🎤</span>What does the glassblower do with the pipe? Use "dip" and "roll".</div>
+      <div class="speak-q"><span class="mic">🎤</span>How does the glassblower spin the glass? Use "as fast as I can".</div>
+    </div>
+
+    <div class="speak-level">
+      <h3>🔵 Level 3 — Open-Ended Questions</h3>
+      <div class="speak-q"><span class="mic">🎤</span>Why do you think the glassblower has to work quickly with hot glass?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Would you like to try glassblowing? Why or why not?</div>
+      <div class="speak-q"><span class="mic">🎤</span>Describe the steps to make a glass bowl in your own words.</div>
+    </div>
+
+    <div class="card">
+      <strong>Useful phrases:</strong> <em>First, ... | Then, ... | After that, ... | I think... because... | In my opinion...</em>
+    </div>
+
+  </section>
+
+  <!-- ================= 6. WRITING ================= -->
+  <section class="section" data-section="5">
+    <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+    <div class="section-sub">Build up from words to sentences to a paragraph.</div>
+
+    <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+    <p>Click the words in the correct order to build the sentence.</p>
+
+    <div class="card">
+      <p><strong>1.</strong> the hot glass / is / The / runny, like honey</p>
+      <div class="scramble-words" id="scramble1"></div>
+      <div class="answer-line" id="answer1"></div>
+      <button class="check-btn" onclick="checkScramble(1,'The hot glass is runny, like honey')">Check</button>
+      <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+      <div class="feedback" id="scrambleFeedback1"></div>
+    </div>
+
+    <div class="card">
+      <p><strong>2.</strong> the glass / as fast as I can / I spin</p>
+      <div class="scramble-words" id="scramble2"></div>
+      <div class="answer-line" id="answer2"></div>
+      <button class="check-btn" onclick="checkScramble(2,'I spin the glass as fast as I can')">Check</button>
+      <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+      <div class="feedback" id="scrambleFeedback2"></div>
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+    <div class="frame">
+      I <input type="text" placeholder="dip"> my long <input type="text" placeholder="pipe"> into the hot glass.
+    </div>
+    <div class="frame">
+      I <input type="text" placeholder="blow"> into the pipe and make a <input type="text" placeholder="bubble">.
+    </div>
+    <div class="frame">
+      I <input type="text" placeholder="spin"> the glass <input type="text" placeholder="as fast as I can">.
+    </div>
+
+    <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+    <p>Write 3-4 sentences about how a glassblower makes a bowl. Use at least <strong>three</strong> vocabulary words or phrases: <em>glassblower, oven, pipe, dip, roll, smooth, bowl, gooey, shape, spin, heat, blow into, get wider and wider, try not to, as fast as I can</em>.</p>
+    <textarea class="paragraph" id="paragraphBox" placeholder="A glassblower makes a bowl by..." oninput="updateWordCount()"></textarea>
+    <div class="word-counter" id="wordCounter">0 words</div>
+    <div class="vocab-tracker" id="vocabTracker">
+      <span class="track-chip" data-word="glassblower">glassblower</span>
+      <span class="track-chip" data-word="oven">oven</span>
+      <span class="track-chip" data-word="pipe">pipe</span>
+      <span class="track-chip" data-word="dip">dip</span>
+      <span class="track-chip" data-word="roll">roll</span>
+      <span class="track-chip" data-word="smooth">smooth</span>
+      <span class="track-chip" data-word="bowl">bowl</span>
+      <span class="track-chip" data-word="gooey">gooey</span>
+      <span class="track-chip" data-word="shape">shape</span>
+      <span class="track-chip" data-word="spin">spin</span>
+      <span class="track-chip" data-word="heat">heat</span>
+      <span class="track-chip" data-word="blow into">blow into</span>
+      <span class="track-chip" data-word="wider and wider">wider and wider</span>
+      <span class="track-chip" data-word="try not to">try not to</span>
+      <span class="track-chip" data-word="as fast as">as fast as</span>
+    </div>
+
+  </section>
+
+  <!-- ================= 7. REVIEW ================= -->
+  <section class="section" data-section="6">
+    <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+    <div class="section-sub">Great job! Here's everything you learned today.</div>
+
+    <div class="review-grid">
+      <div class="review-card card">
+        <h3>📝 Today's Vocabulary</h3>
+        <div class="star-word">glassblower ⭐</div>
+        <div class="star-word">oven</div>
+        <div class="star-word">runny ⭐</div>
+        <div class="star-word">pipe</div>
+        <div class="star-word">dip</div>
+        <div class="star-word">roll</div>
+        <div class="star-word">smooth</div>
+        <div class="star-word">bowl</div>
+        <div class="star-word">gooey</div>
+        <div class="star-word">shape ⭐</div>
+        <div class="star-word">spin</div>
+        <div class="star-word">heat</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>🧩 New Phrases</h3>
+        <div class="pattern-line">blow into 吹进去</div>
+        <div class="pattern-line">get wider and wider 变得越来越宽</div>
+        <div class="pattern-line">try to do sth 试着做某事</div>
+        <div class="pattern-line">try not to do sth 试着不做某事</div>
+        <div class="pattern-line">as fast as one can 尽快</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>📐 Key Grammar Points</h3>
+        <div class="pattern-line">First-person narration: I am... I dip... I blow...</div>
+        <div class="pattern-line">Sequence words: First, then, after that, finally</div>
+        <div class="pattern-line">try (not) to + verb</div>
+      </div>
+
+      <div class="review-card card">
+        <h3>💭 Things to Remember</h3>
+        <div class="pattern-line">A glassblower shapes hot, runny glass using a pipe and an oven.</div>
+        <div class="pattern-line">The glass must be heated again and again to stay soft enough to shape.</div>
+        <div class="pattern-line">Spinning the glass makes the bowl get wider and wider.</div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;margin-top:20px;">
+      <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing Glassblowing!</h2>
+      <p style="margin:8px 0 0;">You learned new words and phrases, and practiced reading, speaking, and writing. Well done! 做得好！</p>
+    </div>
+
+  </section>
+
+  <div class="footer-nav">
+    <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+  </div>
+
+</main>
+
+<script>
+  // ===== Navigation =====
+  const sections = document.querySelectorAll('.section');
+  const steps = document.querySelectorAll('.progress-step');
+  let current = 0;
+
+  function showSection(i){
+    sections.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+    steps.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+    document.getElementById('prevBtn').disabled = (i===0);
+    document.getElementById('nextBtn').textContent = (i===sections.length-1) ? 'Finish ✓' : 'Next →';
+    current = i;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function changeSection(dir){
+    let next = current + dir;
+    if(next < 0) next = 0;
+    if(next > sections.length-1){ return; }
+    showSection(next);
+  }
+  steps.forEach((step,idx)=>{
+    step.addEventListener('click', ()=> showSection(idx));
+  });
+  showSection(0);
+
+  // ===== Vocabulary / phrase cards =====
+  function toggleVocab(el){
+    el.parentElement.classList.toggle('open');
+  }
+
+  // ===== TF / MC instant feedback =====
+  function checkTF(btn, isCorrect){
+    const group = btn.parentElement;
+    const feedback = group.parentElement.querySelector('.feedback');
+    if(group.classList.contains('answered')) return;
+    group.classList.add('answered');
+    Array.from(group.children).forEach(b=> b.classList.add('disabled'));
+    if(isCorrect){
+      btn.classList.add('correct');
+      feedback.textContent = '✓ Correct! Well done!';
+      feedback.className = 'feedback correct-text';
+    } else {
+      btn.classList.add('wrong');
+      feedback.textContent = '✗ Not quite. Try the next one!';
+      feedback.className = 'feedback wrong-text';
+      // highlight correct one
+      Array.from(group.children).forEach(b=>{
+        if(b !== btn && b.getAttribute('onclick').includes('true')){
+          b.classList.add('correct');
+        }
+      });
+    }
+  }
+
+  // ===== Hints =====
+  function toggleHint(btn){
+    const box = btn.nextElementSibling;
+    box.classList.toggle('show');
+    btn.textContent = box.classList.contains('show') ? '🙈 Hide hint' : '💡 Show hint';
+  }
+
+  // ===== Match words and meanings =====
+  const matchData = [
+    {word:'glassblower', meaning:'a person who makes things out of hot glass'},
+    {word:'oven', meaning:'a very hot place that heats things up'},
+    {word:'runny', meaning:'thin and able to flow, like a liquid'},
+    {word:'pipe', meaning:'a long, hollow tube used to blow glass'},
+    {word:'dip', meaning:'to put something into a liquid for a short time'},
+    {word:'roll', meaning:'to turn something over and over while it moves'},
+    {word:'smooth', meaning:'to make something even, with no bumps'},
+    {word:'bowl', meaning:'a round dish, often used for food'},
+    {word:'gooey', meaning:'soft, thick, and sticky'},
+    {word:'shape', meaning:'to give something a form by working on it'},
+    {word:'spin', meaning:'to turn around and around quickly'},
+    {word:'heat', meaning:'to make something hot'}
+  ];
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function buildMatch(){
+    const grid = document.getElementById('matchGrid');
+    const words = matchData.map(d=>d.word);
+    const meanings = shuffle(matchData.map(d=>d.meaning));
+    let html = '<div>';
+    words.forEach(w=> html += `<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);
+    html += '</div><div>';
+    meanings.forEach(m=> html += `<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);
+    html += '</div>';
+    grid.innerHTML = html;
+  }
+
+  let selectedWord = null;
+  function selectMatch(el){
+    if(el.classList.contains('matched')) return;
+    if(el.dataset.type === 'word'){
+      if(selectedWord) selectedWord.classList.remove('selected');
+      selectedWord = el;
+      el.classList.add('selected');
+    } else {
+      if(!selectedWord) return;
+      const correct = matchData.find(d=>d.word===selectedWord.dataset.val).meaning;
+      if(correct === el.dataset.val){
+        selectedWord.classList.remove('selected');
+        selectedWord.classList.add('matched');
+        el.classList.add('matched');
+        selectedWord = null;
+      } else {
+        el.classList.add('shake');
+        setTimeout(()=> el.classList.remove('shake'), 400);
+      }
+    }
+  }
+  buildMatch();
+
+  // ===== Fill in the blanks (drag & click) =====
+  let fillSelected = null;
+  function dragWord(ev){
+    ev.dataTransfer.setData('text/plain', ev.target.dataset.word);
+    ev.dataTransfer.setData('chipid', Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));
+  }
+  function dropWord(ev, zone){
+    ev.preventDefault();
+    if(zone.classList.contains('filled')) return;
+    const word = ev.dataTransfer.getData('text/plain');
+    const chipIdx = ev.dataTransfer.getData('chipid');
+    placeWordInZone(zone, word, document.querySelectorAll('.word-chip')[chipIdx]);
+  }
+  function selectFillWord(chip){
+    if(chip.classList.contains('used')) return;
+    if(fillSelected) fillSelected.classList.remove('selected');
+    fillSelected = chip;
+    chip.classList.add('selected');
+  }
+  function clickFillBlank(zone){
+    if(zone.classList.contains('filled') || !fillSelected) return;
+    placeWordInZone(zone, fillSelected.dataset.word, fillSelected);
+    fillSelected.classList.remove('selected');
+    fillSelected = null;
+  }
+  function placeWordInZone(zone, word, chip){
+    zone.textContent = word;
+    zone.classList.add('filled');
+    if(chip) chip.classList.add('used');
+  }
+  function checkFillBlanks(){
+    const zones = document.querySelectorAll('.dz');
+    let correct = 0;
+    zones.forEach(z=>{
+      if(z.textContent.trim().toLowerCase() === z.dataset.answer.toLowerCase()){
+        z.classList.add('filled');
+        z.style.background = '#cdeede';
+        z.style.borderColor = '#3eb489';
+        correct++;
+      } else if(z.textContent.trim() !== '') {
+        z.style.background = '#fbe0db';
+        z.style.borderColor = '#e8895c';
+      }
+    });
+    const fb = document.getElementById('fillFeedback');
+    fb.textContent = `You got ${correct} / ${zones.length} correct!`;
+    fb.className = correct === zones.length ? 'feedback correct-text' : 'feedback wrong-text';
+  }
+  function resetFillBlanks(){
+    document.querySelectorAll('.dz').forEach(z=>{
+      z.textContent = '';
+      z.classList.remove('filled');
+      z.style.background = '';
+      z.style.borderColor = '';
+    });
+    document.querySelectorAll('.word-chip').forEach(c=> c.classList.remove('used','selected'));
+    document.getElementById('fillFeedback').textContent = '';
+    fillSelected = null;
+  }
+
+  // ===== Chinese <-> English matching =====
+  const cnEnData = [
+    {en:'glassblower', cn:'吹玻璃师'},
+    {en:'oven', cn:'炉子'},
+    {en:'runny', cn:'流动的'},
+    {en:'pipe', cn:'管子'},
+    {en:'dip', cn:'蘸'},
+    {en:'roll', cn:'滚动'},
+    {en:'smooth', cn:'把…变圆滑'},
+    {en:'bowl', cn:'碗'},
+    {en:'gooey', cn:'胶状的'},
+    {en:'shape', cn:'塑形'},
+    {en:'spin', cn:'旋转'},
+    {en:'heat', cn:'加热'}
+  ];
+
+  function buildCnEn(containerId, leftKey, rightKey){
+    const grid = document.getElementById(containerId);
+    const lefts = cnEnData.map(d=>d[leftKey]);
+    const rights = shuffle(cnEnData.map(d=>d[rightKey]));
+    let html = '<div>';
+    lefts.forEach(l=> html += `<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);
+    html += '</div><div>';
+    rights.forEach(r=> html += `<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);
+    html += '</div>';
+    grid.innerHTML = html;
+  }
+
+  const cnEnSelected = {};
+  function selectCnEn(el, containerId){
+    if(el.classList.contains('matched')) return;
+    const isLeftToEn = containerId === 'cnToEnGrid';
+    const dataKey = isLeftToEn ? 'cn' : 'en';
+    const otherKey = isLeftToEn ? 'en' : 'cn';
+    if(el.dataset.type === 'left'){
+      if(cnEnSelected[containerId]) cnEnSelected[containerId].classList.remove('selected');
+      cnEnSelected[containerId] = el;
+      el.classList.add('selected');
+    } else {
+      const sel = cnEnSelected[containerId];
+      if(!sel) return;
+      const pair = cnEnData.find(d=> d[dataKey] === sel.dataset.val);
+      if(pair && pair[otherKey] === el.dataset.val){
+        sel.classList.remove('selected');
+        sel.classList.add('matched');
+        el.classList.add('matched');
+        cnEnSelected[containerId] = null;
+      } else {
+        el.classList.add('shake');
+        setTimeout(()=> el.classList.remove('shake'), 400);
+      }
+    }
+  }
+  buildCnEn('cnToEnGrid','cn','en');
+  buildCnEn('enToCnGrid','en','cn');
+
+  // ===== Sentence completion =====
+  function checkSC(id, answer){
+    const input = document.getElementById(id);
+    if(input.value.trim().toLowerCase() === answer.toLowerCase()){
+      input.classList.remove('wrong');
+      input.classList.add('correct');
+    } else {
+      input.classList.remove('correct');
+      input.classList.add('wrong');
+    }
+  }
+
+  // ===== Sentence scramble =====
+  const scrambleData = {
+    1: ['The hot glass', 'is', 'runny, like honey'],
+    2: ['I spin', 'the glass', 'as fast as I can']
+  };
+  function buildScramble(num){
+    const container = document.getElementById('scramble'+num);
+    const words = shuffle(scrambleData[num]);
+    container.innerHTML = '';
+    words.forEach(w=>{
+      const chip = document.createElement('div');
+      chip.className = 'scramble-chip';
+      chip.textContent = w;
+      chip.onclick = ()=> moveChip(chip, num);
+      container.appendChild(chip);
+    });
+  }
+  function moveChip(chip, num){
+    const answerLine = document.getElementById('answer'+num);
+    if(chip.parentElement.id === 'scramble'+num){
+      answerLine.appendChild(chip);
+    } else {
+      document.getElementById('scramble'+num).appendChild(chip);
+    }
+  }
+  function checkScramble(num, correctSentence){
+    const answerLine = document.getElementById('answer'+num);
+    const built = Array.from(answerLine.children).map(c=>c.textContent).join(' ');
+    const fb = document.getElementById('scrambleFeedback'+num);
+    if(built.toLowerCase() === correctSentence.toLowerCase()){
+      fb.textContent = '✓ Correct! ' + correctSentence + '.';
+      fb.className = 'feedback correct-text';
+    } else {
+      fb.textContent = '✗ Not quite. Try rearranging the words!';
+      fb.className = 'feedback wrong-text';
+    }
+  }
+  function resetScramble(num){
+    buildScramble(num);
+    document.getElementById('answer'+num).innerHTML = '';
+    document.getElementById('scrambleFeedback'+num).textContent = '';
+  }
+  buildScramble(1);
+  buildScramble(2);
+
+  // ===== Paragraph writing tracker =====
+  function updateWordCount(){
+    const text = document.getElementById('paragraphBox').value;
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    document.getElementById('wordCounter').textContent = words.length + ' words';
+    const lower = text.toLowerCase();
+    document.querySelectorAll('.track-chip').forEach(chip=>{
+      const w = chip.dataset.word.toLowerCase();
+      chip.classList.toggle('used', lower.includes(w));
+    });
+  }
+</script>
+
+</body>
+</html>
