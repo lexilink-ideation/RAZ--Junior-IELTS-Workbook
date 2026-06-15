@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZ ESL · Junior IELTS — Reading Workbook Library</title>
+<style>
+  :root{
+    --teal-dark:#0f3d3e;
+    --teal:#1f7a72;
+    --teal-light:#5fb3a8;
+    --blue:#2f6f9e;
+    --sand:#fbf6ec;
+    --card:#ffffff;
+    --accent:#ffb347;
+    --accent2:#e8895c;
+    --text:#1c2b2d;
+    --muted:#5b7674;
+    --radius:18px;
+    --shadow: 0 6px 20px rgba(15,61,62,0.10);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Trebuchet MS', 'Segoe UI', Verdana, sans-serif;
+    background: linear-gradient(160deg, var(--sand) 0%, #eef6f4 60%, #e6f3ef 100%);
+    color:var(--text);
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+
+  /* HERO */
+  header{
+    background: linear-gradient(120deg, var(--teal-dark), var(--teal) 70%, var(--teal-light));
+    color:#fff;
+    padding:48px 20px 64px;
+    border-radius:0 0 40px 40px;
+    box-shadow:var(--shadow);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    top:-60px; right:-60px;
+    width:240px; height:240px;
+    background: rgba(255,255,255,0.08);
+    border-radius:50%;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    bottom:-80px; left:-40px;
+    width:200px; height:200px;
+    background: rgba(255,179,71,0.15);
+    border-radius:50%;
+  }
+  .studio-name{
+    font-size:0.78rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.85;
+    font-weight:700;
+    position:relative;
+    z-index:1;
+  }
+  header h1{
+    margin:8px 0 6px;
+    font-size:2.4rem;
+    font-weight:800;
+    letter-spacing:0.5px;
+    position:relative;
+    z-index:1;
+  }
+  header .subtitle{
+    font-size:1rem;
+    opacity:0.92;
+    font-weight:500;
+    max-width:520px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+  }
+  .hero-stats{
+    margin-top:24px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    position:relative;
+    z-index:1;
+  }
+  .stat-pill{
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:999px;
+    padding:8px 20px;
+    font-size:0.88rem;
+    font-weight:700;
+    backdrop-filter: blur(2px);
+  }
+
+  /* SEARCH / FILTER BAR */
+  .toolbar{
+    max-width:1000px;
+    margin:-28px auto 0;
+    padding:0 16px;
+    position:relative;
+    z-index:2;
+  }
+  .toolbar-inner{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+  }
+  .search-input{
+    flex:1;
+    min-width:200px;
+    border:2px solid var(--teal-light);
+    border-radius:999px;
+    padding:10px 18px;
+    font-family:inherit;
+    font-size:0.95rem;
+    color:var(--text);
+    outline:none;
+  }
+  .search-input:focus{ border-color:var(--teal); }
+  .level-jump{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .level-jump a{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:#eaf4f2;
+    color:var(--teal-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:0.85rem;
+    text-decoration:none;
+    transition: all 0.2s ease;
+  }
+  .level-jump a:hover{
+    background: var(--teal);
+    color:#fff;
+    transform:translateY(-2px);
+  }
+
+  /* MAIN */
+  main{
+    max-width:1000px;
+    margin:32px auto;
+    padding:0 16px;
+  }
+
+  .level-band{
+    margin-bottom:36px;
+    scroll-margin-top:90px;
+  }
+  .level-band-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .level-badge{
+    width:48px; height:48px;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;
+    font-size:1.3rem;
+    color:#fff;
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .level-band-head h2{
+    margin:0;
+    font-size:1.3rem;
+    color:var(--teal-dark);
+    font-weight:800;
+  }
+  .level-band-head .grade-note{
+    color:var(--muted);
+    font-size:0.85rem;
+    font-weight:600;
+  }
+
+  .reader-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:14px;
+  }
+
+  .reader-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    text-decoration:none;
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    border:2px solid transparent;
+    transition: transform 0.15s ease, border-color 0.2s ease;
+    position:relative;
+  }
+  .reader-card:hover{
+    transform:translateY(-3px);
+    border-color: var(--teal-light);
+  }
+  .reader-card.placeholder{
+    opacity:0.55;
+    border-style:dashed;
+    border-color:#c8d8d5;
+    cursor:default;
+    pointer-events:none;
+  }
+  .reader-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .reader-emoji{ font-size:1.8rem; }
+  .reader-level-tag{
+    background:#eaf4f2;
+    color:var(--teal-dark);
+    font-size:0.72rem;
+    font-weight:800;
+    padding:3px 10px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    white-space:nowrap;
+  }
+  .reader-title{
+    font-size:1.05rem;
+    font-weight:800;
+    color:var(--teal-dark);
+  }
+  .reader-meta{
+    font-size:0.8rem;
+    color:var(--muted);
+    font-weight:600;
+  }
+  .reader-cta{
+    margin-top:auto;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.85rem;
+    font-weight:800;
+    color:var(--blue);
+  }
+  .reader-card:hover .reader-cta{ color:var(--teal); }
+  .reader-cta .arrow{
+    transition: transform 0.2s ease;
+  }
+  .reader-card:hover .reader-cta .arrow{
+    transform: translateX(4px);
+  }
+  .coming-soon-badge{
+    position:absolute;
+    top:12px; right:12px;
+    background:var(--accent);
+    color:#3a2400;
+    font-size:0.68rem;
+    font-weight:800;
+    padding:3px 10px;
+    border-radius:999px;
+    text-transform:uppercase;
+  }
+
+  /* FOOTER */
+  footer{
+    max-width:1000px;
+    margin:40px auto 0;
+    padding:0 16px;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+  footer a{ color:var(--blue); text-decoration:none; font-weight:700; }
+  footer a:hover{ text-decoration:underline; }
+
+  /* hidden state for search filtering */
+  .reader-card.hidden, .level-band.hidden{ display:none; }
+
+  ::selection{ background:var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>📚 RAZ ESL · Junior IELTS</h1>
+  <div class="subtitle">Interactive vocabulary &amp; reading workbooks for young ESL learners — built around Reading A–Z leveled readers, levels A through M.</div>
+  <div class="hero-stats">
+    <div class="stat-pill">12 Levels (A–M)</div>
+    <div class="stat-pill">7 Sections per Reader</div>
+    <div class="stat-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by reader title..." oninput="filterReaders()">
+    <div class="level-jump" id="levelJump"></div>
+  </div>
+</div>
+
+<main id="main">
+  <!-- Level bands are generated by JS from the data below -->
+</main>
+
+<footer>
+  <p>Lexilink Ideation IELTS Studio</p>
+  <p>New readers are added regularly — check back for updates!</p>
+</footer>
+
+<script>
+  // ===========================================================
+  // READER DATA
+  // File naming convention: level-{letter}_{title-slug}.html
+  // Add new readers here as they're created. "file: null" or
+  // omitting "file" shows a "Coming Soon" placeholder card.
+  // ===========================================================
+  const levelColors = {
+    A:'#7fb8a8', B:'#6cb3a0', C:'#5fb3a8', D:'#4fa9a6',
+    E:'#3f9ea8', F:'#3893a4', G:'#2f88a0', H:'#1f7a72',
+    I:'#2f6f9e', J:'#2c668f', K:'#295c80', L:'#264f6f',
+    M:'#0f3d3e'
+  };
+
+  const levels = [
+    { letter:'A', grade:'Pre-K – K', readers:[] },
+    { letter:'B', grade:'K', readers:[] },
+    { letter:'C', grade:'K – Grade 1', readers:[] },
+    { letter:'D', grade:'Grade 1', readers:[] },
+    { letter:'E', grade:'Grade 1', readers:[] },
+    { letter:'F', grade:'Grade 1', readers:[] },
+    { letter:'G', grade:'Grade 1', readers:[] },
+    {
+      letter:'H', grade:'Grade 1', readers:[
+        { title:'City Falcons', emoji:'🦅', words:251, lexile:'420L', file:'level-h_city-falcons.html' }
+      ]
+    },
+    { letter:'I', grade:'Grade 1 – 2', readers:[] },
+    { letter:'J', grade:'Grade 2', readers:[] },
+    { letter:'K', grade:'Grade 2', readers:[] },
+    { letter:'L', grade:'Grade 2 – 3', readers:[] },
+    { letter:'M', grade:'Grade 3', readers:[] },
+  ];
+
+  const main = document.getElementById('main');
+  const levelJump = document.getElementById('levelJump');
+
+  levels.forEach(level=>{
+    // level jump nav dot
+    const a = document.createElement('a');
+    a.href = '#level-'+level.letter;
+    a.textContent = level.letter;
+    a.title = 'Level '+level.letter+' ('+level.grade+')';
+    levelJump.appendChild(a);
+
+    // band
+    const band = document.createElement('div');
+    band.className = 'level-band';
+    band.id = 'level-'+level.letter;
+
+    const head = document.createElement('div');
+    head.className = 'level-band-head';
+    head.innerHTML = `
+      <div class="level-badge" style="background:${levelColors[level.letter]}">${level.letter}</div>
+      <div>
+        <h2>Level ${level.letter}</h2>
+        <div class="grade-note">${level.grade}</div>
+      </div>
+    `;
+    band.appendChild(head);
+
+    const grid = document.createElement('div');
+    grid.className = 'reader-grid';
+
+    if(level.readers.length === 0){
+      const placeholder = document.createElement('div');
+      placeholder.className = 'reader-card placeholder';
+      placeholder.innerHTML = `
+        <div class="reader-top">
+          <span class="reader-emoji">✨</span>
+          <span class="reader-level-tag">Level ${level.letter}</span>
+        </div>
+        <div class="reader-title">More readers coming soon</div>
+        <div class="reader-meta">Check back for new Level ${level.letter} workbooks</div>
+      `;
+      grid.appendChild(placeholder);
+    } else {
+      level.readers.forEach(reader=>{
+        const card = document.createElement(reader.file ? 'a' : 'div');
+        card.className = 'reader-card';
+        if(reader.file){ card.href = reader.file; }
+        else { card.classList.add('placeholder'); }
+        card.dataset.title = reader.title.toLowerCase();
+
+        card.innerHTML = `
+          ${!reader.file ? '<div class="coming-soon-badge">Coming Soon</div>' : ''}
+          <div class="reader-top">
+            <span class="reader-emoji">${reader.emoji}</span>
+            <span class="reader-level-tag">Level ${level.letter}</span>
+          </div>
+          <div class="reader-title">${reader.title}</div>
+          <div class="reader-meta">${reader.words} words · Lexile ${reader.lexile}</div>
+          ${reader.file ? '<div class="reader-cta">Start practice <span class="arrow">→</span></div>' : ''}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    band.appendChild(grid);
+    main.appendChild(band);
+  });
+
+  // ===== Search filter =====
+  function filterReaders(){
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    document.querySelectorAll('.level-band').forEach(band=>{
+      let anyVisible = false;
+      band.querySelectorAll('.reader-card').forEach(card=>{
+        const title = card.dataset.title || '';
+        const isPlaceholder = card.classList.contains('placeholder') && !card.dataset.title;
+        if(q === '' ){
+          card.classList.remove('hidden');
+          anyVisible = true;
+        } else if(card.dataset.title && card.dataset.title.includes(q)){
+          card.classList.remove('hidden');
+          anyVisible = true;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      band.classList.toggle('hidden', !anyVisible);
+    });
+  }
+</script>
+
+</body>
+</html>
