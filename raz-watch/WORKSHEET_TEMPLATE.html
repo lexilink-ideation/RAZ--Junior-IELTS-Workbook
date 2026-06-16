@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BOOK_TITLE}} — RAZ Vocabulary Workbook</title>
+
+<!-- ================================================================
+  LEXILINK RAZ WORKSHEET TEMPLATE
+  Based on: level-d_hobbies.html
+  7 sections: Vocabulary · Story · Comprehension · Practice · Speaking · Writing · Review
+
+  PLACEHOLDERS FOR CLAUDE TO FILL:
+    {{BOOK_TITLE}}    - e.g. "At the Farm"
+    {{BOOK_EMOJI}}    - e.g. "🌾"
+    {{LEVEL_LABEL}}   - e.g. "Level C (RAZ)"
+    {{READER_NAME}}   - e.g. "At the Farm"
+    {{VOCAB_WORDS}}   - see Section 1 comments
+    {{STORY_PAGES}}   - see Section 2 comments
+    {{COMP_QS}}       - see Section 3 comments
+    {{FILL_BLANKS}}   - see Section 4B comments
+    {{MATCH_DATA}}    - see JS comment
+    {{SCRAMBLE_DATA}} - see JS comment
+    {{REVIEW_DATA}}   - see Section 7 comments
+================================================================ -->
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <!-- Replace emoji and title below -->
+  <h1>{{BOOK_EMOJI}} {{BOOK_TITLE}}</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <!-- Replace level and reader name below -->
+    <div class="meta-pill level">{{LEVEL_LABEL}}</div>
+    <div class="meta-pill">Reader: {{READER_NAME}}</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 1: VOCABULARY
+  Add one .vocab-card per word (aim for 8–10 words).
+  Each card: emoji · word · (pos) · Chinese · simple meaning · example sentence
+═══════════════════════════════════════════════════════════ -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <!-- EXAMPLE CARD — copy this pattern for each word:
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌾</span><span><span class="vocab-word">farm</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">农场</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a place where people grow food and raise animals</div><div class="label">Example</div><div class="vocab-example">We visited a farm and saw many animals.</div></div></div>
+  -->
+
+  <!-- INSERT VOCAB CARDS HERE -->
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 2: STORY
+  One .story-card per page spread.
+  story-img-wrap: emoji + description of the photo in the book
+  story-text: actual page text with target words wrapped in <mark>
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <!-- EXAMPLE STORY CARD:
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌾 A family standing in front of a red barn on a sunny farm</div><div class="story-text"><div class="story-page-num">Page 3</div>We went to the <mark>farm</mark>. We saw animals and fields.</div></div></div>
+  -->
+
+  <!-- INSERT STORY CARDS HERE -->
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 3: COMPREHENSION
+  A: 5 True/False questions
+  B: 5 Multiple Choice (3 options each) — checkTF(btn, isCorrect)
+  C: 3 Short Answer with optional hints
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+  <!-- EXAMPLE T/F: correct answer is True, so first button gets (this,true), second (this,false)
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>{{STATEMENT}}</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+  -->
+
+  <!-- INSERT 5 TRUE/FALSE QUESTIONS HERE -->
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+  <!-- EXAMPLE MC: correct answer is second option
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>{{QUESTION}}</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">{{OPTION_A}}</button><button class="opt-btn" onclick="checkTF(this,true)">{{OPTION_B}}</button><button class="opt-btn" onclick="checkTF(this,false)">{{OPTION_C}}</button></div><div class="feedback"></div></div>
+  -->
+
+  <!-- INSERT 5 MULTIPLE CHOICE QUESTIONS HERE -->
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+  <!-- SHORT ANSWER WITH HINT:
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>{{QUESTION}}</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: {{HINT_TEXT}}</div></div>
+  PERSONAL QUESTION (no hint):
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>{{PERSONAL_QUESTION}}</div><textarea placeholder="My answer is..."></textarea></div>
+  -->
+
+  <!-- INSERT 3 SHORT ANSWER QUESTIONS HERE -->
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 4: PRACTICE
+  A: Word ↔ Meaning matching (built by JS from matchData)
+  B: Drag-and-drop fill in blanks (5 sentences, word bank)
+  C: Multiple choice "choose the correct word" (2–3 questions)
+  D: Chinese → English matching (built by JS from cnEnData)
+  E: English → Chinese matching (same data, reversed)
+  F: Sentence completion (type the answer, click Check)
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    <!--
+    REPLACE with 5 sentences using 5 different vocab words.
+    Each blank: <span class="dz" data-answer="ANSWER_WORD" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>
+    Add matching .word-chip divs in the word-bank below.
+
+    EXAMPLE:
+    <p>1. We went to the <span class="dz" data-answer="farm" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> to see the animals.</p>
+    -->
+
+    <!-- INSERT 5 FILL-IN-THE-BLANK SENTENCES HERE -->
+
+    <div class="word-bank" id="wordBank">
+      <!--
+      Add one .word-chip per word used in fill-in-the-blank above.
+      EXAMPLE:
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="farm">farm</div>
+      -->
+
+      <!-- INSERT WORD CHIPS HERE -->
+
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+  <!-- INSERT 2–3 MCQ QUESTIONS HERE (same checkTF pattern as Section 3B) -->
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  <!--
+  EXAMPLE (type correct word, click Check):
+  <div class="q-block"><div class="q-text">1. We went to the ______. We saw animals there.</div><input type="text" class="blank-input" id="sc1" placeholder="place"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','farm')">Check</button></div>
+  Use sc1, sc2, sc3 as ids. Call checkSC('sc1','correct_answer').
+  -->
+
+  <!-- INSERT 3 SENTENCE COMPLETION QUESTIONS HERE -->
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 5: SPEAKING
+  3 levels: simple → sentence → open-ended
+  3 questions per level
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <!-- e.g. <div class="speak-q"><span class="mic">🎤</span>What is a farm?</div> -->
+    <!-- INSERT 3 SIMPLE QUESTIONS HERE -->
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <!-- INSERT 3 SENTENCE-LEVEL QUESTIONS HERE -->
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <!-- INSERT 3 OPEN-ENDED QUESTIONS HERE -->
+  </div>
+
+  <!-- UPDATE the useful phrases to match the book's key sentence patterns -->
+  <div class="card"><strong>Useful phrases:</strong> <em>I can see a... | There is a ... | I think... | In the story...</em></div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 6: WRITING
+  A: 2 sentence scrambles (words shuffled, click to rearrange)
+  B: 3 guided writing frames (fill-in-the-blank sentence starters)
+  C: Free paragraph (tracks which vocab words are used)
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <!--
+    Show the scrambled words above (as text hint), then let JS build interactive chips.
+    checkScramble(1, 'Exact correct sentence here')
+    The scrambleData JS object (below) holds the word/phrase chunks.
+    EXAMPLE:
+    <p><strong>1.</strong> went / We / to / the farm / see / animals / to</p>
+    -->
+    <p><strong>1.</strong> <!-- scramble 1 hint --></p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'{{SCRAMBLE_1_ANSWER}}')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> <!-- scramble 2 hint --></p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'{{SCRAMBLE_2_ANSWER}}')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <!--
+  3 sentence frames with inline text inputs. EXAMPLE:
+  <div class="frame">I can see a <input type="text" placeholder="animal">. It is <input type="text" placeholder="adjective">.</div>
+  -->
+  <!-- INSERT 3 SENTENCE FRAMES HERE -->
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <!-- UPDATE vocab word list in the instruction and tracker chips below to match this book's words -->
+  <p>Write 3-4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em><!-- LIST VOCAB WORDS HERE --></em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <!--
+    One .track-chip per vocab word. data-word must match the word exactly (lowercase).
+    EXAMPLE:
+    <span class="track-chip" data-word="farm">farm</span>
+    -->
+    <!-- INSERT VOCAB TRACKER CHIPS HERE (one per vocabulary word) -->
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+  SECTION 7: REVIEW
+  4 review cards: vocabulary list · sentence patterns · key grammar · things to remember
+  + closing congratulations card
+═══════════════════════════════════════════════════════════ -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <!-- Mark 3 most important with ⭐. EXAMPLE:
+      <div class="star-word">farm ⭐</div><div class="star-word">animal ⭐</div><div class="star-word">grow ⭐</div>
+      <div class="star-word">field</div><div class="star-word">barn</div> ...
+      -->
+      <!-- INSERT STAR WORDS HERE -->
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <!-- 3 key sentence structures from the book. EXAMPLE:
+      <div class="pattern-line">There is a ___ on the farm.</div>
+      <div class="pattern-line">We can see a ___.</div>
+      <div class="pattern-line">The ___ is ___.</div>
+      -->
+      <!-- INSERT 3 PATTERN LINES HERE -->
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <!-- 3 grammar points illustrated with examples from the book. -->
+      <!-- INSERT 3 PATTERN LINES HERE -->
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <!-- 3 key content takeaways from the story. -->
+      <!-- INSERT 3 PATTERN LINES HERE -->
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <!-- UPDATE word count and title below -->
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing {{BOOK_TITLE}}!</h2>
+    <p style="margin:8px 0 0;">You learned {{WORD_COUNT}} new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════════ */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* ═══════════════════════════════════════════════════════════════
+   VOCAB CARDS
+═══════════════════════════════════════════════════════════════ */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRUE/FALSE & MULTIPLE CHOICE
+═══════════════════════════════════════════════════════════════ */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* ═══════════════════════════════════════════════════════════════
+   HINTS
+═══════════════════════════════════════════════════════════════ */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATCH: WORD ↔ MEANING  (Section 4A)
+   REPLACE matchData with this book's vocab words and short meanings.
+═══════════════════════════════════════════════════════════════ */
+const matchData=[
+  // EXAMPLE — replace all entries:
+  // {word:'farm', meaning:'a place to grow food and raise animals'},
+  // {word:'animal', meaning:'a living creature that moves and breathes'},
+  /* INSERT matchData ENTRIES HERE */
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* ═══════════════════════════════════════════════════════════════
+   CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E)
+   REPLACE cnEnData with this book's words.
+═══════════════════════════════════════════════════════════════ */
+const cnEnData=[
+  // EXAMPLE — replace all entries:
+  // {en:'farm', cn:'农场'},
+  // {en:'animal', cn:'动物'},
+  /* INSERT cnEnData ENTRIES HERE */
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE COMPLETION (Section 4F)
+═══════════════════════════════════════════════════════════════ */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* ═══════════════════════════════════════════════════════════════
+   DRAG-AND-DROP FILL IN BLANK (Section 4B)
+═══════════════════════════════════════════════════════════════ */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE SCRAMBLE (Section 6A)
+   REPLACE scrambleData with 2 sentences from this book.
+   Each entry is an array of word/phrase chunks (will be shuffled).
+═══════════════════════════════════════════════════════════════ */
+const scrambleData={
+  // EXAMPLE — replace with actual sentences:
+  // 1: ['We','went','to','the farm','to see','the animals'],
+  // 2: ['The farmer','grows','food','in the field']
+  /* INSERT scrambleData ENTRIES HERE */
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const words=shuffle(scrambleData[num]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* ═══════════════════════════════════════════════════════════════
+   WORD COUNT + VOCAB TRACKER (Section 6C)
+═══════════════════════════════════════════════════════════════ */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
