@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Trucks — RAZ Vocabulary Workbook</title>
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🚚 Food Trucks</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level E (RAZ)</div>
+    <div class="meta-pill">Reader: Food Trucks</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════ SECTION 1: VOCABULARY ═══════════════════════ -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🚚</span><span><span class="vocab-word">truck</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">卡车</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a large vehicle used to carry things or sell food</div><div class="label">Example</div><div class="vocab-example">The red truck drives down the street to sell food.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🍳</span><span><span class="vocab-word">kitchen</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">厨房</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a place where people cook and make food</div><div class="label">Example</div><div class="vocab-example">Each food truck has a kitchen inside.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🏷️</span><span><span class="vocab-word">sell</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">出售</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to give something to someone for money</div><div class="label">Example</div><div class="vocab-example">Food trucks sell many kinds of food.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔥</span><span><span class="vocab-word">barbecue</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">烧烤</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>meat or food cooked over a fire or grill</div><div class="label">Example</div><div class="vocab-example">This food truck sells barbecue — it smells delicious!</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌊</span><span><span class="vocab-word">seafood</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">海鲜</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>food that comes from the sea, like fish and shrimp</div><div class="label">Example</div><div class="vocab-example">This food truck sells seafood such as fish and crabs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌮</span><span><span class="vocab-word">tacos</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">玉米饼</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a Mexican food made with a folded tortilla shell and filling inside</div><div class="label">Example</div><div class="vocab-example">This food truck sells tacos with chicken and vegetables.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">👥</span><span><span class="vocab-word">crowds</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">人群</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>many people together in one place</div><div class="label">Example</div><div class="vocab-example">Food trucks go wherever there are crowds of people.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">😋</span><span><span class="vocab-word">taste</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">尝起来</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to have a certain flavor; what you notice when you eat something</div><div class="label">Example</div><div class="vocab-example">The food can taste really good!</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🍕</span><span><span class="vocab-word">pizza</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">比萨</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a round flat bread with sauce and cheese on top, baked in an oven</div><div class="label">Example</div><div class="vocab-example">This food truck sells pizza with tomato sauce and cheese.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🥪</span><span><span class="vocab-word">grilled</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">烤制的</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>cooked on a hot metal grill over heat</div><div class="label">Example</div><div class="vocab-example">This food truck sells grilled cheese sandwiches — warm and toasty!</div></div></div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 2: STORY ═══════════════════════ -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-img-wrap">🚚 A colorful food truck parked on a city street with people buying food from the window</div><div class="story-text"><div class="story-page-num">Pages 3–4</div>Food trucks are trucks where people make and <mark>sell</mark> food. Each food truck has a <mark>kitchen</mark> inside.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🐟🍗 Food trucks selling different foods — fish and chips on one side, barbecue chicken and pizza on the other</div><div class="story-text"><div class="story-page-num">Pages 5–6</div>This food truck <mark>sells</mark> fish and chips. This food truck <mark>sells</mark> <mark>barbecue</mark>.<br><br>This food truck <mark>sells</mark> chicken. This food truck <mark>sells</mark> <mark>pizza</mark>.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🍛🌭 A food truck with Indian and Japanese food, and another selling hot dogs and grilled cheese sandwiches</div><div class="story-text"><div class="story-page-num">Pages 7–8</div>This food truck <mark>sells</mark> Indian food. This food truck <mark>sells</mark> Japanese food.<br><br>This food truck <mark>sells</mark> hot dogs. This food truck <mark>sells</mark> <mark>grilled</mark> cheese sandwiches.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🌊🌮 A seafood truck and a taco truck, plus a ribs truck and a hamburger truck</div><div class="story-text"><div class="story-page-num">Pages 9–10</div>This food truck <mark>sells</mark> <mark>seafood</mark>. This food truck <mark>sells</mark> <mark>tacos</mark>.<br><br>This food truck <mark>sells</mark> ribs. This food truck <mark>sells</mark> hamburgers.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">👥😋 A food truck surrounded by a large crowd of people; someone eating and smiling happily</div><div class="story-text"><div class="story-page-num">Pages 11–12</div>Food trucks go wherever there are <mark>crowds</mark> of people.<br><br>The food can <mark>taste</mark> really good!</div></div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 3: COMPREHENSION ═══════════════════════ -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Food trucks are trucks where people make and sell food.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Each food truck has a bedroom inside.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Food trucks only sell one type of food.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Food trucks go wherever there are crowds of people.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>The food from food trucks can taste really good.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>What is inside each food truck?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">a bedroom</button><button class="opt-btn" onclick="checkTF(this,true)">a kitchen</button><button class="opt-btn" onclick="checkTF(this,false)">a garden</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>What do food trucks sell?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">clothes</button><button class="opt-btn" onclick="checkTF(this,false)">books</button><button class="opt-btn" onclick="checkTF(this,true)">food</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Where do food trucks go?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">wherever there are crowds of people</button><button class="opt-btn" onclick="checkTF(this,false)">only to parks</button><button class="opt-btn" onclick="checkTF(this,false)">only to schools</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Which of these foods is sold by a food truck in the story?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">sushi</button><button class="opt-btn" onclick="checkTF(this,true)">tacos</button><button class="opt-btn" onclick="checkTF(this,false)">dumplings</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>How does the food from food trucks taste?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">very bad</button><button class="opt-btn" onclick="checkTF(this,false)">just okay</button><button class="opt-btn" onclick="checkTF(this,true)">really good</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What do people do at food trucks?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: People make and _______ food at food trucks.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>Name two types of food you can buy from a food truck in the story.</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at pages 5–10. Some examples are pizza, barbecue, tacos, seafood...</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>Would you like to eat from a food truck? What food would you choose? Why?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 4: PRACTICE ═══════════════════════ -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    <p>1. Each food truck has a <span class="dz" data-answer="kitchen" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> inside where people cook food.</p>
+    <p>2. This food truck sells <span class="dz" data-answer="barbecue" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> — meat cooked over a fire.</p>
+    <p>3. Food trucks go wherever there are <span class="dz" data-answer="crowds" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> of people.</p>
+    <p>4. This food truck sells <span class="dz" data-answer="seafood" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> like fish and shrimp.</p>
+    <p>5. I love to eat <span class="dz" data-answer="tacos" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> from the Mexican food truck!</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="kitchen">kitchen</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="barbecue">barbecue</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="crowds">crowds</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="seafood">seafood</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="tacos">tacos</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Food trucks sell food to people. They go where there are _______ of people.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">kitchens</button><button class="opt-btn" onclick="checkTF(this,true)">crowds</button><button class="opt-btn" onclick="checkTF(this,false)">trucks</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>The food from food trucks can _______ really good!</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">smell</button><button class="opt-btn" onclick="checkTF(this,false)">look</button><button class="opt-btn" onclick="checkTF(this,true)">taste</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Each food truck has a _______ inside where people make food.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">kitchen</button><button class="opt-btn" onclick="checkTF(this,false)">bedroom</button><button class="opt-btn" onclick="checkTF(this,false)">garage</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  <div class="q-block"><div class="q-text">1. Food trucks are trucks where people make and _______ food.</div><input type="text" class="blank-input" id="sc1" placeholder="verb"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc1','sell')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. The food can _______ really good!</div><input type="text" class="blank-input" id="sc2" placeholder="verb"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc2','taste')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. Food trucks go wherever there are _______ of people.</div><input type="text" class="blank-input" id="sc3" placeholder="noun"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc3','crowds')">Check</button></div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 5: SPEAKING ═══════════════════════ -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>What is a food truck?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Can you name one food from the story?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Do you like pizza or tacos? Point and say the word!</div>
+  </div>
+
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Tell me what is inside every food truck. Use the word "kitchen."</div>
+    <div class="speak-q"><span class="mic">🎤</span>Say a full sentence using the word "sell." For example: "This food truck sells..."</div>
+    <div class="speak-q"><span class="mic">🎤</span>Where do food trucks go? Use the word "crowds" in your answer.</div>
+  </div>
+
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Why do you think food trucks go to places with crowds of people?</div>
+    <div class="speak-q"><span class="mic">🎤</span>If you had a food truck, what food would you sell? Why? Tell me in 2–3 sentences.</div>
+    <div class="speak-q"><span class="mic">🎤</span>How are food trucks different from restaurants? What do you think is better — a food truck or a restaurant?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>This food truck sells... | I can see a... | There are crowds of people... | The food can taste... | I think food trucks are...</em></div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 6: WRITING ═══════════════════════ -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong> food trucks / go / wherever / there are / crowds of people</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'Food trucks go wherever there are crowds of people.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> each food truck / has / a kitchen / inside</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'Each food truck has a kitchen inside.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">A food truck sells <input type="text" placeholder="type of food">. It is very <input type="text" placeholder="adjective">.</div>
+  <div class="frame">Food trucks go to <input type="text" placeholder="place"> because there are <input type="text" placeholder="crowds / many people"> there.</div>
+  <div class="frame">I think food trucks are <input type="text" placeholder="adjective"> because <input type="text" placeholder="your reason">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3–4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>truck, kitchen, sell, barbecue, seafood, tacos, crowds, taste, pizza, grilled</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="truck">truck</span>
+    <span class="track-chip" data-word="kitchen">kitchen</span>
+    <span class="track-chip" data-word="sell">sell</span>
+    <span class="track-chip" data-word="barbecue">barbecue</span>
+    <span class="track-chip" data-word="seafood">seafood</span>
+    <span class="track-chip" data-word="tacos">tacos</span>
+    <span class="track-chip" data-word="crowds">crowds</span>
+    <span class="track-chip" data-word="taste">taste</span>
+    <span class="track-chip" data-word="pizza">pizza</span>
+    <span class="track-chip" data-word="grilled">grilled</span>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════ SECTION 7: REVIEW ═══════════════════════ -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">truck ⭐</div>
+      <div class="star-word">kitchen ⭐</div>
+      <div class="star-word">sell ⭐</div>
+      <div class="star-word">barbecue</div>
+      <div class="star-word">seafood</div>
+      <div class="star-word">tacos</div>
+      <div class="star-word">crowds</div>
+      <div class="star-word">taste</div>
+      <div class="star-word">pizza</div>
+      <div class="star-word">grilled</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">This food truck sells ___.</div>
+      <div class="pattern-line">Food trucks go wherever there are ___ of people.</div>
+      <div class="pattern-line">The food can taste really ___!</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line"><strong>Simple present tense:</strong> "This truck sells tacos." (Subject + verb + object)</div>
+      <div class="pattern-line"><strong>Plural nouns:</strong> truck → trucks, crowd → crowds</div>
+      <div class="pattern-line"><strong>Adverbs of degree:</strong> "really good" — using "really" to make meaning stronger</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">Food trucks are mobile restaurants — they move to find customers!</div>
+      <div class="pattern-line">Many different types of food can be sold from food trucks — from pizza to tacos to seafood.</div>
+      <div class="pattern-line">Food trucks go wherever there are crowds because that is where they can find the most customers.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing Food Trucks!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════════ */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* ═══════════════════════════════════════════════════════════════
+   VOCAB CARDS
+═══════════════════════════════════════════════════════════════ */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRUE/FALSE & MULTIPLE CHOICE
+═══════════════════════════════════════════════════════════════ */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* ═══════════════════════════════════════════════════════════════
+   HINTS
+═══════════════════════════════════════════════════════════════ */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATCH: WORD ↔ MEANING  (Section 4A)
+═══════════════════════════════════════════════════════════════ */
+const matchData=[
+  {word:'truck', meaning:'a large vehicle that sells food'},
+  {word:'kitchen', meaning:'a place where food is cooked'},
+  {word:'sell', meaning:'to give something for money'},
+  {word:'barbecue', meaning:'meat cooked over a fire'},
+  {word:'seafood', meaning:'food that comes from the sea'},
+  {word:'tacos', meaning:'a Mexican food in a shell'},
+  {word:'crowds', meaning:'many people together'},
+  {word:'taste', meaning:'to have a certain flavor'},
+  {word:'pizza', meaning:'flat bread with sauce and cheese'},
+  {word:'grilled', meaning:'cooked on a hot metal grill'}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* ═══════════════════════════════════════════════════════════════
+   CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E)
+═══════════════════════════════════════════════════════════════ */
+const cnEnData=[
+  {en:'truck', cn:'卡车'},
+  {en:'kitchen', cn:'厨房'},
+  {en:'sell', cn:'出售'},
+  {en:'barbecue', cn:'烧烤'},
+  {en:'seafood', cn:'海鲜'},
+  {en:'tacos', cn:'玉米饼'},
+  {en:'crowds', cn:'人群'},
+  {en:'taste', cn:'尝起来'},
+  {en:'pizza', cn:'比萨'},
+  {en:'grilled', cn:'烤制的'}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE COMPLETION (Section 4F)
+═══════════════════════════════════════════════════════════════ */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* ═══════════════════════════════════════════════════════════════
+   DRAG-AND-DROP FILL IN BLANK (Section 4B)
+═══════════════════════════════════════════════════════════════ */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE SCRAMBLE (Section 6A)
+═══════════════════════════════════════════════════════════════ */
+const scrambleData={
+  1: ['Food trucks','go','wherever','there are','crowds of people.'],
+  2: ['Each food truck','has','a kitchen','inside.']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const words=shuffle(scrambleData[num]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct;fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* ═══════════════════════════════════════════════════════════════
+   WORD COUNT + VOCAB TRACKER (Section 6C)
+═══════════════════════════════════════════════════════════════ */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
