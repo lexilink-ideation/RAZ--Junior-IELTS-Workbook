@@ -1730,7 +1730,9 @@
   };
   function buildScramble(num){
     const container = document.getElementById('scramble'+num);
-    const words = shuffle(scrambleData[num]);
+    const orig = scrambleData[num].join('|');
+    let words = shuffle([...scrambleData[num]]);
+    while(words.join('|') === orig) words = shuffle([...words]);
     container.innerHTML = '';
     words.forEach(w=>{
       const chip = document.createElement('div');
@@ -1767,6 +1769,8 @@
   }
   buildScramble(1);
   buildScramble(2);
+  function shuffleWordBank(){const wb=document.getElementById('wordBank');if(!wb)return;const chips=[...wb.querySelectorAll('.word-chip')];for(let i=chips.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));wb.appendChild(chips[j]);[chips[i],chips[j]]=[chips[j],chips[i]];}}
+  shuffleWordBank();
 
   // ===== Paragraph writing tracker =====
   function updateWordCount(){

@@ -456,11 +456,11 @@ const scrambleData={
   1: ['All','class pets','need','love'],
   2: ['We help','teachers','take care','of them']
 };
-function buildScramble(num){const container=document.getElementById('scramble'+num);const words=shuffle(scrambleData[num]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
 function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
 function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
 function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
-buildScramble(1);buildScramble(2);
+buildScramble(1);buildScramble(2);function shuffleWordBank(){const wb=document.getElementById('wordBank');if(!wb)return;const chips=[...wb.querySelectorAll('.word-chip')];for(let i=chips.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));wb.appendChild(chips[j]);[chips[i],chips[j]]=[chips[j],chips[i]];}}shuffleWordBank();
 
 /* WORD COUNT + VOCAB TRACKER */
 function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
