@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Many Legs? — RAZ Vocabulary Workbook</title>
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🦵 How Many Legs?</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level B (RAZ)</div>
+    <div class="meta-pill">Reader: How Many Legs?</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- SECTION 1: VOCABULARY -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🐾</span><span><span class="vocab-word">animal</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">动物</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a living thing that can move and breathe, like a dog or bird</div><div class="label">Example</div><div class="vocab-example">Many animals have legs to help them walk.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🦵</span><span><span class="vocab-word">legs</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">腿</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the body parts an animal uses to walk, run, or jump</div><div class="label">Example</div><div class="vocab-example">A cat uses its four legs to run fast.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔢</span><span><span class="vocab-word">many</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">许多</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a lot of; more than just a few</div><div class="label">Example</div><div class="vocab-example">Many animals have legs to help them move.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">2️⃣</span><span><span class="vocab-word">two</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">二</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the number 2; one more than one</div><div class="label">Example</div><div class="vocab-example">Birds and people have two legs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">4️⃣</span><span><span class="vocab-word">four</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">四</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the number 4; two plus two</div><div class="label">Example</div><div class="vocab-example">Dogs and cats have four legs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">6️⃣</span><span><span class="vocab-word">six</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">六</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the number 6; four plus two</div><div class="label">Example</div><div class="vocab-example">Insects like ants have six legs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">8️⃣</span><span><span class="vocab-word">eight</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">八</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the number 8; four plus four</div><div class="label">Example</div><div class="vocab-example">Spiders have eight legs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔟</span><span><span class="vocab-word">ten</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">十</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the number 10; five plus five</div><div class="label">Example</div><div class="vocab-example">These animals have ten legs to walk with.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">✋</span><span><span class="vocab-word">have</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">有</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to own or possess something</div><div class="label">Example</div><div class="vocab-example">These animals have four legs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔢</span><span><span class="vocab-word">count</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">数数</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to say numbers in order to find how many there are</div><div class="label">Example</div><div class="vocab-example">Let's count how many legs this animal has!</div></div></div>
+
+</section>
+
+<!-- SECTION 2: STORY -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-img-wrap">🐦🐊 A collection of different animals — birds, lizards, and more — showing their legs</div><div class="story-text"><div class="story-page-num">Pages 3–4</div><mark>Many</mark> <mark>animals</mark> <mark>have</mark> <mark>legs</mark>.<br><br>These <mark>animals</mark> <mark>have</mark> <mark>two</mark> <mark>legs</mark>.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🐕🐄 Photos of four-legged animals like dogs, cows, and horses, and six-legged insects</div><div class="story-text"><div class="story-page-num">Pages 5–6</div>These <mark>animals</mark> <mark>have</mark> <mark>four</mark> <mark>legs</mark>.<br><br>These <mark>animals</mark> <mark>have</mark> <mark>six</mark> <mark>legs</mark>.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🕷️🦞 Photos of spiders with eight legs and crabs or crayfish with ten legs</div><div class="story-text"><div class="story-page-num">Pages 7–8</div>These <mark>animals</mark> <mark>have</mark> <mark>eight</mark> <mark>legs</mark>.<br><br>These <mark>animals</mark> <mark>have</mark> <mark>ten</mark> <mark>legs</mark>.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🐛🦷 Photos of centipedes and millipedes with very many legs — too many to count!</div><div class="story-text"><div class="story-page-num">Pages 9–10</div>These <mark>animals</mark> <mark>have</mark> <mark>many</mark> <mark>legs</mark>.<br><br>How <mark>many</mark> <mark>legs</mark> do these <mark>animals</mark> <mark>have</mark>?</div></div>
+
+</section>
+
+<!-- SECTION 3: COMPREHENSION -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>All animals have the same number of legs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Some animals have two legs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Spiders have six legs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Some animals have many legs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>Birds have four legs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>How many legs do birds have?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">four</button><button class="opt-btn" onclick="checkTF(this,true)">two</button><button class="opt-btn" onclick="checkTF(this,false)">six</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>How many legs does a spider have?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">six</button><button class="opt-btn" onclick="checkTF(this,false)">ten</button><button class="opt-btn" onclick="checkTF(this,true)">eight</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Centipedes have ___ legs.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">two</button><button class="opt-btn" onclick="checkTF(this,true)">many</button><button class="opt-btn" onclick="checkTF(this,false)">four</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>What is this book about?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">animal sounds</button><button class="opt-btn" onclick="checkTF(this,true)">animal legs</button><button class="opt-btn" onclick="checkTF(this,false)">animal food</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>How many legs do dogs have?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">two</button><button class="opt-btn" onclick="checkTF(this,false)">six</button><button class="opt-btn" onclick="checkTF(this,true)">four</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>How many legs does a cat have?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: A cat has the same number of legs as a dog.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>Name one animal from the book that has two legs.</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Think of a bird that you know!</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>What is your favorite animal? How many legs does it have?</div><textarea placeholder="My favorite animal is..."></textarea></div>
+
+</section>
+
+<!-- SECTION 4: PRACTICE -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    <p>1. <mark>Many</mark> <span class="dz" data-answer="animals" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> have legs.</p>
+    <p>2. A bird has <span class="dz" data-answer="two" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> legs.</p>
+    <p>3. A dog has <span class="dz" data-answer="four" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> legs.</p>
+    <p>4. A spider has <span class="dz" data-answer="eight" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> legs.</p>
+    <p>5. Centipedes have <span class="dz" data-answer="many" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> legs.</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="animals">animals</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="two">two</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="four">four</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="eight">eight</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="many">many</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>A spider has ___ legs.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">six</button><button class="opt-btn" onclick="checkTF(this,true)">eight</button><button class="opt-btn" onclick="checkTF(this,false)">ten</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>We can ___ the legs on an animal to find out how many there are.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">grow</button><button class="opt-btn" onclick="checkTF(this,true)">count</button><button class="opt-btn" onclick="checkTF(this,false)">eat</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Insects ___ six legs.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">have</button><button class="opt-btn" onclick="checkTF(this,false)">are</button><button class="opt-btn" onclick="checkTF(this,false)">go</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  <div class="q-block"><div class="q-text">1. A dog has _______ legs. (enter the number)</div><input type="text" class="blank-input" id="sc1" placeholder="number"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc1','four')">Check</button><div class="feedback" id="scFb1"></div></div>
+  <div class="q-block"><div class="q-text">2. A bird has _______ legs.</div><input type="text" class="blank-input" id="sc2" placeholder="number"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc2','two')">Check</button><div class="feedback" id="scFb2"></div></div>
+  <div class="q-block"><div class="q-text">3. Centipedes have _______ legs — too many to count!</div><input type="text" class="blank-input" id="sc3" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc3','many')">Check</button><div class="feedback" id="scFb3"></div></div>
+
+</section>
+
+<!-- SECTION 5: SPEAKING -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>How many legs does a dog have?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How many legs does a bird have?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Do all animals have legs? (Yes / No)</div>
+  </div>
+
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Tell me about a spider. Use the word "eight".</div>
+    <div class="speak-q"><span class="mic">🎤</span>Say a full sentence: "A ___ has ___ legs."</div>
+    <div class="speak-q"><span class="mic">🎤</span>Use "many" in a sentence about animals.</div>
+  </div>
+
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Why do you think some animals have more legs than others?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Which animal in the book do you think is the most interesting? Why?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Can you think of an animal that has no legs? How does it move?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>These animals have ___ legs. | A ___ has ___ legs. | I can count ___ legs. | How many legs does a ___ have?</em></div>
+
+</section>
+
+<!-- SECTION 6: WRITING -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong> Unscramble the words to make a sentence.</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'These animals have eight legs')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Unscramble the words to make a sentence.</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'Many animals have legs')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">1. I can see an animal with <input type="text" placeholder="number"> legs. It is a <input type="text" placeholder="animal name">.</div>
+  <div class="frame">2. A <input type="text" placeholder="animal"> has <input type="text" placeholder="number"> legs. It uses them to <input type="text" placeholder="action">.</div>
+  <div class="frame">3. My favorite animal has <input type="text" placeholder="number"> legs. It is called a <input type="text" placeholder="animal name">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3–4 sentences about animals and their legs. Use at least <strong>three</strong> vocabulary words: <em>animal, legs, many, two, four, six, eight, ten, have, count</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="animal">animal</span>
+    <span class="track-chip" data-word="legs">legs</span>
+    <span class="track-chip" data-word="many">many</span>
+    <span class="track-chip" data-word="two">two</span>
+    <span class="track-chip" data-word="four">four</span>
+    <span class="track-chip" data-word="six">six</span>
+    <span class="track-chip" data-word="eight">eight</span>
+    <span class="track-chip" data-word="ten">ten</span>
+    <span class="track-chip" data-word="have">have</span>
+    <span class="track-chip" data-word="count">count</span>
+  </div>
+
+</section>
+
+<!-- SECTION 7: REVIEW -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">animal ⭐</div>
+      <div class="star-word">legs ⭐</div>
+      <div class="star-word">many ⭐</div>
+      <div class="star-word">two</div>
+      <div class="star-word">four</div>
+      <div class="star-word">six</div>
+      <div class="star-word">eight</div>
+      <div class="star-word">ten</div>
+      <div class="star-word">have</div>
+      <div class="star-word">count</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">These animals have ___ legs.</div>
+      <div class="pattern-line">Many animals have ___.</div>
+      <div class="pattern-line">How many legs do ___ have?</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line">Simple Present: "These animals have eight legs." — describes facts about animals</div>
+      <div class="pattern-line">Plural nouns: animal → animals; leg → legs</div>
+      <div class="pattern-line">Numbers as adjectives: "two legs", "four legs", "many legs"</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">Different animals have different numbers of legs.</div>
+      <div class="pattern-line">Birds have 2 legs; dogs have 4; spiders have 8.</div>
+      <div class="pattern-line">Some animals like centipedes have too many legs to count!</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing How Many Legs?!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* NAVIGATION */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* VOCAB CARDS */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* TRUE/FALSE & MULTIPLE CHOICE */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* HINTS */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* MATCH: WORD ↔ MEANING */
+const matchData=[
+  {word:'animal', meaning:'a living thing that moves and breathes'},
+  {word:'legs', meaning:'body parts used to walk or run'},
+  {word:'many', meaning:'a lot of; more than a few'},
+  {word:'two', meaning:'the number 2'},
+  {word:'four', meaning:'the number 4'},
+  {word:'six', meaning:'the number 6'},
+  {word:'eight', meaning:'the number 8'},
+  {word:'ten', meaning:'the number 10'},
+  {word:'have', meaning:'to own or possess something'},
+  {word:'count', meaning:'to say numbers to find how many'},
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* CHINESE ↔ ENGLISH MATCHING */
+const cnEnData=[
+  {en:'animal', cn:'动物'},
+  {en:'legs', cn:'腿'},
+  {en:'many', cn:'许多'},
+  {en:'two', cn:'二'},
+  {en:'four', cn:'四'},
+  {en:'six', cn:'六'},
+  {en:'eight', cn:'八'},
+  {en:'ten', cn:'十'},
+  {en:'have', cn:'有'},
+  {en:'count', cn:'数数'},
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* SENTENCE COMPLETION */
+function checkSC(id,answer){const input=document.getElementById(id);const fbId='scFb'+id.replace('sc','');const fb=document.getElementById(fbId);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');if(fb)fb.textContent='✓ Correct!',fb.className='feedback correct-text';}else{input.classList.remove('correct');input.classList.add('wrong');if(fb)fb.textContent='✗ Try again!',fb.className='feedback wrong-text';}}
+
+/* DRAG-AND-DROP */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* SENTENCE SCRAMBLE */
+const scrambleData={
+  1:['These animals','have','eight','legs'],
+  2:['Many','animals','have','legs']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* WORD COUNT + VOCAB TRACKER */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
