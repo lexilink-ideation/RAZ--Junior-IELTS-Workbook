@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Stonecutter — RAZ Vocabulary Workbook</title>
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:120px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:150px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>⛏️ The Stonecutter</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level H (RAZ)</div>
+    <div class="meta-pill">Reader: The Stonecutter</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- SECTION 1: VOCABULARY -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">⛏️</span><span><span class="vocab-word">stonecutter</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">石匠</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a person whose job is to cut or shape stone</div><div class="label">Example</div><div class="vocab-example">Long ago there lived a poor stonecutter in Japan.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🛒</span><span><span class="vocab-word">merchant</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">商人</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a person who buys and sells goods to make money</div><div class="label">Example</div><div class="vocab-example">One day, he saw a merchant who had many beautiful things.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">👑</span><span><span class="vocab-word">emperor</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">皇帝</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a man who is the ruler of an empire — the most powerful person in the land</div><div class="label">Example</div><div class="vocab-example">The emperor had beautiful clothes, and the stonecutter was sad.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">✨</span><span><span class="vocab-word">spirit</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">精灵</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a magical being that cannot be seen but has the power to make wishes come true</div><div class="label">Example</div><div class="vocab-example">The spirit of the mountain heard him and granted his wish.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌟</span><span><span class="vocab-word">wish</span><span class="vocab-pos">(n./v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">愿望／许愿</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a strong hope or desire for something to happen; to want something very much</div><div class="label">Example</div><div class="vocab-example">"I wish I were a merchant," he whispered to the mountain.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">😊</span><span><span class="vocab-word">proud</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">自豪的</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>feeling very happy and pleased about something you have done or who you are</div><div class="label">Example</div><div class="vocab-example">Every day, the stonecutter cut stone from the mountain. He was proud of his work.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">😢</span><span><span class="vocab-word">wept</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">哭泣</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>past tense of "weep"; to cry because you feel very sad</div><div class="label">Example</div><div class="vocab-example">"I want to be a stonecutter again," he wept.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">😌</span><span><span class="vocab-word">content</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">满足的</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>happy and satisfied with what you have; not wanting anything more</div><div class="label">Example</div><div class="vocab-example">At the end, he became a stonecutter again and was content with his simple life.</div></div></div>
+
+</section>
+
+<!-- SECTION 2: STORY -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-img-wrap">⛏️ A poor man in old Japanese clothing cutting stone from a rocky mountain with a chisel and hammer</div><div class="story-text"><div class="story-page-num">Pages 3–4</div>Long ago there lived a poor <mark>stonecutter</mark> in Japan. Every day, he cut stone from a mountain. The <mark>stonecutter</mark> was <mark>proud</mark> of his work. He was very happy. One day, he saw a <mark>merchant</mark>. The <mark>merchant</mark> had many beautiful things. The <mark>stonecutter</mark> was sad. He did not have any beautiful things.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">✨ A glowing spirit emerging from the mountain in a flash of light, as the stonecutter stands watching in amazement</div><div class="story-text"><div class="story-page-num">Pages 5–6</div>"I <mark>wish</mark> I were a <mark>merchant</mark>," he whispered. The <mark>spirit</mark> of the mountain heard him. Poof! He became a <mark>merchant</mark>. A month went by. One day, he saw the <mark>emperor</mark>. The <mark>emperor</mark> had beautiful clothes. The <mark>stonecutter</mark> was sad. He did not have such beautiful clothes.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">👑 A man in royal emperor's robes standing proudly, then looking up sadly at the bright shining sun above him</div><div class="story-text"><div class="story-page-num">Pages 7–8</div>"I <mark>wish</mark> I were the <mark>emperor</mark>," he said. The <mark>spirit</mark> of the mountain heard him. Poof! He became the <mark>emperor</mark>. Two months went by. One day, he saw the Sun shining brightly. Again, the <mark>stonecutter</mark> was sad. The Sun was stronger than he was.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">☀️ A blazing sun in the sky, then dark clouds blown by wind rolling in to cover the sun</div><div class="story-text"><div class="story-page-num">Pages 9–10</div>"I <mark>wish</mark> I were the Sun," he cried. Poof! He became the Sun. Then wind blew a cloud over the Sun. The <mark>stonecutter</mark> grew angry.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🌬️ Powerful swirling winds blowing everything except a great mountain, which stands unmoved and solid</div><div class="story-text"><div class="story-page-num">Pages 11–12</div>"I want to be the wind," he yelled. Poof! The <mark>stonecutter</mark> became the wind, but he was still angry. He could not blow the mountain around. "I want to be a mountain!" he screamed. Poof! He became a mountain.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">⛏️ A tiny stonecutter chipping away at the side of a huge mountain, as the mountain-spirit watches sadly</div><div class="story-text"><div class="story-page-num">Pages 13–15</div>The next day, he felt something cut into his side. It was a <mark>stonecutter</mark>. "I want to be a <mark>stonecutter</mark> again," he <mark>wept</mark>. Poof! He became a <mark>stonecutter</mark>. He was very happy.</div></div>
+
+</section>
+
+<!-- SECTION 3: COMPREHENSION -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>The stonecutter was proud of his work and happy at the start of the story.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>The spirit of the mountain granted the stonecutter's wishes.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>The stonecutter was always happy after each wish came true.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>At the end of the story, the stonecutter became the wind forever.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>The stonecutter wept when he wanted to go back to cutting stone.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>What did the stonecutter wish for first?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">to be the emperor</button><button class="opt-btn" onclick="checkTF(this,false)">to be the Sun</button><button class="opt-btn" onclick="checkTF(this,true)">to be a merchant</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Who granted the stonecutter's wishes?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">the emperor</button><button class="opt-btn" onclick="checkTF(this,true)">the spirit of the mountain</button><button class="opt-btn" onclick="checkTF(this,false)">a merchant</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Why was the stonecutter angry when he became the wind?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">He could not blow the mountain around</button><button class="opt-btn" onclick="checkTF(this,false)">He was too cold</button><button class="opt-btn" onclick="checkTF(this,false)">He missed his family</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>How did the stonecutter feel at the very end of the story?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">angry</button><button class="opt-btn" onclick="checkTF(this,false)">sad</button><button class="opt-btn" onclick="checkTF(this,true)">very happy</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>What is the main lesson of this story?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">Wishes always make you happy</button><button class="opt-btn" onclick="checkTF(this,true)">Be happy and content with who you are</button><button class="opt-btn" onclick="checkTF(this,false)">Mountains are stronger than the wind</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What was the stonecutter's job before he made any wishes?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at page 3. What did he do every day on the mountain?</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>How many wishes did the stonecutter make in the whole story? List the things he wished to be.</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Count each time he says "I wish" or "I want to be." Look through all the pages.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>If you could make one wish, what would you wish for? Why?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+<!-- SECTION 4: PRACTICE -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    <p>1. The <span class="dz" data-answer="spirit" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> of the mountain heard the stonecutter's wish and made it come true.</p>
+    <p>2. The stonecutter saw a <span class="dz" data-answer="merchant" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> who had many beautiful things.</p>
+    <p>3. After his second wish, he became the <span class="dz" data-answer="emperor" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> and wore beautiful clothes.</p>
+    <p>4. "I want to be a stonecutter again," he <span class="dz" data-answer="wept" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>, crying with sadness.</p>
+    <p>5. At the start, the stonecutter was <span class="dz" data-answer="proud" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> of his work and very happy.</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="spirit">spirit</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="merchant">merchant</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="emperor">emperor</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="wept">wept</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="proud">proud</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>A ___ is a person who cuts or shapes stone.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">merchant</button><button class="opt-btn" onclick="checkTF(this,true)">stonecutter</button><button class="opt-btn" onclick="checkTF(this,false)">emperor</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>The stonecutter made many ___ to the spirit of the mountain.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">wishes</button><button class="opt-btn" onclick="checkTF(this,false)">paintings</button><button class="opt-btn" onclick="checkTF(this,false)">clothes</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>He was never ___ — he always wanted something different.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">angry</button><button class="opt-btn" onclick="checkTF(this,true)">content</button><button class="opt-btn" onclick="checkTF(this,false)">proud</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  <div class="q-block"><div class="q-text">1. Long ago there lived a poor ___. (the main character's job)</div><input type="text" class="blank-input" id="sc1" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc1','stonecutter')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. The spirit of the mountain ___ him. (it listened and did something)</div><input type="text" class="blank-input" id="sc2" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc2','heard')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. At the end, the stonecutter was very ___. (the opposite of sad)</div><input type="text" class="blank-input" id="sc3" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;margin-left:8px;" onclick="checkSC('sc3','happy')">Check</button></div>
+
+</section>
+
+<!-- SECTION 5: SPEAKING -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>What is a stonecutter? What does he do?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Who granted the stonecutter's wishes?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Was the stonecutter happy at the end of the story?</div>
+  </div>
+
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Tell me one wish the stonecutter made. Use the word "wish" in your answer.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Why did the stonecutter want to be the emperor?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How did the story end? Use the words "stonecutter" and "happy."</div>
+  </div>
+
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>What lesson does this story teach us? Do you agree with this lesson?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Do you think the stonecutter was greedy? Why or why not?</div>
+    <div class="speak-q"><span class="mic">🎤</span>If you could be anything for one day — like a mountain, the sun, or a king — what would you choose? Why?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>"I wish I were a ___." | "Poof! He became a ___." | I think the lesson is... | The stonecutter was ___ because...</em></div>
+
+</section>
+
+<!-- SECTION 6: WRITING -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong></p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'The spirit of the mountain heard him.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong></p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'He became a stonecutter and he was very happy.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">The stonecutter wished he could be a <input type="text" placeholder="thing or person"> because <input type="text" placeholder="reason">.</div>
+  <div class="frame">At the end, he was <input type="text" placeholder="adjective"> with being a simple <input type="text" placeholder="job">.</div>
+  <div class="frame">The lesson of this story is that <input type="text" placeholder="your idea">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3–4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>stonecutter, merchant, emperor, spirit, wish, proud, wept, content</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="In the story, a stonecutter..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="stonecutter">stonecutter</span>
+    <span class="track-chip" data-word="merchant">merchant</span>
+    <span class="track-chip" data-word="emperor">emperor</span>
+    <span class="track-chip" data-word="spirit">spirit</span>
+    <span class="track-chip" data-word="wish">wish</span>
+    <span class="track-chip" data-word="proud">proud</span>
+    <span class="track-chip" data-word="wept">wept</span>
+    <span class="track-chip" data-word="content">content</span>
+  </div>
+
+</section>
+
+<!-- SECTION 7: REVIEW -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">stonecutter ⭐</div>
+      <div class="star-word">wish ⭐</div>
+      <div class="star-word">content ⭐</div>
+      <div class="star-word">merchant</div>
+      <div class="star-word">emperor</div>
+      <div class="star-word">spirit</div>
+      <div class="star-word">proud</div>
+      <div class="star-word">wept</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">"I wish I were a ___," he whispered/said/cried.</div>
+      <div class="pattern-line">The spirit of the mountain heard him. Poof!</div>
+      <div class="pattern-line">He became a ___ and he was very happy.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line"><strong>Simple Past:</strong> "He became a merchant." / "He wept."</div>
+      <div class="pattern-line"><strong>Wish + were:</strong> "I wish I were the emperor." (expressing wishes)</div>
+      <div class="pattern-line"><strong>Circular structure:</strong> The story begins and ends the same way.</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">The stonecutter was never satisfied — he always wanted more.</div>
+      <div class="pattern-line">The spirit of the mountain granted every single wish.</div>
+      <div class="pattern-line">True happiness comes from being content with who you are.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing The Stonecutter!</h2>
+    <p style="margin:8px 0 0;">You learned 8 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* NAVIGATION */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* VOCAB CARDS */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* TRUE/FALSE & MULTIPLE CHOICE */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* HINTS */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* MATCH: WORD ↔ MEANING */
+const matchData=[
+  {word:'stonecutter', meaning:'a person who cuts or shapes stone'},
+  {word:'merchant', meaning:'a person who buys and sells goods'},
+  {word:'emperor', meaning:'the most powerful ruler of an empire'},
+  {word:'spirit', meaning:'a magical being that grants wishes'},
+  {word:'wish', meaning:'a strong hope for something to happen'},
+  {word:'proud', meaning:'happy and pleased about your work'},
+  {word:'wept', meaning:'cried from deep sadness (past tense)'},
+  {word:'content', meaning:'happy and satisfied with what you have'},
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* CHINESE ↔ ENGLISH MATCHING */
+const cnEnData=[
+  {en:'stonecutter', cn:'石匠'},
+  {en:'merchant', cn:'商人'},
+  {en:'emperor', cn:'皇帝'},
+  {en:'spirit', cn:'精灵'},
+  {en:'wish', cn:'愿望'},
+  {en:'proud', cn:'自豪的'},
+  {en:'wept', cn:'哭泣'},
+  {en:'content', cn:'满足的'},
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* SENTENCE COMPLETION */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* DRAG-AND-DROP FILL IN BLANK */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+function shuffleWordBank(){const wb=document.getElementById('wordBank');const chips=[...wb.children];chips.forEach(c=>wb.removeChild(c));shuffle(chips).forEach(c=>wb.appendChild(c));}
+shuffleWordBank();
+
+/* SENTENCE SCRAMBLE */
+const scrambleData={
+  1: ['The spirit', 'of the mountain', 'heard him.'],
+  2: ['He became', 'a stonecutter', 'and he was', 'very happy.']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct;fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* WORD COUNT + VOCAB TRACKER */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
