@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Needs Rain? — RAZ Vocabulary Workbook</title>
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🌧️ Who Needs Rain?</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level F (RAZ)</div>
+    <div class="meta-pill">Reader: Who Needs Rain?</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- SECTION 1: VOCABULARY -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌱</span><span><span class="vocab-word">crops</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">庄稼</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>plants that farmers grow for food, like wheat or corn</div><div class="label">Example</div><div class="vocab-example">"Farmers need rain to grow their crops," the cloud said.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">📦</span><span><span class="vocab-word">goods</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">货物</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>things that are made or grown to be sold or moved</div><div class="label">Example</div><div class="vocab-example">"Ships need rain to move goods over the water," the cloud said.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🚧</span><span><span class="vocab-word">dams</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">水坝</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>big walls built across rivers to hold back water</div><div class="label">Example</div><div class="vocab-example">"Dams need rain to make power," the cloud said.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">⚡</span><span><span class="vocab-word">power</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">电力</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>energy used to run lights, machines, and homes</div><div class="label">Example</div><div class="vocab-example">Dams need rain to make power.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🚒</span><span><span class="vocab-word">firefighters</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">消防员</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>people whose job is to put out fires</div><div class="label">Example</div><div class="vocab-example">"Firefighters need rain to help put out forest fires," the cloud said.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🤔</span><span><span class="vocab-word">wondered</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">想知道；纳闷</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to think about something and want to know the answer</div><div class="label">Example</div><div class="vocab-example">"Who needs rain?" wondered Andy before he went to bed.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">☁️</span><span><span class="vocab-word">cloud</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">云</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a white or gray shape in the sky made of tiny drops of water</div><div class="label">Example</div><div class="vocab-example">Andy dreamed about a cloud.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌊</span><span><span class="vocab-word">rivers</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">河流</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>long lines of water that flow across land</div><div class="label">Example</div><div class="vocab-example">"Fish need rain to keep rivers and lakes full," the cloud said.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">😴</span><span><span class="vocab-word">dreamed</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">做梦</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>had pictures and stories in your mind while sleeping</div><div class="label">Example</div><div class="vocab-example">Andy dreamed about a cloud.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔥</span><span><span class="vocab-word">forest fires</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">森林大火</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>big fires that burn trees in a forest</div><div class="label">Example</div><div class="vocab-example">Firefighters need rain to help put out forest fires.</div></div></div>
+
+</section>
+
+<!-- SECTION 2: STORY -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🏠🌧️ Andy looking out a rainy window, bored, with rain falling outside for days</div><div class="story-text"><div class="story-page-num">Page 3</div>Andy wanted to play outside. Rain kept him inside for three days in a row.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🛏️🤔 Andy lying in bed at night, thinking, before falling asleep</div><div class="story-text"><div class="story-page-num">Page 4</div>"Who needs rain?" <mark>wondered</mark> Andy before he went to bed.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">☁️😄 A big smiling cartoon cloud appearing in Andy's dream</div><div class="story-text"><div class="story-page-num">Page 5</div>Andy <mark>dreamed</mark> about a <mark>cloud</mark>. "Who needs rain?" laughed the cloud.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌾👨‍🌾 A farmer standing in a green field of growing crops</div><div class="story-text"><div class="story-page-num">Page 6</div>"Farmers need rain to grow their <mark>crops</mark>," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🐟🏞️ Fish swimming in a full river next to a lake</div><div class="story-text"><div class="story-page-num">Page 7</div>"Fish need rain to keep <mark>rivers</mark> and lakes full," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🦌💧 Wild animals drinking water from a pond in the forest</div><div class="story-text"><div class="story-page-num">Page 8</div>"Other animals need rain to have water to drink," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🚒🔥 Firefighters spraying water on a burning forest fire</div><div class="story-text"><div class="story-page-num">Page 9</div>"<mark>Firefighters</mark> need rain to help put out <mark>forest fires</mark>," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🚧⚡ A large dam with water flowing through it, generating electricity</div><div class="story-text"><div class="story-page-num">Page 10</div>"<mark>Dams</mark> need rain to make <mark>power</mark>," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🚢📦 A big ship carrying boxes of goods across the water</div><div class="story-text"><div class="story-page-num">Page 11</div>"Ships need rain to move <mark>goods</mark> over the water," the cloud said.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">☀️👩 Andy's mom opening the curtains with sunshine streaming in, waking Andy up</div><div class="story-text"><div class="story-page-num">Page 12</div>"Wake up!" called Andy's mom. "The Sun is finally out," she said. "That's great, but we need rain, too!" said Andy.</div></div></div>
+
+</section>
+
+<!-- SECTION 3: COMPREHENSION -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Rain kept Andy inside for three days in a row.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Andy dreamed about a talking sun.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>The cloud said farmers need rain to grow their crops.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Firefighters need rain to help put out forest fires.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>At the end of the story, Andy says he does not want any more rain.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Why couldn't Andy play outside?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">He was sick</button><button class="opt-btn" onclick="checkTF(this,true)">It was raining</button><button class="opt-btn" onclick="checkTF(this,false)">It was too hot</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Who does Andy meet in his dream?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">His mom</button><button class="opt-btn" onclick="checkTF(this,false)">A farmer</button><button class="opt-btn" onclick="checkTF(this,true)">A cloud</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Why do fish need rain?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">To keep rivers and lakes full</button><button class="opt-btn" onclick="checkTF(this,false)">To grow crops</button><button class="opt-btn" onclick="checkTF(this,false)">To move goods</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>What do dams need rain to make?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">Goods</button><button class="opt-btn" onclick="checkTF(this,true)">Power</button><button class="opt-btn" onclick="checkTF(this,false)">Crops</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>What happens right after Andy wakes up?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">It starts raining again</button><button class="opt-btn" onclick="checkTF(this,true)">His mom says the sun is out</button><button class="opt-btn" onclick="checkTF(this,false)">He goes to the river</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What are two things the cloud says need rain?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at pages 6-11 — farmers, fish, animals, firefighters, dams, and ships all need rain for different reasons.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>How did Andy feel at the start of the story, and how did his feelings about rain change by the end?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: At first Andy just wanted to play outside. After his dream, he tells his mom "we need rain, too!"</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>What do you think is the most important reason we need rain? Why?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+<!-- SECTION 4: PRACTICE -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+
+    <p>1. Farmers need rain to grow their <span class="dz" data-answer="crops" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>.</p>
+    <p>2. Ships need rain to move <span class="dz" data-answer="goods" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> over the water.</p>
+    <p>3. <span class="dz" data-answer="Dams" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> need rain to make power.</p>
+    <p>4. <span class="dz" data-answer="Firefighters" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> need rain to help put out forest fires.</p>
+    <p>5. "Who needs rain?" <span class="dz" data-answer="wondered" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> Andy before he went to bed.</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="crops">crops</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="goods">goods</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="Dams">Dams</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="Firefighters">Firefighters</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="wondered">wondered</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>A big wall built across a river to hold back water is a ______.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">dam</button><button class="opt-btn" onclick="checkTF(this,false)">cloud</button><button class="opt-btn" onclick="checkTF(this,false)">river</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>People whose job is to put out fires are called ______.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">farmers</button><button class="opt-btn" onclick="checkTF(this,true)">firefighters</button><button class="opt-btn" onclick="checkTF(this,false)">fish</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Plants that farmers grow for food are called ______.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">crops</button><button class="opt-btn" onclick="checkTF(this,false)">goods</button><button class="opt-btn" onclick="checkTF(this,false)">power</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+
+  <div class="q-block"><div class="q-text">1. Farmers need rain to grow their ______.</div><input type="text" class="blank-input" id="sc1" placeholder="crops"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','crops')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. Andy ______ about a cloud in his sleep.</div><input type="text" class="blank-input" id="sc2" placeholder="dreamed"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','dreamed')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. Dams need rain to make ______.</div><input type="text" class="blank-input" id="sc3" placeholder="power"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','power')">Check</button></div>
+
+</section>
+
+<!-- SECTION 5: SPEAKING -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Do you like rainy days? Yes or no?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Who does Andy meet in his dream?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What comes out at the end of the story — rain or sun?</div>
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Use the word "crops" to say why farmers need rain.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Use the word "power" to explain what dams need rain for.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Use the word "wondered" to describe what Andy did before bed.</div>
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Why do you think the author chose a cloud to explain rain to Andy?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Can you think of another reason rain is important that the cloud did not mention?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How did Andy's opinion about rain change from the beginning to the end of the story? Why do you think that happened?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>___ need(s) rain to ___. | "Who needs rain?" wondered Andy. | The cloud said... | That's great, but...</em></div>
+
+</section>
+
+<!-- SECTION 6: WRITING -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong> Unscramble the sentence about the farmers.</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'Farmers need rain to grow their crops.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Unscramble the sentence about Andy and his mom.</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'The Sun is finally out, she said.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">Rain kept Andy inside for <input type="text" placeholder="how many"> days.</div>
+  <div class="frame"><input type="text" placeholder="who/what"> need(s) rain to <input type="text" placeholder="reason">.</div>
+  <div class="frame">I think rain is important because <input type="text" placeholder="your reason">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3-4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>crops, goods, dams, power, firefighters, wondered, cloud, rivers, dreamed, forest fires</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="crops">crops</span>
+    <span class="track-chip" data-word="goods">goods</span>
+    <span class="track-chip" data-word="dams">dams</span>
+    <span class="track-chip" data-word="power">power</span>
+    <span class="track-chip" data-word="firefighters">firefighters</span>
+    <span class="track-chip" data-word="wondered">wondered</span>
+    <span class="track-chip" data-word="cloud">cloud</span>
+    <span class="track-chip" data-word="rivers">rivers</span>
+    <span class="track-chip" data-word="dreamed">dreamed</span>
+    <span class="track-chip" data-word="forest fires">forest fires</span>
+  </div>
+
+</section>
+
+<!-- SECTION 7: REVIEW -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">crops ⭐</div><div class="star-word">wondered ⭐</div><div class="star-word">power ⭐</div>
+      <div class="star-word">goods</div><div class="star-word">dams</div><div class="star-word">firefighters</div>
+      <div class="star-word">cloud</div><div class="star-word">rivers</div><div class="star-word">dreamed</div><div class="star-word">forest fires</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">___ need(s) rain to ___.</div>
+      <div class="pattern-line">"___?" wondered Andy before he went to bed.</div>
+      <div class="pattern-line">"That's great, but ___," said Andy.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line">Past tense verbs: dreamed, wondered, laughed, called (add -ed)</div>
+      <div class="pattern-line">"need + to + verb": Farmers need rain to grow their crops.</div>
+      <div class="pattern-line">Quotation marks show exact speech: "Who needs rain?" laughed the cloud.</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">Rain helps farmers, fish, animals, firefighters, dams, and ships.</div>
+      <div class="pattern-line">Andy learned that rain is important, even though he wanted sun.</div>
+      <div class="pattern-line">A dream can teach a character (and the reader) something new.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing Who Needs Rain?!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* NAVIGATION */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* VOCAB CARDS */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* TRUE/FALSE & MULTIPLE CHOICE */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* HINTS */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* MATCH: WORD ↔ MEANING (Section 4A) */
+const matchData=[
+  {word:'crops', meaning:'plants farmers grow for food'},
+  {word:'goods', meaning:'things made or grown to be sold or moved'},
+  {word:'dams', meaning:'big walls built across rivers to hold water'},
+  {word:'power', meaning:'energy that runs lights and machines'},
+  {word:'firefighters', meaning:'people whose job is to put out fires'},
+  {word:'wondered', meaning:'thought about and wanted to know'},
+  {word:'cloud', meaning:'a shape in the sky made of tiny water drops'},
+  {word:'rivers', meaning:'long lines of water flowing across land'},
+  {word:'dreamed', meaning:'had pictures in your mind while sleeping'},
+  {word:'forest fires', meaning:'big fires that burn trees in a forest'}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E) */
+const cnEnData=[
+  {en:'crops', cn:'庄稼'},
+  {en:'goods', cn:'货物'},
+  {en:'dams', cn:'水坝'},
+  {en:'power', cn:'电力'},
+  {en:'firefighters', cn:'消防员'},
+  {en:'wondered', cn:'想知道'},
+  {en:'cloud', cn:'云'},
+  {en:'rivers', cn:'河流'},
+  {en:'dreamed', cn:'做梦'},
+  {en:'forest fires', cn:'森林大火'}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* SENTENCE COMPLETION (Section 4F) */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* DRAG-AND-DROP FILL IN BLANK (Section 4B) */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* SENTENCE SCRAMBLE (Section 6A) */
+const scrambleData={
+  1: ['Farmers','need rain','to grow','their crops.'],
+  2: ['The Sun','is finally','out,','she said.']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const words=shuffle(scrambleData[num]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* WORD COUNT + VOCAB TRACKER (Section 6C) */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>

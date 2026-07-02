@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Lungs — RAZ Vocabulary Workbook</title>
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🫁 My Lungs</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level I (RAZ)</div>
+    <div class="meta-pill">Reader: My Lungs</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- SECTION 1: VOCABULARY -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🫁</span><span><span class="vocab-word">lungs</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">肺</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>parts of the body in the chest that are used for breathing</div><div class="label">Example</div><div class="vocab-example">My lungs are part of a system that keeps me alive.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">💨</span><span><span class="vocab-word">breathe</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">呼吸</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to take in and let out air through the nose or mouth</div><div class="label">Example</div><div class="vocab-example">Oxygen comes from the air I breathe.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌬️</span><span><span class="vocab-word">oxygen</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">氧气</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a gas that has no color, taste, or smell that most animals need to live</div><div class="label">Example</div><div class="vocab-example">My lungs pull oxygen from the air with each breath.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">⚙️</span><span><span class="vocab-word">system</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">系统</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a group of things or ideas that work together</div><div class="label">Example</div><div class="vocab-example">My lungs are part of a system that keeps me alive.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">👄</span><span><span class="vocab-word">throat</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">喉咙</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the inside of the neck where air travels to the lungs and food and drink pass to the stomach</div><div class="label">Example</div><div class="vocab-example">The air moves down my throat into my two lungs.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🍇</span><span><span class="vocab-word">sacs</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">囊袋</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>body parts inside living things shaped like pouches, often holding air or fluid</div><div class="label">Example</div><div class="vocab-example">The tubes end in tiny sacs that look like bunches of grapes.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">☁️</span><span><span class="vocab-word">carbon dioxide</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">二氧化碳</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a waste gas that the body does not need and breathes out</div><div class="label">Example</div><div class="vocab-example">My lungs trade oxygen for carbon dioxide through tiny balloons.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌳</span><span><span class="vocab-word">branch</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">分支</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to split off into smaller parts, like the branches of a tree</div><div class="label">Example</div><div class="vocab-example">It moves through tubes in my lungs that branch like trees.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔄</span><span><span class="vocab-word">trade</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">交换</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to give one thing and get another thing in return</div><div class="label">Example</div><div class="vocab-example">This trade happens with each breath.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🩸</span><span><span class="vocab-word">blood</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">血液</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the red liquid that moves through the body and carries oxygen</div><div class="label">Example</div><div class="vocab-example">My blood drops off the carbon dioxide in the tiny balloons.</div></div></div>
+
+</section>
+
+<!-- SECTION 2: STORY -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🫁 A diagram of a child's chest showing two lungs connected by a windpipe, labeled like a system inside the body</div><div class="story-text"><div class="story-page-num">Page 3</div>My <mark>lungs</mark> are part of a <mark>system</mark> that keeps me alive. My lungs help my body get the <mark>oxygen</mark> it needs.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">💨 An arrow showing air flowing in through the nose down into the lungs</div><div class="story-text"><div class="story-page-num">Page 4</div><mark>Oxygen</mark> comes from the air I <mark>breathe</mark>. My lungs pull oxygen from the air with each breath.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">👃 A close-up cross-section of the nose and throat with tiny hairs shown filtering incoming air</div><div class="story-text"><div class="story-page-num">Page 5</div>Each breath comes into my nose or mouth first. My nose and <mark>throat</mark> warm up and clean the air. Tiny hairs in my nose and throat do the cleaning.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌳 A tree-like diagram of branching airway tubes inside the lungs</div><div class="story-text"><div class="story-page-num">Page 6</div>The air moves down my throat into my two lungs. It moves through tubes in my lungs that <mark>branch</mark> like trees.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🍇 A close-up illustration of tiny balloon-like sacs clustered like bunches of grapes at the end of the airway tubes</div><div class="story-text"><div class="story-page-num">Page 7</div>The tubes end in tiny <mark>sacs</mark> that look like bunches of grapes. The tiny sacs are like balloons.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🔄 A diagram of oxygen and carbon dioxide arrows swapping places inside a tiny balloon-shaped sac</div><div class="story-text"><div class="story-page-num">Page 8</div>My lungs <mark>trade</mark> oxygen for <mark>carbon dioxide</mark> through tiny balloons.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🩸 A diagram of blood carrying carbon dioxide to the lungs and picking up fresh oxygen to carry away</div><div class="story-text"><div class="story-page-num">Page 9-10</div>Carbon dioxide is waste air. My body doesn't need carbon dioxide. My body sends carbon dioxide to my lungs in my <mark>blood</mark>. My blood drops off the carbon dioxide in the tiny balloons. Then, my blood picks up the oxygen and moves it through my body. This <mark>trade</mark> happens with each breath.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🫁 A side-by-side diagram of the chest expanding as a child breathes in and shrinking as the child breathes out</div><div class="story-text"><div class="story-page-num">Page 11-12</div>As I breathe in, my chest moves out. My body makes room for my lungs to fill with oxygen. As I breathe out, my chest moves back in. The carbon dioxide moves out of my lungs.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">📊 A bar graph showing 24 breaths per minute and 1,400 breaths per hour</div><div class="story-text"><div class="story-page-num">Page 13-14</div>I breathe all the time, but I don't think about it. I don't have to think about it. If I did have to think about it, I'd think of nothing else. I take about 24 breaths each minute when I'm resting. That's more than 1,400 breaths each hour.</div></div></div>
+
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">😊 A happy child taking a deep breath outdoors, smiling and thankful</div><div class="story-text"><div class="story-page-num">Page 16</div>I'm thankful that my <mark>lungs</mark> work so hard for me.</div></div></div>
+
+</section>
+
+<!-- SECTION 3: COMPREHENSION -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>The lungs help the body get the oxygen it needs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Air moves into the lungs first through the ears.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>The tubes in the lungs branch like trees and end in tiny sacs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>The body needs to keep carbon dioxide instead of sending it away.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>A resting person takes about 24 breaths every minute.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Where does each breath come into the body first?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">Nose or mouth</button><button class="opt-btn" onclick="checkTF(this,false)">Ears</button><button class="opt-btn" onclick="checkTF(this,false)">Eyes</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>What warms up and cleans the air before it reaches the lungs?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">The blood</button><button class="opt-btn" onclick="checkTF(this,true)">The nose and throat</button><button class="opt-btn" onclick="checkTF(this,false)">The tiny sacs</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>What do the tiny sacs in the lungs look like?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">Long straight tubes</button><button class="opt-btn" onclick="checkTF(this,true)">Bunches of grapes</button><button class="opt-btn" onclick="checkTF(this,false)">Flat leaves</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>What does the blood do in the tiny balloons (sacs)?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">It cleans the nose</button><button class="opt-btn" onclick="checkTF(this,false)">It makes carbon dioxide</button><button class="opt-btn" onclick="checkTF(this,true)">It drops off carbon dioxide and picks up oxygen</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>What happens to the chest when a person breathes in?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">It moves out to make room for oxygen</button><button class="opt-btn" onclick="checkTF(this,false)">It stays completely still</button><button class="opt-btn" onclick="checkTF(this,false)">It moves back in</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>How do the lungs help the body get oxygen? Use details from the book.</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Air comes in through the nose or mouth, moves down the throat, and into tubes that branch and end in tiny sacs where oxygen enters the blood.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>What is the "trade" that happens in the tiny sacs with each breath?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: The blood drops off carbon dioxide (waste) in the sacs and picks up oxygen to carry through the body.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>Do you ever think about your breathing? When do you notice it the most?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+<!-- SECTION 4: PRACTICE -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    <p>1. My <span class="dz" data-answer="lungs" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> help my body get the oxygen it needs.</p>
+    <p>2. I take a deep breath through my nose and <span class="dz" data-answer="throat" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>.</p>
+    <p>3. The tubes end in tiny <span class="dz" data-answer="sacs" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> that look like bunches of grapes.</p>
+    <p>4. My lungs <span class="dz" data-answer="trade" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> oxygen for carbon dioxide.</p>
+    <p>5. My <span class="dz" data-answer="blood" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> moves oxygen through my body.</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="lungs">lungs</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="throat">throat</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="sacs">sacs</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="trade">trade</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="blood">blood</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Which word means "a gas the body needs to live"?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">oxygen</button><button class="opt-btn" onclick="checkTF(this,false)">carbon dioxide</button><button class="opt-btn" onclick="checkTF(this,false)">throat</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Which word means "to take in and let out air"?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">branch</button><button class="opt-btn" onclick="checkTF(this,true)">breathe</button><button class="opt-btn" onclick="checkTF(this,false)">trade</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Which word means "a group of things that work together"?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">sacs</button><button class="opt-btn" onclick="checkTF(this,false)">blood</button><button class="opt-btn" onclick="checkTF(this,true)">system</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+
+  <div class="q-block"><div class="q-text">1. My ______ pull oxygen from the air with each breath.</div><input type="text" class="blank-input" id="sc1" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','lungs')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. My lungs ______ oxygen for carbon dioxide through tiny balloons.</div><input type="text" class="blank-input" id="sc2" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','trade')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. My ______ moves the oxygen through my body.</div><input type="text" class="blank-input" id="sc3" placeholder="word"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','blood')">Check</button></div>
+
+</section>
+
+<!-- SECTION 5: SPEAKING -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>What do your lungs do?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What gas do you breathe in?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What gas do you breathe out?</div>
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Explain what happens when air enters your nose and throat.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Describe the tiny sacs at the end of the tubes in your lungs.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Explain the trade that happens between your blood and your lungs.</div>
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Why do you think it is important to understand how your lungs work?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Why don't we usually think about breathing, even though we do it all the time?</div>
+    <div class="speak-q"><span class="mic">🎤</span>If you could design a poster to teach kids about the lungs, what would you include?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>My lungs help... | Oxygen comes from... | The air moves through... | My body sends... | This trade happens with each breath.</em></div>
+
+</section>
+
+<!-- SECTION 6: WRITING -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong> Unscramble the sentence about oxygen.</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'My lungs pull oxygen from the air with each breath.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Unscramble the sentence about the tiny sacs.</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'The tubes end in tiny sacs that look like bunches of grapes.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">My <input type="text" placeholder="lungs"> help my body get the <input type="text" placeholder="oxygen"> it needs.</div>
+  <div class="frame">Air moves through my <input type="text" placeholder="throat"> and into my <input type="text" placeholder="lungs">.</div>
+  <div class="frame">My blood picks up <input type="text" placeholder="oxygen"> and drops off <input type="text" placeholder="carbon dioxide">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3-4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>lungs, breathe, oxygen, system, throat, sacs, carbon dioxide, branch, trade, blood</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="lungs">lungs</span>
+    <span class="track-chip" data-word="breathe">breathe</span>
+    <span class="track-chip" data-word="oxygen">oxygen</span>
+    <span class="track-chip" data-word="system">system</span>
+    <span class="track-chip" data-word="throat">throat</span>
+    <span class="track-chip" data-word="sacs">sacs</span>
+    <span class="track-chip" data-word="carbon dioxide">carbon dioxide</span>
+    <span class="track-chip" data-word="branch">branch</span>
+    <span class="track-chip" data-word="trade">trade</span>
+    <span class="track-chip" data-word="blood">blood</span>
+  </div>
+
+</section>
+
+<!-- SECTION 7: REVIEW -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">lungs ⭐</div><div class="star-word">oxygen ⭐</div><div class="star-word">breathe ⭐</div>
+      <div class="star-word">system</div><div class="star-word">throat</div><div class="star-word">sacs</div>
+      <div class="star-word">carbon dioxide</div><div class="star-word">branch</div><div class="star-word">trade</div><div class="star-word">blood</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">My lungs help my body get ___.</div>
+      <div class="pattern-line">The air moves through ___ into ___.</div>
+      <div class="pattern-line">My lungs trade ___ for ___.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line">Simple present tense for facts: "My lungs pull oxygen from the air."</div>
+      <div class="pattern-line">Time clauses with "as": "As I breathe in, my chest moves out."</div>
+      <div class="pattern-line">Relative clauses with "that": "tubes in my lungs that branch like trees."</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">Air enters through the nose or mouth, gets warmed and cleaned, then travels down the throat.</div>
+      <div class="pattern-line">Tiny sacs in the lungs trade oxygen for carbon dioxide with the blood.</div>
+      <div class="pattern-line">A resting person breathes about 24 times a minute — more than 1,400 times an hour!</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing My Lungs!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* NAVIGATION */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* VOCAB CARDS */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* TRUE/FALSE & MULTIPLE CHOICE */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* HINTS */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* MATCH: WORD ↔ MEANING (Section 4A) */
+const matchData=[
+  {word:'lungs', meaning:'body parts in the chest used for breathing'},
+  {word:'breathe', meaning:'to take in and let out air'},
+  {word:'oxygen', meaning:'a gas the body needs to live'},
+  {word:'system', meaning:'a group of things that work together'},
+  {word:'throat', meaning:'the inside of the neck where air travels'},
+  {word:'sacs', meaning:'tiny pouches that hold air or fluid'},
+  {word:'carbon dioxide', meaning:'waste gas the body sends out'},
+  {word:'branch', meaning:'to split into smaller parts like a tree'},
+  {word:'trade', meaning:'to give one thing and get another'},
+  {word:'blood', meaning:'red liquid that carries oxygen through the body'}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E) */
+const cnEnData=[
+  {en:'lungs', cn:'肺'},
+  {en:'breathe', cn:'呼吸'},
+  {en:'oxygen', cn:'氧气'},
+  {en:'system', cn:'系统'},
+  {en:'throat', cn:'喉咙'},
+  {en:'sacs', cn:'囊袋'},
+  {en:'carbon dioxide', cn:'二氧化碳'},
+  {en:'branch', cn:'分支'},
+  {en:'trade', cn:'交换'},
+  {en:'blood', cn:'血液'}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* SENTENCE COMPLETION (Section 4F) */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* DRAG-AND-DROP FILL IN BLANK (Section 4B) */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* SENTENCE SCRAMBLE (Section 6A) */
+const scrambleData={
+  1: ['My lungs','pull','oxygen','from the air','with each breath.'],
+  2: ['The tubes','end in','tiny sacs','that look like','bunches of grapes.']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const words=shuffle(scrambleData[num]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* WORD COUNT + VOCAB TRACKER (Section 6C) */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
