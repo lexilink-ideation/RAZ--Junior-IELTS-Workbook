@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beekeeper — RAZ Vocabulary Workbook</title>
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .speaker{font-weight:800;color:var(--blue);}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .word-chip.selected{background:var(--accent);color:#3a2400;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  <h1>🐝 The Beekeeper</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    <div class="meta-pill level">Level T (RAZ)</div>
+    <div class="meta-pill">Reader: The Beekeeper</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+<!-- SECTION 1: VOCABULARY -->
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌼</span><span><span class="vocab-word">anther</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">花药</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the male part of a flower that makes pollen</div><div class="label">Example</div><div class="vocab-example">Inside every flower, an anther produces pollen.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">💨</span><span><span class="vocab-word">bellows</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">风箱</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a tool that pushes out air when you squeeze it</div><div class="label">Example</div><div class="vocab-example">A smoker is a small can with a bellows on it.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">⬡</span><span><span class="vocab-word">cells</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">巢房；小格</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the small six-sided cups that make up a honeycomb</div><div class="label">Example</div><div class="vocab-example">The bees form the wax into the six-sided cells of the honeycomb.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">👥</span><span><span class="vocab-word">congregate</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">聚集</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to come together in a group in one place</div><div class="label">Example</div><div class="vocab-example">Every day the drones congregate outside the hive.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🍯</span><span><span class="vocab-word">extract</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">提取；取出</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to take something out of a place or a thing</div><div class="label">Example</div><div class="vocab-example">I carry it into the honey house, where I extract the honey.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🍞</span><span><span class="vocab-word">honeycomb</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">蜂巢；蜂窝</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>layers of wax cells that bees build inside a hive</div><div class="label">Example</div><div class="vocab-example">I have to lift the honeycomb out of the hives.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🏳️</span><span><span class="vocab-word">native</span><span class="vocab-pos">(adj.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">本土的；原产的</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>belonging to a place because it grew or was born there</div><div class="label">Example</div><div class="vocab-example">America actually has no native honeybees.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">💧</span><span><span class="vocab-word">nectar</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">花蜜</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the sweet liquid that bees collect from flowers</div><div class="label">Example</div><div class="vocab-example">They make honey from nectar, the liquid they collect from flowers.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌷</span><span><span class="vocab-word">pistil</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">雌蕊</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the female part of a flower that makes seeds</div><div class="label">Example</div><div class="vocab-example">There is also a pistil, which produces seeds.</div></div></div>
+
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🟡</span><span><span class="vocab-word">pollen</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">花粉</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>male flower cells that look like fine yellow dust</div><div class="label">Example</div><div class="vocab-example">When a bee goes into a flower, pollen from the anther rubs onto the bee.</div></div></div>
+
+</section>
+
+<!-- SECTION 2: STORY -->
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the interview. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  <div class="story-card"><div class="story-img-wrap">🧑‍🌾 A smiling man in a white bee suit standing beside a row of wooden hives</div><div class="story-text"><div class="story-page-num">Page 3</div>Russell “Buzz” Riopelle is a beekeeper in the Cleveland, Ohio, area. He has been keeping bees for 30 years.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🐝 A close-up of a honeybee resting on a fingertip</div><div class="story-text"><div class="story-page-num">Page 4 · The Work of a Beekeeper</div><span class="speaker">Interviewer:</span> Did you get the name “Buzz” because you keep bees?<br><span class="speaker">Buzz:</span> No, my parents started calling me Buzz before I was born.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🚚 A pickup truck loaded with stacked honey boxes and a bee blower</div><div class="story-text"><div class="story-page-num">Page 5</div><span class="speaker">Interviewer:</span> How much work is involved in beekeeping?<br><span class="speaker">Buzz:</span> There’s a lot of work, and it has to be done at the correct time. A one- or two-week delay can affect your honey crop drastically. You have to make sure the queen is laying eggs. You have to look at your bees every two to three weeks to make sure everything is all right. Removing the honey is a lot of heavy work. I have to lift the <mark>honeycomb</mark> out of the hives and put it on the truck. Then I carry it into the honey house, where I <mark>extract</mark> the honey.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">💨 A beekeeper pouring white smoke from a metal smoker over an open hive</div><div class="story-text"><div class="story-page-num">Page 6</div><span class="speaker">Interviewer:</span> What kind of equipment do you need?<br><span class="speaker">Buzz:</span> I wear a bee suit to keep my clothes clean. I also wear a veil over my head to protect my eyes and head from stings. I use a smoker to calm the bees. That’s a small can with a <mark>bellows</mark> on it. I build a little fire in there and put the lid on. When you blow smoke on the bees, they think it’s a forest fire. They fill their stomachs with honey in case they have to leave their tree. That’s why smoke seems to calm them, because it keeps them busy.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">✋ Bare hands lifting a wooden box covered with crawling bees</div><div class="story-text"><div class="story-page-num">Page 7 · Life in the Hive</div><span class="speaker">Interviewer:</span> Tell me about the kinds of bees.<br><span class="speaker">Buzz:</span> There are queens, drones, and workers. The queens and workers are female, and the drones are male. All the bees in the hive come from eggs laid by the queen. In the springtime she lays 1,500 to 2,000 eggs a day. Drones are only useful for mating. They don’t work at all. Every day they <mark>congregate</mark> outside the hive, waiting for a queen to fly by. Then they race after her and mate with her.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🔍 Three photos stacked top to bottom: a worker bee, a drone, and a queen honeybee</div><div class="story-text"><div class="story-page-num">Page 8</div><span class="speaker">Interviewer:</span> How often do you get stung?<br><span class="speaker">Buzz:</span> I get stung a couple thousand times a year because I don’t wear gloves. Gloves are bulky and hard to keep clean, so they can spread disease. I don’t swell up from stings anymore, but they still hurt. I work the bees on nice sunny days around two o’clock in the afternoon when all the flowers are producing <mark>nectar</mark>. When half the bees are out collecting <mark>nectar</mark>, I only have to deal with the other half.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🥚 A honeycomb full of tiny white eggs standing on end inside the cells</div><div class="story-text"><div class="story-page-num">Page 9</div><span class="speaker">Interviewer:</span> I thought the queen never left the hive. She flies around?<br><span class="speaker">Buzz:</span> She makes short flights to mate. Other than that, she only leaves to swarm. If a second queen develops in the hive, the colony divides. The new queen stays in the old location. The old queen and half the bees find a new place to live. They fill their stomachs with two or three days’ supply of honey. They find another place to build a <mark>honeycomb</mark>. Then they store the honey in this new comb and start laying eggs.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🕯️ Beeswax candles and pots of lip balm made from wax</div><div class="story-text"><div class="story-page-num">Page 10 · Do You Know?</div>Bees make beeswax from glands on their bellies. They scrape thin sheets of wax off their bellies with their legs. Then they form the wax into the six-sided <mark>cells</mark> of the <mark>honeycomb</mark>. People use beeswax to make candles, lip gloss, moisturizer, and decorations. For health reasons, people eat <mark>pollen</mark> and “royal jelly,” a special food that bees make for the queen. Honey is also used in many health and beauty products.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">👑 A large queen bee in the centre, surrounded by smaller worker bees</div><div class="story-text"><div class="story-page-num">Page 11</div><span class="speaker">Interviewer:</span> How long do bees live?<br><span class="speaker">Buzz:</span> Queens can live two to three years. In the summertime, drones and workers live for only four to six weeks because their wings wear out. In the winter they live longer because they don’t fly. In the wintertime, they eat honey and shiver to generate heat. When it’s 5 degrees below zero (Fahrenheit; –20° C) outside, it’s 95 degrees (Fahrenheit; 35° C) in the center of the beehive. This keeps the colony alive during the winter.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">📦 An open beehive box showing a row of wooden frames inside</div><div class="story-text"><div class="story-page-num">Page 12</div><span class="speaker">Interviewer:</span> How many bees live in a hive?<br><span class="speaker">Buzz:</span> In the summertime, there can be 60,000 to 80,000.<br><span class="speaker">Interviewer:</span> How do bees find their way back to the hive?<br><span class="speaker">Buzz:</span> When they leave the hive, they notice where the sun is in the sky. When they come back, they use the sun to find their way. On cloudy or rainy days, bees don’t fly because they can’t see the sun. The <mark>honeycomb</mark> is where bees lay eggs, raise their young, and store <mark>pollen</mark> and honey.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🐝 Six photos of different insects: bumblebee, carpenter bee, hornet, potter wasp, spider wasp, European wasp</div><div class="story-text"><div class="story-page-num">Page 13 · Types of Bees</div><span class="speaker">Interviewer:</span> Are there different kinds of honeybees?<br><span class="speaker">Buzz:</span> There are different kinds of bees from different places. Caucasian bees come from the Caucasus Mountains in Europe. Italian bees come from Italy, and there are bees from Africa. These are all honeybees. America actually has no <mark>native</mark> honeybees. The Pilgrims and settlers brought bees from Europe on their ships. Then those bees flew all over the United States and built hives.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">⚠️ A dense cloud of angry bees swarming around a hive entrance</div><div class="story-text"><div class="story-page-num">Page 14</div><span class="speaker">Interviewer:</span> What’s the difference between honeybees and “killer bees”?<br><span class="speaker">Buzz:</span> There is no difference, other than where they come from. They produce honey just like regular bees. A scientist from South America bred bees from Africa with South American bees. But the Africanized bees he created are easily riled up. Hundreds or thousands of bees will attack one animal or person. The Africanized bees, which some people call “killer bees,” come into a beehive, kick out the bees that live there, and take over. People have been trying to get rid of them for thirty years. But Africanized bees and honeybees do the same job.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🪝 A close-up of a hooked stinger pushing into skin, next to a venom sac</div><div class="story-text"><div class="story-page-num">Page 15 · Do You Know?</div>Both queen and worker bees have stingers. A worker bee’s stinger has a hook on the end. When a worker bee stings, the stinger pulls out some of its insides. This kills the bee, so a bee will only sting when its life, or the hive, is at risk. The queen bee has a smooth stinger, so she can sting over and over. Some people are allergic to bee stings and must carry a special medicine with them.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🌸 A bee covered in yellow dust, drinking from an open flower</div><div class="story-text"><div class="story-page-num">Page 16 · Making Honey</div><span class="speaker">Interviewer:</span> Do bees use <mark>pollen</mark> to make honey?<br><span class="speaker">Buzz:</span> No, they make honey from <mark>nectar</mark>, the liquid they collect from flowers. The bee goes to the flower and eats the <mark>nectar</mark>, putting it into her honey stomach. She flies back to the beehive, spits the <mark>nectar</mark> out, and other bees store it in the comb. Then bees fan their wings to evaporate water from the <mark>nectar</mark> and make it thicker.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🌼 A labelled diagram of a flower showing the petals, pistil, anther, and stem</div><div class="story-text"><div class="story-page-num">Page 17</div>But the biggest purpose of bees in this country is not to make honey. Their purpose is to pollinate crops like alfalfa, an important animal feed, and melons and almonds. Inside every flower, an <mark>anther</mark> produces <mark>pollen</mark>. This is a powder that contains the male <mark>cells</mark> of the plant. There is also a <mark>pistil</mark>, which produces seeds when <mark>pollen</mark> from another flower brushes on it. When a bee goes into a flower to get <mark>nectar</mark>, <mark>pollen</mark> from the <mark>anther</mark> rubs onto the bee. When she goes to the next flower, the <mark>pollen</mark> rubs onto the <mark>pistil</mark>.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🍯 Jars of honey in many different colours, from pale gold to dark amber</div><div class="story-text"><div class="story-page-num">Page 18</div>Different flowers have different flavors of <mark>nectar</mark>. Orange-blossom honey tastes different from apple-blossom honey. People with orchards don’t have time to keep bees, so they rent bees from me. I take my bees into their orchard at night and leave them for a week or two. After the flowers have fallen off the trees, I take the bees home. When I take my bees to an apple orchard, I get apple-blossom honey. If I took them to an orange orchard, I’d get orange-blossom honey.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🖼️ A wooden frame of honeycomb, with capped honey around the outside and pollen in the centre</div><div class="story-text"><div class="story-page-num">Page 19</div><span class="speaker">Interviewer:</span> How much honey do you get from one beehive?<br><span class="speaker">Buzz:</span> Between 60 and 350 pounds (27–159 kg) of honey a year, depending on the location and how hardworking the bees are. Bees are like people. Some people get up early and work.</div></div>
+
+  <div class="story-card"><div class="story-img-wrap">🏭 A honey house with a heating tank, a filter bag, and a bucket of golden honey</div><div class="story-text"><div class="story-page-num">Page 20</div><span class="speaker">Interviewer:</span> How do you get the honey out of the comb?<br><span class="speaker">Buzz:</span> A wax cap seals the <mark>honeycomb</mark>. I have to cut off the capping and then put the frame into a machine that spins around. This makes the honey fly out of the <mark>cells</mark>. I give the comb back to the bees, and they fill it up again. After the honey comes out, I heat it to thin it. Then I filter out the wax and put the honey in jars.</div></div>
+
+</section>
+
+<!-- SECTION 3: COMPREHENSION -->
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the interview.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Buzz got his nickname because he keeps bees.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>In the springtime, the queen lays 1,500 to 2,000 eggs a day.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Bees make honey out of pollen.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>America has no native honeybees.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>Bees do not fly on cloudy or rainy days because they cannot see the sun.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>What does Buzz use to calm the bees?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">a veil</button><button class="opt-btn" onclick="checkTF(this,true)">a smoker</button><button class="opt-btn" onclick="checkTF(this,false)">thick gloves</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Why does Buzz not wear gloves?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">They cost too much money.</button><button class="opt-btn" onclick="checkTF(this,true)">They are bulky and can spread disease.</button><button class="opt-btn" onclick="checkTF(this,false)">The bees do not like the colour.</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>In the summertime, how many bees can live in one hive?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">600 to 800</button><button class="opt-btn" onclick="checkTF(this,false)">6,000 to 8,000</button><button class="opt-btn" onclick="checkTF(this,true)">60,000 to 80,000</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Which part of a flower produces pollen?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">the pistil</button><button class="opt-btn" onclick="checkTF(this,false)">the stem</button><button class="opt-btn" onclick="checkTF(this,true)">the anther</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>How does Buzz get the honey out of the comb?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">He cuts off the wax capping and spins the frame in a machine.</button><button class="opt-btn" onclick="checkTF(this,false)">He melts the whole comb over a fire.</button><button class="opt-btn" onclick="checkTF(this,false)">He waits for the bees to carry it into jars.</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What is a bellows, and how does Buzz use it?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at page 6. It is part of the smoker, and it blows air onto a little fire.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>Buzz says the biggest purpose of bees is not making honey. What is it, and why does it matter?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at page 17. Think about alfalfa, melons, and almonds — and how pollen moves from the anther to the pistil.</div></div>
+
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>Buzz gets stung a couple thousand times a year but still loves his job. Would you like to be a beekeeper? Why or why not?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+<!-- SECTION 4: PRACTICE -->
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+
+    <p>1. Buzz carries the boxes into the honey house, where he will <span class="dz" data-answer="extract" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> the honey.</p>
+    <p>2. Every day the drones <span class="dz" data-answer="congregate" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> outside the hive and wait for a queen.</p>
+    <p>3. Bees build a <span class="dz" data-answer="honeycomb" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> out of six-sided wax cells.</p>
+    <p>4. America has no <span class="dz" data-answer="native" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> honeybees, so settlers brought them from Europe.</p>
+    <p>5. The anther of a flower makes <span class="dz" data-answer="pollen" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>, a fine yellow powder.</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="extract">extract</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="congregate">congregate</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="honeycomb">honeycomb</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="native">native</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="pollen">pollen</div>
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">1.</span>The ______ is the female part of the flower that produces seeds.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">anther</button><button class="opt-btn" onclick="checkTF(this,true)">pistil</button><button class="opt-btn" onclick="checkTF(this,false)">bellows</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Bees collect ______ from flowers and turn it into honey.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">pollen</button><button class="opt-btn" onclick="checkTF(this,false)">beeswax</button><button class="opt-btn" onclick="checkTF(this,true)">nectar</button></div><div class="feedback"></div></div>
+
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>The six-sided cups that form a honeycomb are called ______.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">cells</button><button class="opt-btn" onclick="checkTF(this,false)">frames</button><button class="opt-btn" onclick="checkTF(this,false)">hives</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+
+  <div class="q-block"><div class="q-text">1. A smoker is a small can with a ______ on it that blows air onto a little fire.</div><input type="text" class="blank-input" id="sc1" placeholder="tool"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','bellows')">Check</button></div>
+
+  <div class="q-block"><div class="q-text">2. Drones ______ outside the hive every day, waiting for a queen to fly by.</div><input type="text" class="blank-input" id="sc2" placeholder="verb"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','congregate')">Check</button></div>
+
+  <div class="q-block"><div class="q-text">3. Inside every flower, an ______ produces pollen.</div><input type="text" class="blank-input" id="sc3" placeholder="flower part"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','anther')">Check</button></div>
+
+</section>
+
+<!-- SECTION 5: SPEAKING -->
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Where does Buzz keep his bees?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How long has Buzz been a beekeeper?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Do bees make honey from pollen or from nectar?</div>
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Describe what a beekeeper wears, and explain why.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Explain how a bee turns nectar into honey.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Tell me about the three kinds of bees in a hive and what each one does.</div>
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+    <div class="speak-q"><span class="mic">🎤</span>Why are bees so important to farmers and to the food we eat?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What do you think would happen if all the bees disappeared?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Buzz has done the same job for 30 years. What makes someone love a job for that long?</div>
+  </div>
+
+  <div class="card"><strong>Useful phrases:</strong> <em>I use a ... to ... | They ... because ... | The ... produces ... | He has been ...ing for ... years | In the interview, Buzz says...</em></div>
+
+</section>
+
+<!-- SECTION 6: WRITING -->
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    <p><strong>1.</strong> Put the chunks in order to make a sentence.</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'I use a smoker to calm the bees')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Put the chunks in order to make a sentence.</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'Bees make honey from nectar, the liquid they collect from flowers')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  <div class="frame">A beekeeper uses a <input type="text" placeholder="tool"> to <input type="text" placeholder="verb"> the bees.</div>
+  <div class="frame">Bees collect <input type="text" placeholder="what"> from <input type="text" placeholder="where"> and store it in the <input type="text" placeholder="place">.</div>
+  <div class="frame">I think bees are important because <input type="text" placeholder="reason" style="width:220px;">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  <p>Write 3-4 sentences about the interview. Use at least <strong>three</strong> vocabulary words: <em>anther, bellows, cells, congregate, extract, honeycomb, native, nectar, pistil, pollen</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read an interview with a beekeeper named Buzz..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    <span class="track-chip" data-word="anther">anther</span>
+    <span class="track-chip" data-word="bellows">bellows</span>
+    <span class="track-chip" data-word="cells">cells</span>
+    <span class="track-chip" data-word="congregate">congregate</span>
+    <span class="track-chip" data-word="extract">extract</span>
+    <span class="track-chip" data-word="honeycomb">honeycomb</span>
+    <span class="track-chip" data-word="native">native</span>
+    <span class="track-chip" data-word="nectar">nectar</span>
+    <span class="track-chip" data-word="pistil">pistil</span>
+    <span class="track-chip" data-word="pollen">pollen</span>
+  </div>
+
+</section>
+
+<!-- SECTION 7: REVIEW -->
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      <div class="star-word">pollen ⭐</div><div class="star-word">nectar ⭐</div><div class="star-word">honeycomb ⭐</div>
+      <div class="star-word">anther</div><div class="star-word">pistil</div><div class="star-word">cells</div>
+      <div class="star-word">bellows</div><div class="star-word">congregate</div><div class="star-word">extract</div><div class="star-word">native</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      <div class="pattern-line">I use a ___ to ___ the bees.</div>
+      <div class="pattern-line">They ___ because ___.</div>
+      <div class="pattern-line">Inside every flower, an ___ produces ___.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      <div class="pattern-line"><strong>Simple present for facts:</strong> “Bees make honey from nectar.”</div>
+      <div class="pattern-line"><strong>Present perfect continuous + for:</strong> “He has been keeping bees for 30 years.”</div>
+      <div class="pattern-line"><strong>Appositive (a noun phrase that renames):</strong> “nectar, the liquid they collect from flowers”</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      <div class="pattern-line">A hive holds three kinds of bees: one queen, male drones, and female workers.</div>
+      <div class="pattern-line">Honey comes from nectar, not pollen. Bees fan their wings to make it thicker.</div>
+      <div class="pattern-line">The most important job of bees is pollinating crops such as alfalfa, melons, and almonds.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing The Beekeeper!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* NAVIGATION */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* VOCAB CARDS */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* TRUE/FALSE & MULTIPLE CHOICE */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* HINTS */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* MATCH: WORD ↔ MEANING (Section 4A) */
+const matchData=[
+  {word:'anther', meaning:'the male part of a flower that makes pollen'},
+  {word:'bellows', meaning:'a tool that pushes out air when you squeeze it'},
+  {word:'cells', meaning:'the six-sided cups that form a honeycomb'},
+  {word:'congregate', meaning:'to gather together in one place'},
+  {word:'extract', meaning:'to take something out'},
+  {word:'honeycomb', meaning:'layers of wax cells built inside a hive'},
+  {word:'native', meaning:'belonging to a place by birth'},
+  {word:'nectar', meaning:'the sweet liquid bees collect from flowers'},
+  {word:'pistil', meaning:'the female part of a flower that makes seeds'},
+  {word:'pollen', meaning:'male flower cells that look like yellow dust'}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E) */
+const cnEnData=[
+  {en:'anther', cn:'花药'},
+  {en:'bellows', cn:'风箱'},
+  {en:'cells', cn:'巢房'},
+  {en:'congregate', cn:'聚集'},
+  {en:'extract', cn:'提取'},
+  {en:'honeycomb', cn:'蜂巢'},
+  {en:'native', cn:'本土的'},
+  {en:'nectar', cn:'花蜜'},
+  {en:'pistil', cn:'雌蕊'},
+  {en:'pollen', cn:'花粉'}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* SENTENCE COMPLETION (Section 4F) */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* DRAG-AND-DROP FILL IN BLANK (Section 4B) */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+function shuffleWordBank(){const bank=document.getElementById('wordBank');const chips=shuffle(Array.from(bank.children));chips.forEach(c=>bank.appendChild(c));}
+shuffleWordBank();
+
+/* SENTENCE SCRAMBLE (Section 6A) */
+const scrambleData={
+  1: ['I use','a smoker','to calm','the bees'],
+  2: ['Bees','make honey','from nectar,','the liquid','they collect','from flowers']
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* WORD COUNT + VOCAB TRACKER (Section 6C) */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+</body>
+</html>
