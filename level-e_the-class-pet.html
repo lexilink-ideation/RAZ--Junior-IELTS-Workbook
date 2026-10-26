@@ -457,5 +457,71 @@ buildScramble(1);buildScramble(2);function shuffleWordBank(){const wb=document.g
 /* WORD COUNT + VOCAB TRACKER */
 function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
 </script>
+<!-- ===== STORY AUDIO (browser text-to-speech) ===== -->
+<style>
+  .audio-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;margin-bottom:16px;}
+  .audio-bar .audio-title{font-weight:800;color:var(--teal-dark);margin-right:auto;}
+  .audio-btn{border:none;cursor:pointer;font-family:inherit;font-weight:800;border-radius:999px;padding:8px 18px;font-size:0.9rem;background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.3);}
+  .audio-btn.stop{background:linear-gradient(120deg,#e8895c,#ffb347);}
+  .audio-btn.speed{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .page-audio{float:right;border:none;background:#eaf4f2;border-radius:999px;width:38px;height:38px;font-size:1.15rem;cursor:pointer;margin-left:10px;}
+  .page-audio:hover{background:var(--teal-light);}
+  .story-card.reading{outline:3px solid var(--accent);background:#fffaf0;}
+</style>
+<script>
+(function(){
+  if(!('speechSynthesis' in window)||!document.querySelector('.story-card'))return;
+  var synth=window.speechSynthesis,slow=false,queue=[],playing=false,voice=null;
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.story-card'));
+  function pickVoice(){
+    var vs=synth.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang);});
+    var pref=['Samantha','Google US English','Ava','Allison','Karen','Serena','Moira','Aria','Jenny'];
+    for(var i=0;i<pref.length;i++){var f=vs.find(function(v){return v.name.indexOf(pref[i])>-1;});if(f){voice=f;return;}}
+    voice=vs.find(function(v){return /en[-_]US/i.test(v.lang);})||vs[0]||null;
+  }
+  pickVoice();if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=pickVoice;
+  function textOf(card){
+    var t=card.querySelector('.story-text').cloneNode(true);
+    Array.prototype.forEach.call(t.querySelectorAll('.story-page-num,.page-audio'),function(n){n.remove();});
+    Array.prototype.forEach.call(t.querySelectorAll('br'),function(b){b.replaceWith(' ');});
+    return t.textContent.replace(/\s+/g,' ').trim();
+  }
+  function clearHL(){cards.forEach(function(c){c.classList.remove('reading');});}
+  function stopAll(){queue=[];playing=false;synth.cancel();clearHL();var p=document.getElementById('playAllBtn');if(p)p.textContent='▶ Play all pages';}
+  function speak(card,done){
+    var u=new SpeechSynthesisUtterance(textOf(card));
+    u.lang='en-US';u.rate=slow?0.6:0.85;u.pitch=1.05;if(voice)u.voice=voice;
+    clearHL();card.classList.add('reading');
+    u.onend=function(){card.classList.remove('reading');if(done)done();};
+    u.onerror=function(){card.classList.remove('reading');if(done)done();};
+    synth.speak(u);
+  }
+  function playOne(card){stopAll();setTimeout(function(){speak(card);},80);}
+  function next(){
+    if(!playing||!queue.length){stopAll();return;}
+    var c=queue.shift();c.scrollIntoView({behavior:'smooth',block:'center'});
+    speak(c,function(){if(playing)setTimeout(next,350);});
+  }
+  function playAll(){stopAll();playing=true;queue=cards.slice();document.getElementById('playAllBtn').textContent='⏸ Playing…';setTimeout(next,80);}
+  cards.forEach(function(card){
+    var b=document.createElement('button');b.className='page-audio';b.type='button';b.title='Listen to this page';b.textContent='🔊';
+    b.onclick=function(){playOne(card);};
+    var st=card.querySelector('.story-text');st.insertBefore(b,st.firstChild);
+  });
+  var sec=cards[0].closest('.section'),sub=sec.querySelector('.section-sub');
+  var bar=document.createElement('div');bar.className='audio-bar';
+  bar.innerHTML='<span class="audio-title">🎧 Listen to the story 听故事</span>'+
+    '<button type="button" class="audio-btn" id="playAllBtn">▶ Play all pages</button>'+
+    '<button type="button" class="audio-btn stop" id="stopBtn">■ Stop</button>'+
+    '<button type="button" class="audio-btn speed" id="speedBtn">🐢 Slow: OFF</button>';
+  sub.parentNode.insertBefore(bar,sub.nextSibling);
+  document.getElementById('playAllBtn').onclick=playAll;
+  document.getElementById('stopBtn').onclick=stopAll;
+  document.getElementById('speedBtn').onclick=function(){slow=!slow;this.textContent='🐢 Slow: '+(slow?'ON':'OFF');};
+  if(typeof window.showSection==='function'){var orig=window.showSection;window.showSection=function(i){stopAll();return orig(i);};}
+  window.addEventListener('pagehide',stopAll);
+})();
+</script>
+<!-- ===== END STORY AUDIO ===== -->
 </body>
 </html>
