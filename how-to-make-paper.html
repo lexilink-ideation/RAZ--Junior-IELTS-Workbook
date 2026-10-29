@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Make Paper — RAZ Vocabulary Workbook</title>
+
+
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  
+  <h1>📜 How to Make Paper</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    
+    <div class="meta-pill level">Level I (RAZ)</div>
+    <div class="meta-pill">Reader: How to Make Paper</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  
+
+    <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🧰</span><span><span class="vocab-word">supplies</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">用品；材料</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the things needed for a task</div><div class="label">Example</div><div class="vocab-example">You just need a few supplies and some help from an adult.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🏭</span><span><span class="vocab-word">mills</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">工厂；磨坊</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>buildings where things like paper are made</div><div class="label">Example</div><div class="vocab-example">Paper is often made with machines in big mills.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">✂️</span><span><span class="vocab-word">rip</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">撕</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to tear something into pieces</div><div class="label">Example</div><div class="vocab-example">Rip the paper into small pieces.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌀</span><span><span class="vocab-word">blend</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">搅拌；混合</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to mix things together</div><div class="label">Example</div><div class="vocab-example">Blend the paper and water on high for ten seconds.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🥣</span><span><span class="vocab-word">pulp</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">纸浆</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a mass of soft, wet material</div><div class="label">Example</div><div class="vocab-example">The paper and water will turn into pulp.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🖼️</span><span><span class="vocab-word">frame</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">框架</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>solid parts that surround something for support</div><div class="label">Example</div><div class="vocab-example">This is the frame for your paper.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🫗</span><span><span class="vocab-word">pour</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">倒；注入</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to make a liquid flow out of a container</div><div class="label">Example</div><div class="vocab-example">Pour three cups of warm water into the blender.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🧽</span><span><span class="vocab-word">sponge</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">海绵</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a soft thing that soaks up water</div><div class="label">Example</div><div class="vocab-example">Press a sponge on the pulp to soak up the extra water.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🧶</span><span><span class="vocab-word">felt</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">毛毡</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a thick, soft cloth made from wool</div><div class="label">Example</div><div class="vocab-example">Place two pieces of felt on top of the newspaper.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🫳</span><span><span class="vocab-word">peel</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">剥下；揭下</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to pull something off a surface</div><div class="label">Example</div><div class="vocab-example">Then, peel the paper from the frame.</div></div></div>
+
+</section>
+
+
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  
+
+    <div class="story-card"><div class="story-page"><div class="story-img-wrap">❓📄 A child wondering how paper is made, next to a big paper mill</div><div class="story-text"><div class="story-page-num">Page 3</div>Have you ever wanted to know how paper is made? Paper is often made with machines in big <mark>mills</mark>. But you can make your own paper at home or school. You just need a few <mark>supplies</mark> and some help from an adult.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🧰 All the supplies laid out on a table</div><div class="story-text"><div class="story-page-num">Page 4</div>Here are the <mark>supplies</mark> you will need: newspaper, a <mark>sponge</mark>, a wire hanger, old paper (cards, magazines, bags, etc.), an old pair of pantyhose, a flat pan, two pieces of <mark>felt</mark>, scissors, a <mark>blender</mark>, and water.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">✂️ Hands ripping old paper into small pieces</div><div class="story-text"><div class="story-page-num">Page 5–6</div>The first step to making paper is to find old paper. <mark>Rip</mark> the paper into small pieces. <mark>Rip</mark> enough paper to fill one cup.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌀 Paper and warm water spinning in a blender</div><div class="story-text"><div class="story-page-num">Page 7–8</div>Second, put all the paper pieces in a <mark>blender</mark>. <mark>Pour</mark> three cups of warm water into the <mark>blender</mark>. <mark>Blend</mark> the paper and water on high for ten seconds. The paper and water will turn into <mark>pulp</mark>. The <mark>pulp</mark> should look like thick soup.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🥣 Two bowls of pulp: one too watery, one too chunky</div><div class="story-text"><div class="story-page-num">Page 9–10</div>Add more water if the <mark>pulp</mark> is as thick as oatmeal. Add more paper if the <mark>pulp</mark> is as thin as water. Third, bend the wire hanger into a rectangle. Cut off one leg of the pantyhose. Put the hanger inside the leg. This is the <mark>frame</mark> for your paper.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🖼️ A frame sliding into a pan of pulp</div><div class="story-text"><div class="story-page-num">Page 11</div>Fourth, <mark>pour</mark> the <mark>pulp</mark> into the flat pan. Slide the <mark>frame</mark> into the pan. Move the <mark>frame</mark> around until the <mark>pulp</mark> evenly covers it.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">💧 A frame lifted up with water dripping into the pan</div><div class="story-text"><div class="story-page-num">Page 12</div>Slowly lift the <mark>frame</mark> out of the pan. Hold it flat above the pan. Let the extra water drip into the pan.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🧶 Newspaper and felt on a flat table with the frame on top</div><div class="story-text"><div class="story-page-num">Page 13</div>Fifth, place ten sheets of newspaper on a flat table. Place two pieces of <mark>felt</mark> on top of the newspaper. Lay the <mark>frame</mark> with the <mark>pulp</mark> side up on the <mark>felt</mark>.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🧽 A sponge pressing the pulp, then paper peeling away</div><div class="story-text"><div class="story-page-num">Page 14</div>Press a <mark>sponge</mark> on the <mark>pulp</mark> to soak up the extra water. Let the <mark>pulp</mark> dry on the <mark>frame</mark> for twenty-four hours. Then, <mark>peel</mark> the paper from the <mark>frame</mark>.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌸 Handmade paper with grass, flowers and leaves</div><div class="story-text"><div class="story-page-num">Page 15–16</div>Add Plants: You can use grass, flowers, or leaves. Place the plants onto the <mark>pulp</mark> after the steps on page 13. You did it! You made your own paper. Use your paper to make cards or write notes to someone.</div></div></div>
+
+</section>
+
+
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+  
+
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Paper is often made with machines in big mills.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>The first step is to put paper in a blender.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>You blend the paper and water to make pulp.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>You dry the pulp for ten minutes.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>You can add plants like grass or flowers to your paper.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+  
+
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>What is the first step to making paper?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">Find old paper</button><button class="opt-btn" onclick="checkTF(this,false)">Pour the pulp</button><button class="opt-btn" onclick="checkTF(this,false)">Peel the paper</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>How much warm water goes into the blender?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">One cup</button><button class="opt-btn" onclick="checkTF(this,true)">Three cups</button><button class="opt-btn" onclick="checkTF(this,false)">Ten cups</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>What should the pulp look like?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">Thick soup</button><button class="opt-btn" onclick="checkTF(this,false)">Dry sand</button><button class="opt-btn" onclick="checkTF(this,false)">Clear water</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>What do you use to soak up the extra water?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">A hanger</button><button class="opt-btn" onclick="checkTF(this,false)">Felt</button><button class="opt-btn" onclick="checkTF(this,true)">A sponge</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>What can you do with your paper at the end?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">Make cards or write notes</button><button class="opt-btn" onclick="checkTF(this,false)">Put it in the blender</button><button class="opt-btn" onclick="checkTF(this,false)">Throw it away</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+  
+
+    <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What do you do with the paper and water in the blender?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at pages 7–8: blend on high for ten ___.</div></div>
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>How long must the pulp dry on the frame?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at page 14: twenty-four ___.</div></div>
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>What would you make with your own paper? Why?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    
+
+        <p>1. You need a few <span class="dz" data-answer="supplies" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> and some help from an adult.</p>
+    <p>2. Big <span class="dz" data-answer="mills" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> make paper with machines.</p>
+    <p>3. <span class="dz" data-answer="Rip" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> the old paper into small pieces.</p>
+    <p>4. Paper and water turn into <span class="dz" data-answer="pulp" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> in the blender.</p>
+    <p>5. Peel the paper from the <span class="dz" data-answer="frame" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>.</p>
+
+    <div class="word-bank" id="wordBank">
+      
+
+            <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="supplies">supplies</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="mills">mills</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="Rip">Rip</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="pulp">pulp</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="frame">frame</div>
+
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Slowly ___ the frame out of the pan.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">lift</button><button class="opt-btn" onclick="checkTF(this,false)">lifts</button><button class="opt-btn" onclick="checkTF(this,false)">lifted</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Add more water if the pulp is as ___ as oatmeal.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">thin</button><button class="opt-btn" onclick="checkTF(this,true)">thick</button><button class="opt-btn" onclick="checkTF(this,false)">fast</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Let the pulp dry ___ twenty-four hours.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">for</button><button class="opt-btn" onclick="checkTF(this,false)">at</button><button class="opt-btn" onclick="checkTF(this,false)">on</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  
+
+    <div class="q-block"><div class="q-text">1. Pour three cups of warm ______ into the blender.</div><input type="text" class="blank-input" id="sc1" placeholder="liquid"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','water')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. Press a ______ on the pulp to soak up water.</div><input type="text" class="blank-input" id="sc2" placeholder="soft tool"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','sponge')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. Place two pieces of ______ on top of the newspaper.</div><input type="text" class="blank-input" id="sc3" placeholder="cloth"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','felt')">Check</button></div>
+
+</section>
+
+
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    
+        <div class="speak-q"><span class="mic">🎤</span>Do you use paper every day?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Is a blender loud?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Can you make paper at home?</div>
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+        <div class="speak-q"><span class="mic">🎤</span>What is the first step to make paper?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Name three supplies you need.</div>
+    <div class="speak-q"><span class="mic">🎤</span>What does the pulp look like?</div>
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+        <div class="speak-q"><span class="mic">🎤</span>Explain how to make paper in your own words. Use first, second, third.</div>
+    <div class="speak-q"><span class="mic">🎤</span>Why is it good to use old paper?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What would you add to your paper to make it special?</div>
+  </div>
+
+  
+  <div class="card"><strong>Useful phrases:</strong> <em>First, ___. Second, ___. Third, ___. | Then, ___. | You just need ___. | Add more ___ if ___.</em></div>
+
+</section>
+
+
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    
+    <p><strong>1.</strong> Click the words in the correct order to make a sentence. 点击词语，排出正确的句子。</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'Pour three cups of warm water into the blender.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Click the words in the correct order to make a sentence. 点击词语，排出正确的句子。</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'Slowly lift the frame out of the pan.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  
+    <div class="frame">First, <input type="text" placeholder="verb"> the <input type="text" placeholder="noun">.</div>
+  <div class="frame">Second, <input type="text" placeholder="verb"> it. Third, <input type="text" placeholder="verb"> it.</div>
+  <div class="frame">I can make paper with <input type="text" placeholder="things">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  
+  <p>Write 3-4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>supplies, mills, rip, blend, pulp, frame, pour, sponge, felt, peel</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    
+        <span class="track-chip" data-word="supplies">supplies</span>
+    <span class="track-chip" data-word="mills">mills</span>
+    <span class="track-chip" data-word="rip">rip</span>
+    <span class="track-chip" data-word="blend">blend</span>
+    <span class="track-chip" data-word="pulp">pulp</span>
+    <span class="track-chip" data-word="frame">frame</span>
+    <span class="track-chip" data-word="pour">pour</span>
+    <span class="track-chip" data-word="sponge">sponge</span>
+    <span class="track-chip" data-word="felt">felt</span>
+    <span class="track-chip" data-word="peel">peel</span>
+  </div>
+
+</section>
+
+
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      
+            <div class="star-word">supplies</div>
+      <div class="star-word">mills</div>
+      <div class="star-word">rip</div>
+      <div class="star-word">blend ⭐</div>
+      <div class="star-word">pulp ⭐</div>
+      <div class="star-word">frame ⭐</div>
+      <div class="star-word">pour</div>
+      <div class="star-word">sponge</div>
+      <div class="star-word">felt</div>
+      <div class="star-word">peel</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      
+            <div class="pattern-line">First, ___. Second, ___. Third, ___.</div>
+      <div class="pattern-line">Pour ___ into ___.</div>
+      <div class="pattern-line">Add more ___ if the pulp is ___.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      
+            <div class="pattern-line">Imperatives (commands): Rip the paper. Pour the water. Blend it.</div>
+      <div class="pattern-line">Sequence words: first, second, third, fourth, fifth, then.</div>
+      <div class="pattern-line">as + adjective + as: as thick as oatmeal, as thin as water.</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      
+            <div class="pattern-line">You can make paper at home with old paper and water.</div>
+      <div class="pattern-line">Follow the steps in order: rip, blend, make a frame, pour, press, dry, peel.</div>
+      <div class="pattern-line">You can add plants to make special paper.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing How to Make Paper!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════════ */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* ═══════════════════════════════════════════════════════════════
+   VOCAB CARDS
+═══════════════════════════════════════════════════════════════ */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRUE/FALSE & MULTIPLE CHOICE
+═══════════════════════════════════════════════════════════════ */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* ═══════════════════════════════════════════════════════════════
+   HINTS
+═══════════════════════════════════════════════════════════════ */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATCH: WORD ↔ MEANING  (Section 4A)
+   REPLACE matchData with this book's vocab words and short meanings.
+═══════════════════════════════════════════════════════════════ */
+const matchData=[
+    {"word": "supplies", "meaning": "the things needed for a task"},
+  {"word": "mills", "meaning": "buildings where things like paper are made"},
+  {"word": "rip", "meaning": "to tear something into pieces"},
+  {"word": "blend", "meaning": "to mix things together"},
+  {"word": "pulp", "meaning": "a mass of soft, wet material"},
+  {"word": "frame", "meaning": "solid parts that surround something for support"},
+  {"word": "pour", "meaning": "to make a liquid flow out of a container"},
+  {"word": "sponge", "meaning": "a soft thing that soaks up water"},
+  {"word": "felt", "meaning": "a thick, soft cloth made from wool"},
+  {"word": "peel", "meaning": "to pull something off a surface"}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* ═══════════════════════════════════════════════════════════════
+   CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E)
+   REPLACE cnEnData with this book's words.
+═══════════════════════════════════════════════════════════════ */
+const cnEnData=[
+    {"en": "supplies", "cn": "用品；材料"},
+  {"en": "mills", "cn": "工厂；磨坊"},
+  {"en": "rip", "cn": "撕"},
+  {"en": "blend", "cn": "搅拌；混合"},
+  {"en": "pulp", "cn": "纸浆"},
+  {"en": "frame", "cn": "框架"},
+  {"en": "pour", "cn": "倒；注入"},
+  {"en": "sponge", "cn": "海绵"},
+  {"en": "felt", "cn": "毛毡"},
+  {"en": "peel", "cn": "剥下；揭下"}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE COMPLETION (Section 4F)
+═══════════════════════════════════════════════════════════════ */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* ═══════════════════════════════════════════════════════════════
+   DRAG-AND-DROP FILL IN BLANK (Section 4B)
+═══════════════════════════════════════════════════════════════ */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE SCRAMBLE (Section 6A)
+   REPLACE scrambleData with 2 sentences from this book.
+   Each entry is an array of word/phrase chunks (will be shuffled).
+═══════════════════════════════════════════════════════════════ */
+const scrambleData={
+    1: ["Pour", "three cups", "of warm water", "into the blender."],
+  2: ["Slowly", "lift the frame", "out of", "the pan."]
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* ═══════════════════════════════════════════════════════════════
+   WORD COUNT + VOCAB TRACKER (Section 6C)
+═══════════════════════════════════════════════════════════════ */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+<!-- ===== STORY AUDIO (browser text-to-speech) ===== -->
+<style>
+  .audio-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;margin-bottom:16px;}
+  .audio-bar .audio-title{font-weight:800;color:var(--teal-dark);margin-right:auto;}
+  .audio-btn{border:none;cursor:pointer;font-family:inherit;font-weight:800;border-radius:999px;padding:8px 18px;font-size:0.9rem;background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.3);}
+  .audio-btn.stop{background:linear-gradient(120deg,#e8895c,#ffb347);}
+  .audio-btn.speed{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .page-audio{float:right;border:none;background:#eaf4f2;border-radius:999px;width:38px;height:38px;font-size:1.15rem;cursor:pointer;margin-left:10px;}
+  .page-audio:hover{background:var(--teal-light);}
+  .story-card.reading{outline:3px solid var(--accent);background:#fffaf0;}
+</style>
+<script>
+(function(){
+  if(!('speechSynthesis' in window)||!document.querySelector('.story-card'))return;
+  var synth=window.speechSynthesis,slow=false,queue=[],playing=false,voice=null;
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.story-card'));
+  function pickVoice(){
+    var vs=synth.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang);});
+    var pref=['Samantha','Google US English','Ava','Allison','Karen','Serena','Moira','Aria','Jenny'];
+    for(var i=0;i<pref.length;i++){var f=vs.find(function(v){return v.name.indexOf(pref[i])>-1;});if(f){voice=f;return;}}
+    voice=vs.find(function(v){return /en[-_]US/i.test(v.lang);})||vs[0]||null;
+  }
+  pickVoice();if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=pickVoice;
+  function textOf(card){
+    var t=card.querySelector('.story-text').cloneNode(true);
+    Array.prototype.forEach.call(t.querySelectorAll('.story-page-num,.page-audio'),function(n){n.remove();});
+    Array.prototype.forEach.call(t.querySelectorAll('br'),function(b){b.replaceWith(' ');});
+    return t.textContent.replace(/\s+/g,' ').trim();
+  }
+  function clearHL(){cards.forEach(function(c){c.classList.remove('reading');});}
+  function stopAll(){queue=[];playing=false;synth.cancel();clearHL();var p=document.getElementById('playAllBtn');if(p)p.textContent='▶ Play all pages';}
+  function speak(card,done){
+    var u=new SpeechSynthesisUtterance(textOf(card));
+    u.lang='en-US';u.rate=slow?0.6:0.85;u.pitch=1.05;if(voice)u.voice=voice;
+    clearHL();card.classList.add('reading');
+    u.onend=function(){card.classList.remove('reading');if(done)done();};
+    u.onerror=function(){card.classList.remove('reading');if(done)done();};
+    synth.speak(u);
+  }
+  function playOne(card){stopAll();setTimeout(function(){speak(card);},80);}
+  function next(){
+    if(!playing||!queue.length){stopAll();return;}
+    var c=queue.shift();c.scrollIntoView({behavior:'smooth',block:'center'});
+    speak(c,function(){if(playing)setTimeout(next,350);});
+  }
+  function playAll(){stopAll();playing=true;queue=cards.slice();document.getElementById('playAllBtn').textContent='⏸ Playing…';setTimeout(next,80);}
+  cards.forEach(function(card){
+    var b=document.createElement('button');b.className='page-audio';b.type='button';b.title='Listen to this page';b.textContent='🔊';
+    b.onclick=function(){playOne(card);};
+    var st=card.querySelector('.story-text');st.insertBefore(b,st.firstChild);
+  });
+  var sec=cards[0].closest('.section'),sub=sec.querySelector('.section-sub');
+  var bar=document.createElement('div');bar.className='audio-bar';
+  bar.innerHTML='<span class="audio-title">🎧 Listen to the story 听故事</span>'+
+    '<button type="button" class="audio-btn" id="playAllBtn">▶ Play all pages</button>'+
+    '<button type="button" class="audio-btn stop" id="stopBtn">■ Stop</button>'+
+    '<button type="button" class="audio-btn speed" id="speedBtn">🐢 Slow: OFF</button>';
+  sub.parentNode.insertBefore(bar,sub.nextSibling);
+  document.getElementById('playAllBtn').onclick=playAll;
+  document.getElementById('stopBtn').onclick=stopAll;
+  document.getElementById('speedBtn').onclick=function(){slow=!slow;this.textContent='🐢 Slow: '+(slow?'ON':'OFF');};
+  if(typeof window.showSection==='function'){var orig=window.showSection;window.showSection=function(i){stopAll();return orig(i);};}
+  window.addEventListener('pagehide',stopAll);
+})();
+</script>
+<!-- ===== END STORY AUDIO ===== -->
+</body>
+</html>

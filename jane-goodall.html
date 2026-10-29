@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jane Goodall — RAZ Vocabulary Workbook</title>
+
+
+
+<style>
+  :root{
+    --teal-dark:#0f3d3e;--teal:#1f7a72;--teal-light:#5fb3a8;--blue:#2f6f9e;
+    --sand:#fbf6ec;--card:#ffffff;--accent:#ffb347;--accent2:#e8895c;
+    --text:#1c2b2d;--muted:#5b7674;--radius:18px;--shadow:0 6px 20px rgba(15,61,62,0.10);
+  }
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{font-family:'Trebuchet MS','Segoe UI',Verdana,sans-serif;background:linear-gradient(160deg,var(--sand) 0%,#eef6f4 60%,#e6f3ef 100%);color:var(--text);line-height:1.6;padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--teal-dark),var(--teal) 70%,var(--teal-light));color:#fff;padding:28px 20px 22px;border-radius:0 0 32px 32px;box-shadow:var(--shadow);text-align:center;}
+  .studio-name{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-weight:700;}
+  header h1{margin:6px 0 4px;font-size:2.1rem;font-weight:800;}
+  header .subtitle{font-size:0.95rem;opacity:0.92;font-weight:500;}
+  .header-meta{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .meta-pill{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:999px;padding:6px 16px;font-size:0.85rem;font-weight:600;}
+  .meta-pill.level{background:var(--accent);color:#3a2400;border:none;}
+  .progress-wrap{max-width:880px;margin:18px auto 0;padding:0 16px;}
+  .progress-track{display:flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:6px;gap:4px;overflow-x:auto;}
+  .progress-step{flex:1;min-width:74px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer;transition:all 0.25s ease;white-space:nowrap;}
+  .progress-step.active{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.35);}
+  .progress-step .check{display:inline-block;margin-left:4px;color:var(--accent2);font-weight:900;}
+  .progress-step.active .check{color:#fff;}
+  main{max-width:880px;margin:24px auto;padding:0 16px;}
+  .section{display:none;animation:fadeIn 0.4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .section-title .num{background:var(--teal);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:var(--shadow);flex-shrink:0;}
+  .section-title h2{margin:0;font-size:1.5rem;color:var(--teal-dark);font-weight:800;}
+  .section-sub{color:var(--muted);font-size:0.92rem;margin:-12px 0 18px 50px;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;}
+  .vocab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:2px solid transparent;transition:border-color 0.25s ease,transform 0.15s ease;}
+  .vocab-card:hover{transform:translateY(-2px);border-color:var(--teal-light);}
+  .vocab-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;}
+  .vocab-head-left{display:flex;align-items:center;gap:14px;}
+  .vocab-emoji{font-size:1.8rem;}
+  .vocab-word{font-size:1.25rem;font-weight:800;color:var(--teal-dark);}
+  .vocab-pos{font-size:0.8rem;color:var(--muted);font-weight:600;margin-left:6px;}
+  .vocab-cn{font-size:1.05rem;color:var(--blue);font-weight:700;background:#eaf4f2;padding:4px 12px;border-radius:999px;}
+  .vocab-arrow{font-size:1.2rem;color:var(--teal);transition:transform 0.3s ease;}
+  .vocab-card.open .vocab-arrow{transform:rotate(180deg);}
+  .vocab-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0 20px;background:#f6fbfa;}
+  .vocab-card.open .vocab-body{max-height:300px;padding:14px 20px 18px;}
+  .vocab-body .label{font-weight:800;color:var(--teal);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+  .vocab-body .label:first-child{margin-top:0;}
+  .vocab-example{font-style:italic;color:var(--text);background:#fff;border-left:4px solid var(--accent);padding:8px 12px;border-radius:8px;margin-top:4px;}
+  .story-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:16px;}
+  .story-img-wrap{width:100%;background:#e6f3ef;display:flex;align-items:center;justify-content:center;min-height:60px;padding:14px;font-size:0.85rem;color:var(--muted);text-align:center;}
+  .story-text{padding:18px 22px;font-size:1.15rem;}
+  .story-page-num{font-weight:800;color:var(--teal-light);font-size:0.8rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .story-text mark{background:var(--accent);color:var(--teal-dark);border-radius:6px;padding:0 4px;font-weight:800;}
+  .q-block{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;}
+  .q-num{font-weight:800;color:var(--blue);margin-right:6px;}
+  .q-text{font-weight:700;margin-bottom:10px;}
+  .tf-options,.mc-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt-btn{border:2px solid var(--teal-light);background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;}
+  .opt-btn:hover{background:#eaf4f2;}
+  .opt-btn.correct{background:#cdeede;border-color:#3eb489;color:#0f3d3e;}
+  .opt-btn.wrong{background:#fbe0db;border-color:#e8895c;color:#7a2e1c;}
+  .opt-btn.disabled{pointer-events:none;opacity:0.85;}
+  .feedback{margin-top:8px;font-weight:700;font-size:0.92rem;min-height:20px;}
+  .feedback.correct-text{color:#1f7a4f;}
+  .feedback.wrong-text{color:#c0492f;}
+  .short-answer textarea{width:100%;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;font-family:inherit;font-size:1rem;resize:vertical;min-height:60px;}
+  .hint-btn{margin-top:8px;background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.88rem;padding:0;}
+  .hint-box{margin-top:6px;background:#eaf4f2;border-radius:10px;padding:8px 12px;font-size:0.9rem;color:var(--teal-dark);display:none;}
+  .hint-box.show{display:block;}
+  .practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.practice-grid{grid-template-columns:1fr;}}
+  .match-item{background:#fff;border:2px solid var(--teal-light);border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.2s;}
+  .match-item.selected{background:var(--teal-light);color:#fff;}
+  .match-item.matched{background:#cdeede;border-color:#3eb489;color:#0f3d3e;pointer-events:none;}
+  .match-item.shake{animation:shake 0.4s;border-color:#e8895c;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .blank-input{border:none;border-bottom:3px dotted var(--teal);background:#eaf4f2;font-weight:800;font-size:1rem;text-align:center;width:130px;padding:4px 6px;border-radius:6px;font-family:inherit;}
+  .blank-input.correct{background:#cdeede;border-bottom-color:#3eb489;}
+  .blank-input.wrong{background:#fbe0db;border-bottom-color:#e8895c;}
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .word-chip{background:var(--teal);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;cursor:grab;user-select:none;font-size:0.92rem;}
+  .word-chip.used{opacity:0.35;cursor:default;}
+  .dz{border:2px dashed var(--teal-light);border-radius:10px;padding:4px 10px;min-width:110px;display:inline-block;text-align:center;min-height:32px;vertical-align:middle;font-weight:800;color:var(--teal-dark);background:#f6fbfa;}
+  .dz.filled{background:#cdeede;border-style:solid;border-color:#3eb489;}
+  .check-btn,.reset-btn,.nav-btn{background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:800;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(31,122,114,0.3);transition:transform 0.15s ease;}
+  .check-btn:hover,.reset-btn:hover,.nav-btn:hover{transform:translateY(-2px);}
+  .reset-btn{background:linear-gradient(120deg,#c0c8c6,#9bb0ad);box-shadow:none;}
+  .speak-level{margin-bottom:18px;}
+  .speak-level h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .speak-q{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .speak-q .mic{font-size:1.3rem;}
+  .scramble-words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .scramble-chip{background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;}
+  .answer-line{min-height:46px;border:2px dashed var(--teal-light);border-radius:10px;background:#f6fbfa;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;}
+  .answer-line .scramble-chip{cursor:pointer;border-color:#3eb489;background:#cdeede;}
+  .frame{background:#f6fbfa;border-radius:12px;padding:14px;margin:10px 0;}
+  .frame input[type=text]{border:none;border-bottom:2px solid var(--teal);background:transparent;font-weight:700;font-family:inherit;font-size:1rem;padding:2px 6px;width:140px;}
+  textarea.paragraph{width:100%;min-height:120px;border:2px solid var(--teal-light);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical;}
+  .word-counter{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+  .vocab-tracker{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .track-chip{border:2px solid var(--teal-light);border-radius:999px;padding:5px 14px;font-size:0.85rem;font-weight:700;color:var(--muted);}
+  .track-chip.used{background:var(--accent);border-color:var(--accent);color:#3a2400;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:560px){.review-grid{grid-template-columns:1fr;}}
+  .review-card h3{margin:0 0 8px;color:var(--teal-dark);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .star-word{display:inline-block;background:var(--accent);color:#3a2400;border-radius:8px;padding:4px 10px;font-weight:800;margin:4px 4px 0 0;}
+  .pattern-line{background:#eaf4f2;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;}
+  .footer-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+  .nav-btn.secondary{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .nav-btn:disabled{opacity:0.4;pointer-events:none;}
+  ::selection{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="studio-name">Lexilink Ideation IELTS Studio</div>
+  
+  <h1>🐒 Jane Goodall</h1>
+  <div class="subtitle">RAZ Vocabulary Workbook · For ESL Learners · Vocabulary Through Reading</div>
+  <div class="header-meta">
+    
+    <div class="meta-pill level">Level I (RAZ)</div>
+    <div class="meta-pill">Reader: Jane Goodall</div>
+    <div class="meta-pill">Interactive Exercises</div>
+    <div class="meta-pill">Story-Based Learning</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-step active" data-section="0">1 Vocabulary <span class="check">✓</span></div>
+    <div class="progress-step" data-section="1">2 Story <span class="check">✓</span></div>
+    <div class="progress-step" data-section="2">3 Comprehension <span class="check">✓</span></div>
+    <div class="progress-step" data-section="3">4 Practice <span class="check">✓</span></div>
+    <div class="progress-step" data-section="4">5 Speaking <span class="check">✓</span></div>
+    <div class="progress-step" data-section="5">6 Writing <span class="check">✓</span></div>
+    <div class="progress-step" data-section="6">7 Review <span class="check">✓</span></div>
+  </div>
+</div>
+
+<main>
+
+
+<section class="section active" data-section="0">
+  <div class="section-title"><div class="num">1</div><h2>Vocabulary</h2></div>
+  <div class="section-sub">Tap each card to learn the word! 点击单词卡查看意思！</div>
+
+  
+
+    <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌍</span><span><span class="vocab-word">Africa</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">非洲</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>the second-largest continent in the world</div><div class="label">Example</div><div class="vocab-example">She dreamed of living in Africa one day.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🔬</span><span><span class="vocab-word">scientist</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">科学家</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a person who studies science</div><div class="label">Example</div><div class="vocab-example">In Africa, Goodall met a famous scientist.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🎭</span><span><span class="vocab-word">behave</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">表现；行为举止</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to act in a certain way</div><div class="label">Example</div><div class="vocab-example">The study would look at how they behave.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">📝</span><span><span class="vocab-word">study</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">研究</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a careful look at something to learn about it</div><div class="label">Example</div><div class="vocab-example">Goodall worked on the study with him.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🦍</span><span><span class="vocab-word">chimpanzees</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">黑猩猩</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>smart apes that live in Africa</div><div class="label">Example</div><div class="vocab-example">The study was about chimpanzees.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🛠️</span><span><span class="vocab-word">tools</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">工具</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>objects that make a job easier</div><div class="label">Example</div><div class="vocab-example">Chimps used sticks as tools to dig up bugs.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🌳</span><span><span class="vocab-word">forest</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">森林</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>a large area with many trees</div><div class="label">Example</div><div class="vocab-example">Goodall moved to the Gombe Forest.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🤝</span><span><span class="vocab-word">trust</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">信任</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to believe someone is good and safe</div><div class="label">Example</div><div class="vocab-example">Only a chimp she named David trusted her.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">💗</span><span><span class="vocab-word">feelings</span><span class="vocab-pos">(n.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">感情；情感</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>things you feel, like happy or sad</div><div class="label">Example</div><div class="vocab-example">Chimps showed feelings, as humans do.</div></div></div>
+  <div class="vocab-card"><div class="vocab-head" onclick="toggleVocab(this)"><div class="vocab-head-left"><span class="vocab-emoji">🛡️</span><span><span class="vocab-word">protect</span><span class="vocab-pos">(v.)</span></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="vocab-cn">保护</span><span class="vocab-arrow">▾</span></div></div><div class="vocab-body"><div class="label">Simple meaning</div><div>to keep something safe</div><div class="label">Example</div><div class="vocab-example">Today, she still works to protect the forest.</div></div></div>
+
+</section>
+
+
+<section class="section" data-section="1">
+  <div class="section-title"><div class="num">2</div><h2>Story</h2></div>
+  <div class="section-sub">Read the story. Target words are <mark>highlighted</mark>. 多读几次！</div>
+
+  
+
+    <div class="story-card"><div class="story-page"><div class="story-img-wrap">👧🐕 Young Jane with her dog Rusty, reading about animals</div><div class="story-text"><div class="story-page-num">Page 4</div>The Watcher: As a young girl, Jane Goodall loved to watch animals. She read about them, too. She dreamed of living in <mark>Africa</mark> one day. She hoped to write about the wild animals there. Jane Goodall was born in England in 1934. At that time, most young girls grew up to live quiet lives at home. Jane loved to play with her pets, climb trees, and read. She wanted a life of travel and adventure.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🧑‍🔬 Goodall meeting a famous scientist in Africa</div><div class="story-text"><div class="story-page-num">Page 5–6</div>Off to <mark>Africa</mark>: When she was old enough, Goodall worked and saved her money. When she had saved enough, she went on a trip to <mark>Africa</mark>. In <mark>Africa</mark>, Goodall met a famous <mark>scientist</mark>. The <mark>scientist</mark> needed help with a new <mark>study</mark> about <mark>chimpanzees</mark>. The <mark>study</mark> would look at how they <mark>behave</mark>. He asked Goodall to work on the <mark>study</mark> with him.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌳🦍 Goodall watching chimps from far away in the Gombe Forest</div><div class="story-text"><div class="story-page-num">Page 7–8</div>Into the <mark>Forest</mark>: To work on the <mark>study</mark>, Goodall moved to the Gombe (GOME-bay) <mark>Forest</mark>. She watched the <mark>chimps</mark> every day. The Gombe Gang: At first, most of the <mark>chimps</mark> were afraid of Goodall. Only a <mark>chimp</mark> she named David <mark>trusted</mark> her. He let Goodall meet his family.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🦍🌾 A chimp using a long blade of grass to catch termites</div><div class="story-text"><div class="story-page-num">Page 9–10</div>Goodall said <mark>chimps</mark> were smart. She said they used sticks as <mark>tools</mark> to dig up bugs to eat. She also said <mark>chimps</mark> showed <mark>feelings</mark>, as humans do. Goodall took notes about the <mark>chimps</mark>. Her notes upset many <mark>scientists</mark>. They had their own ideas about how <mark>chimps</mark> <mark>behaved</mark>.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">😊😢😠 Chimps that look happy, sad and angry</div><div class="story-text"><div class="story-page-num">Page 11–12</div>Goodall’s work made some <mark>scientists</mark> think again about <mark>chimps</mark>. They saw that some of their old ideas might be wrong. Goodall saw <mark>chimps</mark> that were happy, sad, and angry. She saw that each <mark>chimp</mark> <mark>behaved</mark> in its own way, just as humans do.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🪓🌲 People cutting down trees in the forest; Goodall speaking to a crowd</div><div class="story-text"><div class="story-page-num">Page 13–14</div>Trouble in the <mark>Forest</mark>: After many years in Gombe, Goodall became worried. Many people in this part of <mark>Africa</mark> are very poor. Some were cutting down the <mark>forest</mark> for firewood or to grow crops there. Some were stealing baby <mark>chimps</mark> and selling them. Goodall knew what she had to do. She went around the world, talking about her work. She asked for help to save the <mark>chimps</mark> and the <mark>forest</mark>.</div></div></div>
+  <div class="story-card"><div class="story-page"><div class="story-img-wrap">🌍💚 Goodall visiting a chimp rescue center today</div><div class="story-text"><div class="story-page-num">Page 15–16</div>Jane Goodall Today: People <mark>trusted</mark> Goodall. They helped to support her work in Gombe. Today, she still works to <mark>protect</mark> the <mark>forest</mark> and the <mark>chimpanzees</mark>.</div></div></div>
+
+</section>
+
+
+<section class="section" data-section="2">
+  <div class="section-title"><div class="num">3</div><h2>Reading Comprehension</h2></div>
+  <div class="section-sub">Answer the questions about the story.</div>
+
+  <h3 style="color:var(--blue);">A · True or False 判断对错</h3>
+  
+
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>As a young girl, Jane Goodall loved to watch animals.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Jane Goodall was born in Africa.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Chimps used sticks as tools to dig up bugs.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>At first, most chimps were not afraid of Goodall.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,false)">True</button><button class="opt-btn" onclick="checkTF(this,true)">False</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>Goodall still works to protect the forest and chimpanzees today.</div><div class="tf-options"><button class="opt-btn" onclick="checkTF(this,true)">True</button><button class="opt-btn" onclick="checkTF(this,false)">False</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">B · Multiple Choice 选择题</h3>
+  
+
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Where did Goodall go to study chimpanzees?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">The Gombe Forest</button><button class="opt-btn" onclick="checkTF(this,false)">A big city</button><button class="opt-btn" onclick="checkTF(this,false)">An island</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>Which chimp trusted Goodall first?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">Rusty</button><button class="opt-btn" onclick="checkTF(this,true)">David</button><button class="opt-btn" onclick="checkTF(this,false)">Pola</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>What did Goodall say about chimps?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">They were slow.</button><button class="opt-btn" onclick="checkTF(this,true)">They were smart and showed feelings.</button><button class="opt-btn" onclick="checkTF(this,false)">They were not like humans at all.</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">4.</span>Why was Goodall worried?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">People were cutting down the forest and stealing baby chimps.</button><button class="opt-btn" onclick="checkTF(this,false)">She lost her notes.</button><button class="opt-btn" onclick="checkTF(this,false)">She was lost.</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">5.</span>What does “behave” mean?</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">To sleep</button><button class="opt-btn" onclick="checkTF(this,true)">To act in a certain way</button><button class="opt-btn" onclick="checkTF(this,false)">To run fast</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:24px;">C · Short Answer 简答题</h3>
+  
+
+    <div class="q-block short-answer"><div class="q-text"><span class="q-num">1.</span>What did Jane Goodall dream about as a young girl?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at page 4: living in ___.</div></div>
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">2.</span>How did Goodall help the chimpanzees and the forest?</div><textarea placeholder="Type your answer here..."></textarea><br><button class="hint-btn" onclick="toggleHint(this)">💡 Show hint</button><div class="hint-box">Hint: Look at pages 13–15: she talked about her work and asked for ___.</div></div>
+  <div class="q-block short-answer"><div class="q-text"><span class="q-num">3.</span>Would you like to be a scientist like Jane Goodall? Why or why not?</div><textarea placeholder="My answer is..."></textarea></div>
+
+</section>
+
+
+<section class="section" data-section="3">
+  <div class="section-title"><div class="num">4</div><h2>Practice</h2></div>
+  <div class="section-sub">Practice the words in different ways!</div>
+
+  <h3 style="color:var(--blue);">A · Match Words and Meanings</h3>
+  <div class="practice-grid" id="matchGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Fill in the Blanks</h3>
+  <div class="card">
+    
+
+        <p>1. Jane Goodall dreamed of living in <span class="dz" data-answer="Africa" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span>.</p>
+    <p>2. A <span class="dz" data-answer="scientist" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> studies nature and animals.</p>
+    <p>3. Chimps used sticks as <span class="dz" data-answer="tools" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> to dig up bugs.</p>
+    <p>4. Goodall did a <span class="dz" data-answer="study" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> about how chimps behave.</p>
+    <p>5. Goodall watched the <span class="dz" data-answer="chimpanzees" ondrop="dropWord(event,this)" ondragover="event.preventDefault()" onclick="clickFillBlank(this)"></span> until they began to trust her.</p>
+
+    <div class="word-bank" id="wordBank">
+      
+
+            <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="Africa">Africa</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="scientist">scientist</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="tools">tools</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="study">study</div>
+      <div class="word-chip" draggable="true" ondragstart="dragWord(event)" onclick="selectFillWord(this)" data-word="chimpanzees">chimpanzees</div>
+
+    </div>
+    <div style="margin-top:14px;"><button class="check-btn" onclick="checkFillBlanks()">Check Answers</button><button class="reset-btn" onclick="resetFillBlanks()">Reset</button></div>
+    <div class="feedback" id="fillFeedback"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Choose the Correct Word</h3>
+    <div class="q-block"><div class="q-text"><span class="q-num">1.</span>Goodall ___ the chimps every day.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">watched</button><button class="opt-btn" onclick="checkTF(this,false)">watch</button><button class="opt-btn" onclick="checkTF(this,false)">watching</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">2.</span>She wanted a life of travel and ___.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,false)">adventures</button><button class="opt-btn" onclick="checkTF(this,false)">adventurous</button><button class="opt-btn" onclick="checkTF(this,true)">adventure</button></div><div class="feedback"></div></div>
+  <div class="q-block"><div class="q-text"><span class="q-num">3.</span>Chimps showed feelings, ___ humans do.</div><div class="mc-options"><button class="opt-btn" onclick="checkTF(this,true)">as</button><button class="opt-btn" onclick="checkTF(this,false)">but</button><button class="opt-btn" onclick="checkTF(this,false)">so</button></div><div class="feedback"></div></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">D · Chinese → English 中译英</h3>
+  <div class="practice-grid" id="cnToEnGrid"></div>
+  <h3 style="color:var(--blue);margin-top:28px;">E · English → Chinese 英译中</h3>
+  <div class="practice-grid" id="enToCnGrid"></div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">F · Sentence Completion</h3>
+  
+
+    <div class="q-block"><div class="q-text">1. Goodall moved to the Gombe ______.</div><input type="text" class="blank-input" id="sc1" placeholder="place"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc1','Forest')">Check</button></div>
+  <div class="q-block"><div class="q-text">2. Her notes ______ many scientists.</div><input type="text" class="blank-input" id="sc2" placeholder="made them unhappy"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc2','upset')">Check</button></div>
+  <div class="q-block"><div class="q-text">3. Today, she still works to ______ the chimpanzees.</div><input type="text" class="blank-input" id="sc3" placeholder="keep safe"><button class="check-btn" style="padding:8px 18px;font-size:0.85rem;" onclick="checkSC('sc3','protect')">Check</button></div>
+
+</section>
+
+
+<section class="section" data-section="4">
+  <div class="section-title"><div class="num">5</div><h2>Speaking</h2></div>
+  <div class="section-sub">Practice speaking out loud! 大声说出来！</div>
+
+  <div class="speak-level"><h3>🟢 Level 1 — Simple Answers</h3>
+    
+        <div class="speak-q"><span class="mic">🎤</span>Is a chimpanzee an animal?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Do you like animals?</div>
+    <div class="speak-q"><span class="mic">🎤</span>Is Africa a continent?</div>
+  </div>
+  <div class="speak-level"><h3>🟡 Level 2 — Short Sentence Answers</h3>
+        <div class="speak-q"><span class="mic">🎤</span>What did Jane Goodall study?  (She studied ___.)</div>
+    <div class="speak-q"><span class="mic">🎤</span>What did chimps use as tools?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How did Goodall help the chimps?</div>
+  </div>
+  <div class="speak-level"><h3>🔵 Level 3 — Open-Ended Questions</h3>
+        <div class="speak-q"><span class="mic">🎤</span>Why was Goodall’s work important?</div>
+    <div class="speak-q"><span class="mic">🎤</span>How are chimps like humans?</div>
+    <div class="speak-q"><span class="mic">🎤</span>What would you like to study when you grow up? Why?</div>
+  </div>
+
+  
+  <div class="card"><strong>Useful phrases:</strong> <em>As a young girl, ___. | She dreamed of ___. | Goodall watched ___ until ___. | She still works to ___.</em></div>
+
+</section>
+
+
+<section class="section" data-section="5">
+  <div class="section-title"><div class="num">6</div><h2>Writing</h2></div>
+  <div class="section-sub">Build from words to sentences to a paragraph!</div>
+
+  <h3 style="color:var(--blue);">A · Sentence Building — Unscramble</h3>
+  <div class="card">
+    
+    <p><strong>1.</strong> Click the words in the correct order to make a sentence. 点击词语，排出正确的句子。</p>
+    <div class="scramble-words" id="scramble1"></div>
+    <div class="answer-line" id="answer1"></div>
+    <button class="check-btn" onclick="checkScramble(1,'As a young girl, Jane Goodall loved to watch animals.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(1)">Reset</button>
+    <div class="feedback" id="scrambleFeedback1"></div>
+  </div>
+  <div class="card">
+    <p><strong>2.</strong> Click the words in the correct order to make a sentence. 点击词语，排出正确的句子。</p>
+    <div class="scramble-words" id="scramble2"></div>
+    <div class="answer-line" id="answer2"></div>
+    <button class="check-btn" onclick="checkScramble(2,'To work on the study, Goodall moved to the Gombe Forest.')">Check</button>
+    <button class="reset-btn" onclick="resetScramble(2)">Reset</button>
+    <div class="feedback" id="scrambleFeedback2"></div>
+  </div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">B · Guided Writing — Sentence Frames</h3>
+  
+    <div class="frame">As a young girl, I loved to <input type="text" placeholder="verb">.</div>
+  <div class="frame">I dream of <input type="text" placeholder="verb + ing"> one day.</div>
+  <div class="frame">A scientist <input type="text" placeholder="verb"> <input type="text" placeholder="noun">.</div>
+
+  <h3 style="color:var(--blue);margin-top:28px;">C · Short Paragraph Writing</h3>
+  
+  <p>Write 3-4 sentences about the story. Use at least <strong>three</strong> vocabulary words: <em>Africa, scientist, behave, study, chimpanzees, tools, forest, trust, feelings, protect</em>.</p>
+  <textarea class="paragraph" id="paragraphBox" placeholder="I read a story about..." oninput="updateWordCount()"></textarea>
+  <div class="word-counter" id="wordCounter">0 words</div>
+  <div class="vocab-tracker" id="vocabTracker">
+    
+        <span class="track-chip" data-word="africa">Africa</span>
+    <span class="track-chip" data-word="scientist">scientist</span>
+    <span class="track-chip" data-word="behave">behave</span>
+    <span class="track-chip" data-word="study">study</span>
+    <span class="track-chip" data-word="chimpanzees">chimpanzees</span>
+    <span class="track-chip" data-word="tools">tools</span>
+    <span class="track-chip" data-word="forest">forest</span>
+    <span class="track-chip" data-word="trust">trust</span>
+    <span class="track-chip" data-word="feelings">feelings</span>
+    <span class="track-chip" data-word="protect">protect</span>
+  </div>
+
+</section>
+
+
+<section class="section" data-section="6">
+  <div class="section-title"><div class="num">7</div><h2>Review</h2></div>
+  <div class="section-sub">Great job! Here's everything you learned today.</div>
+  <div class="review-grid">
+    <div class="review-card card"><h3>📝 Today's Vocabulary</h3>
+      
+            <div class="star-word">Africa</div>
+      <div class="star-word">scientist ⭐</div>
+      <div class="star-word">behave</div>
+      <div class="star-word">study ⭐</div>
+      <div class="star-word">chimpanzees ⭐</div>
+      <div class="star-word">tools</div>
+      <div class="star-word">forest</div>
+      <div class="star-word">trust</div>
+      <div class="star-word">feelings</div>
+      <div class="star-word">protect</div>
+    </div>
+    <div class="review-card card"><h3>🧩 Sentence Patterns</h3>
+      
+            <div class="pattern-line">She dreamed of living in ___.</div>
+      <div class="pattern-line">Goodall watched ___ until ___.</div>
+      <div class="pattern-line">She said chimps used ___ as ___.</div>
+    </div>
+    <div class="review-card card"><h3>📐 Key Grammar</h3>
+      
+            <div class="pattern-line">Past simple: loved, saved, went, met, watched.</div>
+      <div class="pattern-line">Past perfect: When she had saved enough, she went to Africa (saving happened first).</div>
+      <div class="pattern-line">Time words: at first, until, one day, today.</div>
+    </div>
+    <div class="review-card card"><h3>💭 Things to Remember</h3>
+      
+            <div class="pattern-line">Jane Goodall studied chimpanzees in the Gombe Forest in Africa.</div>
+      <div class="pattern-line">She showed that chimps are smart and have feelings.</div>
+      <div class="pattern-line">She works to protect the forest and the chimps.</div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;margin-top:20px;">
+    
+    <h2 style="color:var(--teal-dark);margin:0;">🎉 Great work finishing Jane Goodall!</h2>
+    <p style="margin:8px 0 0;">You learned 10 new words and practiced reading, speaking, and writing. 做得好！</p>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <button class="nav-btn secondary" id="prevBtn" onclick="changeSection(-1)">← Back</button>
+  <button class="nav-btn" id="nextBtn" onclick="changeSection(1)">Next →</button>
+</div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════════ */
+const sections=document.querySelectorAll('.section'),steps=document.querySelectorAll('.progress-step');let current=0;
+function showSection(i){sections.forEach((s,idx)=>s.classList.toggle('active',idx===i));steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));document.getElementById('prevBtn').disabled=(i===0);document.getElementById('nextBtn').textContent=(i===sections.length-1)?'Finish ✓':'Next →';current=i;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSection(dir){let n=current+dir;if(n<0)n=0;if(n>sections.length-1)return;showSection(n);}
+steps.forEach((s,idx)=>s.addEventListener('click',()=>showSection(idx)));showSection(0);
+
+/* ═══════════════════════════════════════════════════════════════
+   VOCAB CARDS
+═══════════════════════════════════════════════════════════════ */
+function toggleVocab(el){el.parentElement.classList.toggle('open');}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRUE/FALSE & MULTIPLE CHOICE
+═══════════════════════════════════════════════════════════════ */
+function checkTF(btn,isCorrect){const g=btn.parentElement,fb=g.parentElement.querySelector('.feedback');if(g.classList.contains('answered'))return;g.classList.add('answered');Array.from(g.children).forEach(b=>b.classList.add('disabled'));if(isCorrect){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.className='feedback correct-text';}else{btn.classList.add('wrong');fb.textContent='✗ Not quite!';fb.className='feedback wrong-text';Array.from(g.children).forEach(b=>{if(b!==btn&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});}}
+
+/* ═══════════════════════════════════════════════════════════════
+   HINTS
+═══════════════════════════════════════════════════════════════ */
+function toggleHint(btn){const box=btn.nextElementSibling;box.classList.toggle('show');btn.textContent=box.classList.contains('show')?'🙈 Hide hint':'💡 Show hint';}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATCH: WORD ↔ MEANING  (Section 4A)
+   REPLACE matchData with this book's vocab words and short meanings.
+═══════════════════════════════════════════════════════════════ */
+const matchData=[
+    {"word": "Africa", "meaning": "the second-largest continent in the world"},
+  {"word": "scientist", "meaning": "a person who studies science"},
+  {"word": "behave", "meaning": "to act in a certain way"},
+  {"word": "study", "meaning": "a careful look at something to learn about it"},
+  {"word": "chimpanzees", "meaning": "smart apes that live in Africa"},
+  {"word": "tools", "meaning": "objects that make a job easier"},
+  {"word": "forest", "meaning": "a large area with many trees"},
+  {"word": "trust", "meaning": "to believe someone is good and safe"},
+  {"word": "feelings", "meaning": "things you feel, like happy or sad"},
+  {"word": "protect", "meaning": "to keep something safe"}
+];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildMatch(){const grid=document.getElementById('matchGrid');const words=matchData.map(d=>d.word);const meanings=shuffle(matchData.map(d=>d.meaning));let html='<div>';words.forEach(w=>html+=`<div class="match-item" data-type="word" data-val="${w}" onclick="selectMatch(this)">${w}</div>`);html+='</div><div>';meanings.forEach(m=>html+=`<div class="match-item" data-type="meaning" data-val="${m}" onclick="selectMatch(this)">${m}</div>`);html+='</div>';grid.innerHTML=html;}
+let selectedWord=null;
+function selectMatch(el){if(el.classList.contains('matched'))return;if(el.dataset.type==='word'){if(selectedWord)selectedWord.classList.remove('selected');selectedWord=el;el.classList.add('selected');}else{if(!selectedWord)return;const correct=matchData.find(d=>d.word===selectedWord.dataset.val).meaning;if(correct===el.dataset.val){selectedWord.classList.remove('selected');selectedWord.classList.add('matched');el.classList.add('matched');selectedWord=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildMatch();
+
+/* ═══════════════════════════════════════════════════════════════
+   CHINESE ↔ ENGLISH MATCHING (Sections 4D & 4E)
+   REPLACE cnEnData with this book's words.
+═══════════════════════════════════════════════════════════════ */
+const cnEnData=[
+    {"en": "Africa", "cn": "非洲"},
+  {"en": "scientist", "cn": "科学家"},
+  {"en": "behave", "cn": "表现；行为举止"},
+  {"en": "study", "cn": "研究"},
+  {"en": "chimpanzees", "cn": "黑猩猩"},
+  {"en": "tools", "cn": "工具"},
+  {"en": "forest", "cn": "森林"},
+  {"en": "trust", "cn": "信任"},
+  {"en": "feelings", "cn": "感情；情感"},
+  {"en": "protect", "cn": "保护"}
+];
+function buildCnEn(containerId,leftKey,rightKey){const grid=document.getElementById(containerId);const lefts=cnEnData.map(d=>d[leftKey]);const rights=shuffle(cnEnData.map(d=>d[rightKey]));let html='<div>';lefts.forEach(l=>html+=`<div class="match-item" data-type="left" data-val="${l}" onclick="selectCnEn(this,'${containerId}')">${l}</div>`);html+='</div><div>';rights.forEach(r=>html+=`<div class="match-item" data-type="right" data-val="${r}" onclick="selectCnEn(this,'${containerId}')">${r}</div>`);html+='</div>';grid.innerHTML=html;}
+const cnEnSelected={};
+function selectCnEn(el,containerId){if(el.classList.contains('matched'))return;const isLeft=containerId==='cnToEnGrid';const dk=isLeft?'cn':'en';const ok=isLeft?'en':'cn';if(el.dataset.type==='left'){if(cnEnSelected[containerId])cnEnSelected[containerId].classList.remove('selected');cnEnSelected[containerId]=el;el.classList.add('selected');}else{const sel=cnEnSelected[containerId];if(!sel)return;const pair=cnEnData.find(d=>d[dk]===sel.dataset.val);if(pair&&pair[ok]===el.dataset.val){sel.classList.remove('selected');sel.classList.add('matched');el.classList.add('matched');cnEnSelected[containerId]=null;}else{el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}}}
+buildCnEn('cnToEnGrid','cn','en');buildCnEn('enToCnGrid','en','cn');
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE COMPLETION (Section 4F)
+═══════════════════════════════════════════════════════════════ */
+function checkSC(id,answer){const input=document.getElementById(id);if(input.value.trim().toLowerCase()===answer.toLowerCase()){input.classList.remove('wrong');input.classList.add('correct');}else{input.classList.remove('correct');input.classList.add('wrong');}}
+
+/* ═══════════════════════════════════════════════════════════════
+   DRAG-AND-DROP FILL IN BLANK (Section 4B)
+═══════════════════════════════════════════════════════════════ */
+let fillSelected=null;
+function dragWord(ev){ev.dataTransfer.setData('text/plain',ev.target.dataset.word);ev.dataTransfer.setData('chipid',Array.from(document.querySelectorAll('.word-chip')).indexOf(ev.target));}
+function dropWord(ev,zone){ev.preventDefault();if(zone.classList.contains('filled'))return;const word=ev.dataTransfer.getData('text/plain');const chipIdx=ev.dataTransfer.getData('chipid');placeWordInZone(zone,word,document.querySelectorAll('.word-chip')[chipIdx]);}
+function selectFillWord(chip){if(chip.classList.contains('used'))return;if(fillSelected)fillSelected.classList.remove('selected');fillSelected=chip;chip.classList.add('selected');}
+function clickFillBlank(zone){if(zone.classList.contains('filled')||!fillSelected)return;placeWordInZone(zone,fillSelected.dataset.word,fillSelected);fillSelected.classList.remove('selected');fillSelected=null;}
+function placeWordInZone(zone,word,chip){zone.textContent=word;zone.classList.add('filled');if(chip)chip.classList.add('used');}
+function checkFillBlanks(){const zones=document.querySelectorAll('.dz');let correct=0;zones.forEach(z=>{if(z.textContent.trim().toLowerCase()===z.dataset.answer.toLowerCase()){z.style.background='#cdeede';z.style.borderColor='#3eb489';correct++;}else if(z.textContent.trim()!==''){z.style.background='#fbe0db';z.style.borderColor='#e8895c';}});const fb=document.getElementById('fillFeedback');fb.textContent=`You got ${correct} / ${zones.length} correct!`;fb.className=correct===zones.length?'feedback correct-text':'feedback wrong-text';}
+function resetFillBlanks(){document.querySelectorAll('.dz').forEach(z=>{z.textContent='';z.classList.remove('filled');z.style.background='';z.style.borderColor='';});document.querySelectorAll('.word-chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('fillFeedback').textContent='';fillSelected=null;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE SCRAMBLE (Section 6A)
+   REPLACE scrambleData with 2 sentences from this book.
+   Each entry is an array of word/phrase chunks (will be shuffled).
+═══════════════════════════════════════════════════════════════ */
+const scrambleData={
+    1: ["As a young girl,", "Jane Goodall", "loved to watch animals."],
+  2: ["To work on the study,", "Goodall", "moved to", "the Gombe Forest."]
+};
+function buildScramble(num){const container=document.getElementById('scramble'+num);const orig=scrambleData[num].join('|');let words=shuffle([...scrambleData[num]]);while(words.join('|')===orig)words=shuffle([...words]);container.innerHTML='';words.forEach(w=>{const chip=document.createElement('div');chip.className='scramble-chip';chip.textContent=w;chip.onclick=()=>moveChip(chip,num);container.appendChild(chip);});}
+function moveChip(chip,num){const al=document.getElementById('answer'+num);if(chip.parentElement.id==='scramble'+num)al.appendChild(chip);else document.getElementById('scramble'+num).appendChild(chip);}
+function checkScramble(num,correct){const al=document.getElementById('answer'+num);const built=Array.from(al.children).map(c=>c.textContent).join(' ');const fb=document.getElementById('scrambleFeedback'+num);if(built.toLowerCase()===correct.toLowerCase()){fb.textContent='✓ Correct! '+correct+'.';fb.className='feedback correct-text';}else{fb.textContent='✗ Not quite. Try rearranging!';fb.className='feedback wrong-text';}}
+function resetScramble(num){buildScramble(num);document.getElementById('answer'+num).innerHTML='';document.getElementById('scrambleFeedback'+num).textContent='';}
+buildScramble(1);buildScramble(2);
+
+/* ═══════════════════════════════════════════════════════════════
+   WORD COUNT + VOCAB TRACKER (Section 6C)
+═══════════════════════════════════════════════════════════════ */
+function updateWordCount(){const text=document.getElementById('paragraphBox').value;const words=text.trim().split(/\s+/).filter(Boolean);document.getElementById('wordCounter').textContent=words.length+' words';const lower=text.toLowerCase();document.querySelectorAll('.track-chip').forEach(chip=>chip.classList.toggle('used',lower.includes(chip.dataset.word.toLowerCase())));}
+</script>
+<!-- ===== STORY AUDIO (browser text-to-speech) ===== -->
+<style>
+  .audio-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;margin-bottom:16px;}
+  .audio-bar .audio-title{font-weight:800;color:var(--teal-dark);margin-right:auto;}
+  .audio-btn{border:none;cursor:pointer;font-family:inherit;font-weight:800;border-radius:999px;padding:8px 18px;font-size:0.9rem;background:linear-gradient(120deg,var(--teal),var(--teal-light));color:#fff;box-shadow:0 3px 10px rgba(31,122,114,0.3);}
+  .audio-btn.stop{background:linear-gradient(120deg,#e8895c,#ffb347);}
+  .audio-btn.speed{background:#fff;color:var(--teal-dark);border:2px solid var(--teal-light);box-shadow:none;}
+  .page-audio{float:right;border:none;background:#eaf4f2;border-radius:999px;width:38px;height:38px;font-size:1.15rem;cursor:pointer;margin-left:10px;}
+  .page-audio:hover{background:var(--teal-light);}
+  .story-card.reading{outline:3px solid var(--accent);background:#fffaf0;}
+</style>
+<script>
+(function(){
+  if(!('speechSynthesis' in window)||!document.querySelector('.story-card'))return;
+  var synth=window.speechSynthesis,slow=false,queue=[],playing=false,voice=null;
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.story-card'));
+  function pickVoice(){
+    var vs=synth.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang);});
+    var pref=['Samantha','Google US English','Ava','Allison','Karen','Serena','Moira','Aria','Jenny'];
+    for(var i=0;i<pref.length;i++){var f=vs.find(function(v){return v.name.indexOf(pref[i])>-1;});if(f){voice=f;return;}}
+    voice=vs.find(function(v){return /en[-_]US/i.test(v.lang);})||vs[0]||null;
+  }
+  pickVoice();if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=pickVoice;
+  function textOf(card){
+    var t=card.querySelector('.story-text').cloneNode(true);
+    Array.prototype.forEach.call(t.querySelectorAll('.story-page-num,.page-audio'),function(n){n.remove();});
+    Array.prototype.forEach.call(t.querySelectorAll('br'),function(b){b.replaceWith(' ');});
+    return t.textContent.replace(/\s+/g,' ').trim();
+  }
+  function clearHL(){cards.forEach(function(c){c.classList.remove('reading');});}
+  function stopAll(){queue=[];playing=false;synth.cancel();clearHL();var p=document.getElementById('playAllBtn');if(p)p.textContent='▶ Play all pages';}
+  function speak(card,done){
+    var u=new SpeechSynthesisUtterance(textOf(card));
+    u.lang='en-US';u.rate=slow?0.6:0.85;u.pitch=1.05;if(voice)u.voice=voice;
+    clearHL();card.classList.add('reading');
+    u.onend=function(){card.classList.remove('reading');if(done)done();};
+    u.onerror=function(){card.classList.remove('reading');if(done)done();};
+    synth.speak(u);
+  }
+  function playOne(card){stopAll();setTimeout(function(){speak(card);},80);}
+  function next(){
+    if(!playing||!queue.length){stopAll();return;}
+    var c=queue.shift();c.scrollIntoView({behavior:'smooth',block:'center'});
+    speak(c,function(){if(playing)setTimeout(next,350);});
+  }
+  function playAll(){stopAll();playing=true;queue=cards.slice();document.getElementById('playAllBtn').textContent='⏸ Playing…';setTimeout(next,80);}
+  cards.forEach(function(card){
+    var b=document.createElement('button');b.className='page-audio';b.type='button';b.title='Listen to this page';b.textContent='🔊';
+    b.onclick=function(){playOne(card);};
+    var st=card.querySelector('.story-text');st.insertBefore(b,st.firstChild);
+  });
+  var sec=cards[0].closest('.section'),sub=sec.querySelector('.section-sub');
+  var bar=document.createElement('div');bar.className='audio-bar';
+  bar.innerHTML='<span class="audio-title">🎧 Listen to the story 听故事</span>'+
+    '<button type="button" class="audio-btn" id="playAllBtn">▶ Play all pages</button>'+
+    '<button type="button" class="audio-btn stop" id="stopBtn">■ Stop</button>'+
+    '<button type="button" class="audio-btn speed" id="speedBtn">🐢 Slow: OFF</button>';
+  sub.parentNode.insertBefore(bar,sub.nextSibling);
+  document.getElementById('playAllBtn').onclick=playAll;
+  document.getElementById('stopBtn').onclick=stopAll;
+  document.getElementById('speedBtn').onclick=function(){slow=!slow;this.textContent='🐢 Slow: '+(slow?'ON':'OFF');};
+  if(typeof window.showSection==='function'){var orig=window.showSection;window.showSection=function(i){stopAll();return orig(i);};}
+  window.addEventListener('pagehide',stopAll);
+})();
+</script>
+<!-- ===== END STORY AUDIO ===== -->
+</body>
+</html>
